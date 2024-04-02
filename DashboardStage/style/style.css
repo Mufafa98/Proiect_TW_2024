@@ -1,0 +1,55 @@
+body {
+    margin: 0em;
+    padding: 0em;
+}
+
+.container {
+    height: 89vh;
+    display: flex;
+}
+
+header {
+    height: 5vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer {
+    height: 5vh;
+}
+
+#searchBar {
+    border-radius: 1em;
+    align-self: center;
+}
+
+.menuLine {
+    margin: 0.3vh;
+    border-radius: 0.2em;
+    background-color: white;
+    height: 0.7vh;
+    width: 2em;
+}
+
+#menuButton {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    float: right;
+    align-self: center;
+}
+
+#secondHeader {
+    height: 1vh;
+}
+
+#leftPadding,
+#rightPadding,
+#footer,
+#secondHeader {
+    background-color: aliceblue;
+}
+
+#content {
+    border-radius: 1em;
+}
