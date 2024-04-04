@@ -1,0 +1,101 @@
+:root {
+    --background: #171625;
+    --auth_background: #1f1c30;
+    --input_border: #60597e;
+    --input_background: #1f1b31;
+    --input_text: #dad3fe;
+    --button_background: #725ad7;
+    --button_text: white;
+    --title_text: white;
+}
+
+
+body {
+    margin: 0em;
+    padding: 0em;
+    background-color: var(--background);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 80vh;
+}
+
+header {
+    height: 10vh;
+}
+
+footer {
+    height: 10vh;
+}
+
+p {
+    text-align: center;
+    color: var(--title_text);
+}
+
+#padding {
+    background-color: var(--background);
+}
+
+#AuthBackground {
+    border-radius: 1.2em;
+    background-color: var(--auth_background);
+
+}
+
+#formElements {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.formElement {
+    border-radius: 1em;
+    margin: 1em;
+    min-height: 50px;
+}
+
+.inputLine {
+    background-color: var(--input_background);
+    color: var(--input_text);
+    border-color: var(--input_border);
+    border-width: 0.2em;
+    border-style: solid;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: medium;
+}
+
+#loginButton {
+    background-color: var(--button_background);
+    border-color: var(--button_background);
+    border-bottom-width: 0.23em;
+    border-left-width: 0em;
+    border-top-width: 0em;
+    border-right-width: 0.15em;
+    color: var(--button_text);
+    font-size: larger;
+    font-weight: bold;
+    border-radius: 0.7em;
+}
+
+#loginButton:hover {
+    filter: brightness(0.92);
+}
+
+#loginButton:active {
+    filter: brightness(0.88);
+
+}
+
+#title {
+    color: var(--title_text);
+}
+
+#signUpLink {
+    color: var(--button_background);
+}

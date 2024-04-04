@@ -13,10 +13,14 @@ export function initLoginScreen() {
 	const formElements = document.getElementsByClassName("formElement");
 
 	for (let i = 0; i < formElements.length; i++) {
-		formElements[i].style.width = `${
-			authBackgroundWidth - 0.2 * authBackgroundWidth
-		}px`;
+		if (formElements[i].type !== "button") {
+			formElements[i].style.width = `${
+				authBackgroundWidth - 0.2 * authBackgroundWidth
+			}px`;
+		} else {
+			formElements[i].style.width = `${
+				authBackgroundWidth - 0.2 * authBackgroundWidth + 32
+			}px`;
+		}
 	}
-
-	// document.getElementById("tes").innerHTML = window.innerWidth;
 }
