@@ -70,7 +70,7 @@ p {
     font-size: medium;
 }
 
-#loginButton {
+#Button {
     background-color: var(--button_background);
     border-color: var(--button_background);
     border-bottom-width: 0.23em;
@@ -83,11 +83,11 @@ p {
     border-radius: 0.7em;
 }
 
-#loginButton:hover {
+#Button:hover {
     filter: brightness(0.92);
 }
 
-#loginButton:active {
+#Button:active {
     filter: brightness(0.88);
 
 }
@@ -96,6 +96,7 @@ p {
     color: var(--title_text);
 }
 
-#signUpLink {
+#swapPage {
     color: var(--button_background);
+    cursor: pointer;
 }
