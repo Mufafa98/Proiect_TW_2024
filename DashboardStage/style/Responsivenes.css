@@ -1,247 +1,200 @@
 @media only screen and (min-width : 20em) {
     .col-sm-1 {
         width: 5%;
-        background-color: rgb(8, 8, 8);
     }
 
     .col-sm-2 {
         width: 16.66%;
-        background-color: rgb(16, 16, 16);
     }
 
     .col-sm-3 {
         width: 25%;
-        background-color: rgb(25, 25, 25);
+
     }
 
     .col-sm-4 {
         width: 33.33%;
-        background-color: rgb(33, 33, 33);
     }
 
     .col-sm-5 {
         width: 41.66%;
-        background-color: rgb(41, 41, 41);
     }
 
     .col-sm-6 {
         width: 50%;
-        background-color: rgb(50, 50, 50);
     }
 
     .col-sm-7 {
         width: 58.33%;
-        background-color: rgb(58, 58, 58);
     }
 
     .col-sm-8 {
         width: 66.66%;
-        background-color: rgb(66, 66, 66);
     }
 
     .col-sm-9 {
         width: 75%;
-        background-color: rgb(75, 75, 75);
     }
 
     .col-sm-10 {
         width: 90%;
-        background-color: rgb(83, 83, 83);
     }
 
     .col-sm-11 {
         width: 91.66%;
-        background-color: rgb(90, 90, 90);
     }
 
     .col-sm-12 {
         width: 100%;
-        background-color: rgb(100, 100, 100);
     }
 }
 
 @media only screen and (min-width : 48em) {
     .col-md-1 {
         width: 8.33%;
-        background-color: rgb(8, 8, 8);
     }
 
     .col-md-2 {
         width: 16.66%;
-        background-color: rgb(16, 16, 16);
     }
 
     .col-md-3 {
         width: 25%;
-        background-color: rgb(25, 25, 25);
     }
 
     .col-md-4 {
         width: 33.33%;
-        background-color: rgb(33, 33, 33);
     }
 
     .col-md-5 {
         width: 41.66%;
-        background-color: rgb(41, 41, 41);
     }
 
     .col-md-6 {
         width: 50%;
-        background-color: rgb(50, 50, 50);
     }
 
     .col-md-7 {
         width: 58.33%;
-        background-color: rgb(58, 58, 58);
     }
 
     .col-md-8 {
         width: 66.66%;
-        background-color: rgb(66, 66, 66);
     }
 
     .col-md-9 {
         width: 75%;
-        background-color: rgb(75, 75, 75);
     }
 
     .col-md-10 {
         width: 83.33%;
-        background-color: rgb(83, 83, 83);
     }
 
     .col-md-11 {
         width: 91.66%;
-        background-color: rgb(90, 90, 90);
     }
 
     .col-md-12 {
         width: 100%;
-        background-color: rgb(100, 100, 100);
     }
 }
 
 @media only screen and (min-width : 64em) {
     .col-lg-1 {
         width: 8.33%;
-        background-color: rgb(8, 8, 8);
     }
 
     .col-lg-2 {
         width: 16.66%;
-        background-color: rgb(16, 16, 16);
     }
 
     .col-lg-3 {
         width: 25%;
-        background-color: rgb(25, 25, 25);
     }
 
     .col-lg-4 {
         width: 33.33%;
-        background-color: rgb(33, 33, 33);
     }
 
     .col-lg-5 {
         width: 41.66%;
-        background-color: rgb(41, 41, 41);
     }
 
     .col-lg-6 {
         width: 50%;
-        background-color: rgb(50, 50, 50);
     }
 
     .col-lg-7 {
         width: 58.33%;
-        background-color: rgb(58, 58, 58);
     }
 
     .col-lg-8 {
         width: 66.66%;
-        background-color: rgb(66, 66, 66);
     }
 
     .col-lg-9 {
         width: 75%;
-        background-color: rgb(75, 75, 75);
     }
 
     .col-lg-10 {
         width: 83.33%;
-        background-color: rgb(83, 83, 83);
     }
 
     .col-lg-11 {
         width: 91.66%;
-        background-color: rgb(90, 90, 90);
     }
 
     .col-lg-12 {
         width: 100%;
-        background-color: rgb(100, 100, 100);
     }
 }
 
 @media only screen and (min-width : 80em) {
     .col-xl-1 {
         width: 8.33%;
-        background-color: rgb(8, 8, 8);
     }
 
     .col-xl-2 {
         width: 16.66%;
-        background-color: rgb(16, 16, 16);
     }
 
     .col-xl-3 {
         width: 25%;
-        background-color: rgb(25, 25, 25);
     }
 
     .col-xl-4 {
         width: 33.33%;
-        background-color: rgb(33, 33, 33);
     }
 
     .col-xl-5 {
         width: 41.66%;
-        background-color: rgb(41, 41, 41);
     }
 
     .col-xl-6 {
         width: 50%;
-        background-color: rgb(50, 50, 50);
     }
 
     .col-xl-7 {
         width: 58.33%;
-        background-color: rgb(58, 58, 58);
     }
 
     .col-xl-8 {
         width: 66.66%;
-        background-color: rgb(66, 66, 66);
     }
 
     .col-xl-9 {
         width: 75%;
-        background-color: rgb(75, 75, 75);
     }
 
     .col-xl-10 {
         width: 83.33%;
-        background-color: rgb(83, 83, 83);
     }
 
     .col-xl-11 {
         width: 91.66%;
-        background-color: rgb(90, 90, 90);
     }
 
     .col-xl-12 {
         width: 100%;
-        background-color: rgb(100, 100, 100);
     }
 }
