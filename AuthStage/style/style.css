@@ -1,5 +1,5 @@
 :root {
-    --background-image: url("../../Images/image-b4p0p8w9.png");
+    --background: url("../../Images/image-b4p0p8w9.png");
     --auth_background: #1f1c30;
     --input_border: #60597e;
     --input_background: #1f1b31;
@@ -13,7 +13,7 @@
 body {
     margin: 0em;
     padding: 0em;
-    background-image: url("../../Images/image-b4p0p8w9.png");
+    background-image: var(--background);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
