@@ -19,7 +19,7 @@ export function initLoginScreen() {
 			}px`;
 		} else {
 			formElements[i].style.width = `${
-				authBackgroundWidth - 0.2 * authBackgroundWidth + 32
+				authBackgroundWidth - 0.2 * authBackgroundWidth
 			}px`;
 		}
 	}

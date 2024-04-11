@@ -1,7 +1,7 @@
 :root {
     --background: url("../../Images/image-2xpim7gy.png");
     --background-color: #171625;
-    --auth_background: #1f1c30;
+    --second_background: #1f1c30;
     --input_border: #60597e;
     --input_background: #1f1b31;
     --input_text: #dad3fe;
@@ -14,51 +14,14 @@
 body {
     margin: 0em;
     padding: 0em;
-    background-image: var(--background);
     /* background-color: var(--background-color); */
+    background-image: var(--background);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.container {
     display: flex;
-    height: 80vh;
-}
-
-header {
-    height: 10vh;
-}
-
-footer {
-    height: 10vh;
-}
-
-p {
-    text-align: center;
-    color: var(--title_text);
 }
 
 #padding {
     background-color: var(--background);
-}
-
-#AuthBackground {
-    border-radius: 1.2em;
-    background-color: var(--auth_background);
-
-}
-
-#formElements {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-}
-
-.formElement {
-    border-radius: 1em;
-    margin: 1em;
-    min-height: 50px;
 }
 
 .inputLine {
@@ -70,7 +33,6 @@ p {
     padding-left: 1em;
     padding-right: 1em;
     font-size: medium;
-    box-sizing: border-box;
 }
 
 #Button {
@@ -81,7 +43,7 @@ p {
     border-top-width: 0em;
     border-right-width: 0.15em;
     color: var(--button_text);
-    font-size: larger;
+    font-size: medium;
     font-weight: bold;
     border-radius: 0.7em;
 }
@@ -95,11 +57,60 @@ p {
 
 }
 
-#title {
-    color: var(--title_text);
+.container {
+    background-color: var(--second_background);
+    color: var(--input_text);
+    margin: 2vh 1em 2vh 1em;
+    min-height: 96vh;
+    border-radius: 1em;
 }
 
-#swapPage {
-    color: var(--button_background);
-    cursor: pointer;
+#statement {
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-right: 0.5em;
+    text-align: left;
+    font-size: 20px;
+    text-indent: 2em;
+}
+
+#solution {
+    top: 1em;
+    margin-left: 0.5em;
+    height: 96vh;
+    position: sticky;
+}
+
+#problemTitle {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 25px;
+}
+
+.inOutContainer {
+    background-color: var(--input_background);
+    color: var(--input_text);
+    border-radius: 1em;
+    border-color: var(--input_border);
+    border-width: 0.2em;
+    border-style: solid;
+    padding: 1em;
+    font-size: medium;
+    margin: 1em;
+    text-align: left;
+    resize: none;
+
+    outline: none;
+}
+
+#actionDiv {
+    padding: 1em;
+    font-size: medium;
+    margin: 1em;
+}
+
+@media only screen and (max-width : 48em) {
+    .solutionContainer {
+        display: none;
+    }
 }
