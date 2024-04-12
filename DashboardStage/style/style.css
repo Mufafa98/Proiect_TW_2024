@@ -44,6 +44,7 @@ footer {
     border-style: solid;
     font-size: medium;
     padding-left: 1em;
+    outline: none;
 }
 
 .menuLine {

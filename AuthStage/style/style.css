@@ -59,6 +59,7 @@ p {
     border-radius: 1em;
     margin: 1em;
     min-height: 50px;
+    outline: none;
 }
 
 .inputLine {

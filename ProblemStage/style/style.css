@@ -35,7 +35,7 @@ body {
     font-size: medium;
 }
 
-#Button {
+.Button {
     background-color: var(--button_background);
     border-color: var(--button_background);
     border-bottom-width: 0.23em;
@@ -46,13 +46,14 @@ body {
     font-size: medium;
     font-weight: bold;
     border-radius: 0.7em;
+    min-height: 2em;
 }
 
-#Button:hover {
+.Button:hover {
     filter: brightness(0.92);
 }
 
-#Button:active {
+.Button:active {
     filter: brightness(0.88);
 
 }
@@ -95,19 +96,59 @@ body {
     border-width: 0.2em;
     border-style: solid;
     padding: 1em;
-    font-size: medium;
-    margin: 1em;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 1em 1em 0em 1em;
     text-align: left;
     resize: none;
-
+    box-sizing: border-box;
     outline: none;
 }
 
 #actionDiv {
-    padding: 1em;
+    display: flex;
+    justify-content: space-between;
     font-size: medium;
     margin: 1em;
 }
+
+#popUpContainer {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    display: none;
+    backdrop-filter: blur(1.5px);
+}
+
+#popUp {
+    background-color: var(--second_background);
+    border-color: var(--background-color);
+    border-width: 0.2em;
+    border-radius: 1em;
+    border-style: solid;
+    display: inline-block;
+    padding: 3em;
+    top: 50%;
+    left: 50%;
+}
+
+#popUp p {
+    text-align: center;
+    color: var(--input_text);
+}
+
+
+select {
+    margin-bottom: 1em;
+    background-color: var(--button_background);
+    border-style: none;
+    border-radius: 0.7em;
+}
+
+option {
+    border-style: none;
+}
+
 
 @media only screen and (max-width : 48em) {
     .solutionContainer {
