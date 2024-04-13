@@ -7,13 +7,14 @@
     --button_background: #725ad7;
     --button_text: white;
     --title_text: white;
+    --background: url("../../Images/image-2xpim7gy.png");
 }
 
 
 body {
     margin: 0em;
     padding: 0em;
-    background-color: var(--background);
+    background-image: var(--background);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -43,6 +44,7 @@ footer {
     border-style: solid;
     font-size: medium;
     padding-left: 1em;
+    outline: none;
 }
 
 .menuLine {

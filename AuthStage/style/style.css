@@ -1,5 +1,5 @@
 :root {
-    --background: url("../../Images/image-b4p0p8w9.png");
+    --background: url("../../Images/image-2xpim7gy.png");
     --background-color: #171625;
     --auth_background: #1f1c30;
     --input_border: #60597e;
@@ -15,6 +15,7 @@ body {
     margin: 0em;
     padding: 0em;
     background-image: var(--background);
+    /* background-color: var(--background-color); */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -58,6 +59,7 @@ p {
     border-radius: 1em;
     margin: 1em;
     min-height: 50px;
+    outline: none;
 }
 
 .inputLine {
@@ -69,6 +71,7 @@ p {
     padding-left: 1em;
     padding-right: 1em;
     font-size: medium;
+    box-sizing: border-box;
 }
 
 #Button {

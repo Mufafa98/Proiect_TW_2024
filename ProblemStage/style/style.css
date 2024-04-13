@@ -1,0 +1,157 @@
+:root {
+    --background: url("../../Images/image-2xpim7gy.png");
+    --background-color: #171625;
+    --second_background: #1f1c30;
+    --input_border: #60597e;
+    --input_background: #1f1b31;
+    --input_text: #dad3fe;
+    --button_background: #725ad7;
+    --button_text: white;
+    --title_text: white;
+}
+
+
+body {
+    margin: 0em;
+    padding: 0em;
+    /* background-color: var(--background-color); */
+    background-image: var(--background);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: flex;
+}
+
+#padding {
+    background-color: var(--background);
+}
+
+.inputLine {
+    background-color: var(--input_background);
+    color: var(--input_text);
+    border-color: var(--input_border);
+    border-width: 0.2em;
+    border-style: solid;
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: medium;
+}
+
+.Button {
+    background-color: var(--button_background);
+    border-color: var(--button_background);
+    border-bottom-width: 0.23em;
+    border-left-width: 0em;
+    border-top-width: 0em;
+    border-right-width: 0.15em;
+    color: var(--button_text);
+    font-size: medium;
+    font-weight: bold;
+    border-radius: 0.7em;
+    min-height: 2em;
+}
+
+.Button:hover {
+    filter: brightness(0.92);
+}
+
+.Button:active {
+    filter: brightness(0.88);
+
+}
+
+.container {
+    background-color: var(--second_background);
+    color: var(--input_text);
+    margin: 2vh 1em 2vh 1em;
+    min-height: 96vh;
+    border-radius: 1em;
+}
+
+#statement {
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-right: 0.5em;
+    text-align: left;
+    font-size: 20px;
+    text-indent: 2em;
+}
+
+#solution {
+    top: 1em;
+    margin-left: 0.5em;
+    height: 96vh;
+    position: sticky;
+}
+
+#problemTitle {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 25px;
+}
+
+.inOutContainer {
+    background-color: var(--input_background);
+    color: var(--input_text);
+    border-radius: 1em;
+    border-color: var(--input_border);
+    border-width: 0.2em;
+    border-style: solid;
+    padding: 1em;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 1em 1em 0em 1em;
+    text-align: left;
+    resize: none;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#actionDiv {
+    display: flex;
+    justify-content: space-between;
+    font-size: medium;
+    margin: 1em;
+}
+
+#popUpContainer {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    display: none;
+    backdrop-filter: blur(1.5px);
+}
+
+#popUp {
+    background-color: var(--second_background);
+    border-color: var(--background-color);
+    border-width: 0.2em;
+    border-radius: 1em;
+    border-style: solid;
+    display: inline-block;
+    padding: 3em;
+    top: 50%;
+    left: 50%;
+}
+
+#popUp p {
+    text-align: center;
+    color: var(--input_text);
+}
+
+
+select {
+    margin-bottom: 1em;
+    background-color: var(--button_background);
+    border-style: none;
+    border-radius: 0.7em;
+}
+
+option {
+    border-style: none;
+}
+
+
+@media only screen and (max-width : 48em) {
+    .solutionContainer {
+        display: none;
+    }
+}
