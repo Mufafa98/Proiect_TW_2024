@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminDashboard</title>
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2 style="border: 5px solid white">
+        <h2text>
+            Administrate 
+            <users>users</users> 
+            and 
+            <users>problems</users>
+        </h2text>
+
+        <div class="buttoncontainer">
+            <button id="mybutton" type="button" onclick="users()">
+                Users
+            </button>
+            <button id="mybutton" type="button" onclick="problems()">
+                Problems
+            </button>
+        </div>
+    </h2>
+
+    <div class="evenbiggercontainer">
+        <div class="container">
+            <iframe class="problems" src="./Problems/problems.html" title="Problems" style="display: none; border: 0px solid #60597e;" width="100%"></iframe>
+            <iframe class="createproblems" src="./CreateProblem/createproblem.html" title="CreateProblems" style="display: none; border: 0px solid #60597e;" width="100%"></iframe>
+            <iframe class="users" src="./Users/users.html" title="Problems" style="display: none; border: 0px solid #60597e;" width="100%"></iframe>
+        </div>
+
+        <div class="listContainer">
+            <iframe class="problemlist" src="./Problems/listofproblems.html" title="Problems" style="display: none; border: 0px solid #60597e;" width="100%"></iframe>
+            <iframe class="userlist" src="./Users/listofusers.html" title="Users" style="display: none; border: 0px solid #60597e;" width="100%"></iframe>
+        </div>   
+    </div>
+
+    <div>
+        <button id="createbutton" class="problems" type="button" style="display: none;" onclick="createproblem()">
+            Create Problem
+        </button>
+    </div>
+
+</body>
+</html>
