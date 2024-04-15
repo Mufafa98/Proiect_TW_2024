@@ -16,7 +16,7 @@ const searchBar = document.getElementById("searchBar");
 searchField();
 
 menuButton.addEventListener("click", () => {
-	window.location.href = "../../ProfileStage/Profile.html";
+	window.location.href = "../../AuthStage/Auth.html";
 });
 searchBar.addEventListener("keydown", (event) => {
 	if (event.key === "Enter") {
