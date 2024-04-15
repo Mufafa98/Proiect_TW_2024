@@ -8,7 +8,8 @@ export function initSwaping() {
 export function loginButtonLogic() {
 	const loginButton = document.getElementById("Button");
 	loginButton.addEventListener("click", () => {
-		window.location.href = "../../DashboardStage/Dashboard.html";
+		window.location.href = "IntermediaryPage.html";
+		// window.location.href = "../../DashboardStage/Dashboard.html";
 	});
 }
 
