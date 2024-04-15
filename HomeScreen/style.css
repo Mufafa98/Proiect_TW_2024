@@ -3,12 +3,17 @@ h1{
     justify-content: center;
     background-color: #8b0c2c;
     padding: 5px;
-    border-radius: 5px;
-    color: #171625;
+    color: white;
     margin-top: 0px;
     margin-bottom: 0px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size:xx-large;
+    border-left-color: white;
+    border-left-width: 5px;
+    border-left-style: solid;
+    border-right-color: white;
+    border-right-width: 5px;
+    border-right-style: solid;
 }
 
 h2{
@@ -21,6 +26,34 @@ h2{
     margin-bottom: 0px;
 }
 
+h2#top{
+    border-left-color: white;
+    border-left-width: 5px;
+    border-left-style: solid;
+    border-right-color: white;
+    border-right-width: 5px;
+    border-right-style: solid;
+    border-top-color: white;
+    border-top-width: 5px;
+    border-top-style: solid;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+h2#bottom{
+    border-left-color: white;
+    border-left-width: 5px;
+    border-left-style: solid;
+    border-right-color: white;
+    border-right-width: 5px;
+    border-right-style: solid;
+    border-bottom-color: white;
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
 p{
     width: auto;
     padding-left: 5px;
@@ -29,7 +62,7 @@ p{
 }
 
 body{
-    background-image: url("../Images/image-b4p0p8w9.png");
+    background-image: url("../Images/image-2xpim7gy.png");
 }
 
 .buttoncontainer{

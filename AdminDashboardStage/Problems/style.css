@@ -1,0 +1,56 @@
+body{
+    color: #dad3fe;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#searchBar {
+    border-radius: 0.7em;
+    align-self: center;
+    background-color: #1f1b31;
+    border-color: #60597e;
+    color: grey;
+    border-width: 0.2em;
+    border-style: solid;
+    font-size: medium;
+    padding-left: 1em;
+    outline: none;
+}
+
+.problemSpecifications{
+    margin-left: 20px;
+}
+
+.problemDescription{
+    width: 80%;
+    height: 10em;
+    border-color: #dad3fe;
+    border-width: 0.2em;
+    border-style: solid;
+    border-radius: 0.7em;
+    outline: none;
+    margin-top: 20px;
+}
+
+p{
+    margin-bottom: 5px;
+}
+
+button{
+    background-color: #725ad7;
+    border-color: #725ad7;
+    color: white;
+    font-size: medium;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    box-shadow: none;
+    margin-left: 10px;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.buttoncontainer{
+    display: flex;
+    margin-right: 20px;
+    margin-top: 20px;
+}

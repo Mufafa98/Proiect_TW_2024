@@ -1,0 +1,115 @@
+body{
+    display: flex;
+    background-image: url("../Images/image-2xpim7gy.png");
+    flex-direction: column;
+}
+
+.heathercontainer{
+    display: flex;
+    justify-content: center;
+    background-color: #8b0c2c;
+    color: #171625;
+    width: 30%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    font-weight: bolder;
+    font-size: x-large;
+    border-radius: 0.7em;
+    align-self: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.biggercontainer{
+    display: flex;
+    justify-content: space-around;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    color: white;
+    background-color: #1f1c30;
+}
+
+.datacontainer{
+    display: flex;
+    width: 30%;
+    height:60%;
+    color: white;
+    background-color: #1f1c30;
+    border-radius: 0.7em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+.textcontainer{
+    width: 30%;
+    align-self: center;
+}
+
+.datacontainer:hover{
+    background-color: #262142;
+}
+
+#nume{
+    margin-left: 20px;
+    text-decoration: underline;
+    font-size: larger;
+}
+
+#date{
+    margin-left: 10px;
+}
+
+data{
+    font-style: italic;
+}
+
+#userLine{
+    background-color: #1f1c30;
+    color: grey;
+    width: 20%;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+#feedbacktext{
+    background-color: #1f1c30;
+    color: grey;
+    width: 50%;
+    height: 10em;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.feedbackcontainer{
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    color: white;
+    background-color: #1f1c30;
+}
+
+#Button {
+    background-color: #725ad7;
+    border-color: #725ad7;
+    border-bottom-width: 0.23em;
+    border-left-width: 0em;
+    border-top-width: 0em;
+    border-right-width: 0.15em;
+    color: white;
+    font-weight: bold;
+    border-radius: 0.7em;
+}
+
+.buttoncontainer{
+    display: flex;
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    width: 45px;
+}
