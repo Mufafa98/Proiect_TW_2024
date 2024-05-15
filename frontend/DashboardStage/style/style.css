@@ -1,0 +1,120 @@
+:root {
+    --background: #171625;
+    --second_background: #1f1c30;
+    --input_border: #60597e;
+    --input_background: #1f1b31;
+    --input_text: #dad3fe;
+    --button_background: #725ad7;
+    --button_text: white;
+    --title_text: white;
+    --background: url("../../Images/image-2xpim7gy.png");
+}
+
+
+body {
+    margin: 0em;
+    padding: 0em;
+    background-image: var(--background);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.container {
+    min-height: 87vh;
+    display: flex;
+}
+
+header {
+    height: 7vh;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--second_background);
+}
+
+footer {
+    height: 5vh;
+}
+
+#searchBar {
+    border-radius: 0.7em;
+    align-self: center;
+    background-color: var(--input_background);
+    border-color: var(--input_border);
+    color: var(--input_text);
+    border-width: 0.2em;
+    border-style: solid;
+    font-size: medium;
+    padding-left: 1em;
+    outline: none;
+}
+
+.menuLine {
+    margin: 0.3vh;
+    border-radius: 0.2em;
+    background-color: var(--input_border);
+    height: 0.7vh;
+    width: 2em;
+}
+
+#menuButton {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    float: right;
+    align-self: center;
+}
+
+#secondHeader {
+    height: 1vh;
+}
+
+#leftPadding,
+#rightPadding,
+#footer,
+#secondHeader {
+    background-color: var(--background);
+}
+
+#content {
+    border-radius: 1em;
+    background-color: var(--second_background);
+}
+
+#filters {
+    margin: 1em;
+    display: flex;
+    border: 0em;
+    border-bottom: 0.2em;
+    border-color: var(--input_border);
+    border-style: solid;
+}
+
+.filter {
+    margin: 1em;
+    color: var(--input_text);
+    cursor: pointer;
+}
+
+#problem {
+    margin: 1em;
+    display: flex;
+    border: 0em;
+    border-bottom: 0.1em;
+    border-color: var(--input_border);
+    border-style: solid;
+    cursor: pointer;
+}
+
+.property {
+    margin: 1em;
+    color: var(--input_text);
+}
+
+#Title {
+    display: none;
+}
+
+@media only screen and (min-width : 48em) {
+    #Title {
+        display: block
+    }
+}

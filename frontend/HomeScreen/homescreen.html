@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeScreen</title>
+    <script src="./script.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <h2 id="top">|</h2>
+    <h1>Home Screen</h1>
+    <h2 id="bottom">
+        <a href="..\AuthStage\Auth.html"><button id="Button" class="buttoncontainer" type="button">Login</button></a>
+        <a href="..\ContactStage\contact.html"><button id="Button" class="buttoncontainer" type="button">Contact</button></a>
+    </h2>
+</head>
+<body>
+    <div class="biggercontainer">
+
+        <div class="leftcontainer">
+            <button class="sidebutton" type="button" 
+            onclick="insertInformationalTextIntroduction()"> 
+                Introduction
+            </button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertInformationalTextSelect()"
+            >SELECT</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextWhere()"
+            >WHERE</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextOrderBy()"
+            >ORDER BY</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextHaving()"
+            >HAVING</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextInsertInto()"
+            >INSERT INTO</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextUpdate()"
+            >UPDATE</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextDelete()"
+            >DELETE</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextJoin()"
+            >JOIN</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextUnion()"
+            >UNION</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextCount()"
+            >COUNT</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextSum()"
+            >SUM</button>
+
+            <button class="sidebutton" type="button"
+            onclick="insertTextAverage()"
+            >AVG</button>
+        </div>
+
+        <div class="container">
+            <p class="information"><subtitlu>Introduction:</subtitlu><br></p>
+        </div>
+
+        <div class="rightcontainer">
+            <img style='border: 10px solid #60597e' 
+            src="../Images/sqlimage.png" 
+            onmouseenter="src='../Images/lightbulb.jpg'" 
+            onmouseleave="src='../Images/sqlimage.png'">
+            
+            <img style="border: 10px solid #60597e"
+            src="../Images/lightbulb.jpg" 
+            onmouseenter="src='../Images/sqlimage.png'" 
+            onmouseleave="src='../Images/lightbulb.jpg'">
+        </div>
+
+    </div>
+</body>
+</html>
