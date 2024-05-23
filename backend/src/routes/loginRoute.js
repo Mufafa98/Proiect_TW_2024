@@ -1,21 +1,19 @@
 const diveIntoUrl = require("../utils/urlDiver")
 const urlRoot = require("../utils/urlRoot")
 const resourceNotFound = require("../utils/resourceNotFound")
+const loginUser = require("../controllers/loginController")
 
 const routes = {
     'GET /': (req, res) => {
-        const responseObject = { data: "/Test -> Will be removed" };
+        console.log("recived get on /login");
+        const responseObject = { data: "Login GET request" };
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(responseObject));
     },
-    'GET /asd': (req, res) => {
-        const responseObject = { data: "/Test -> Will be removed asd" };
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(responseObject));
-    },
+    'POST /': loginUser,
 };
 
-async function handleRequest(req, res) {
+async function handleSignUp(req, res) {
     const method = req.method;
     const currentUrl = await diveIntoUrl(req.url.split('?')[0]);
     const url = await urlRoot(currentUrl);
@@ -30,4 +28,4 @@ async function handleRequest(req, res) {
     }
 }
 
-module.exports = handleRequest;
+module.exports = handleSignUp;

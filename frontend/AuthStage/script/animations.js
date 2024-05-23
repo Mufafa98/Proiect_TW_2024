@@ -1,60 +1,70 @@
+let userChanged = false; let emailChanged = false; let passChanged = false;
 export function userField() {
-    let fieldChanged = false;
     const inputLine = document.getElementById("userLine");
     inputLine.addEventListener("blur", () => {
         const value = inputLine.value.trim();
         if (value === "") {
-            fieldChanged = false;
+            userChanged = false;
             inputLine.value = "Username";
         }
     });
     inputLine.addEventListener("focus", () => {
-        if (!fieldChanged) {
+        if (!userChanged) {
             inputLine.value = "";
         }
     });
     inputLine.addEventListener("input", () => {
-        fieldChanged = true;
+        userChanged = true;
     });
 }
 export function emailField() {
-    let fieldChanged = false;
     const inputLine = document.getElementById("emailLine");
     inputLine.addEventListener("blur", () => {
         const value = inputLine.value.trim();
         if (value === "") {
-            fieldChanged = false;
+            emailChanged = false;
             inputLine.value = "Email";
         }
     });
     inputLine.addEventListener("focus", () => {
-        if (!fieldChanged) {
+        if (!emailChanged) {
             inputLine.value = "";
         }
     });
     inputLine.addEventListener("input", () => {
-        fieldChanged = true;
+        emailChanged = true;
     });
 }
 export function passField() {
-    let fieldChanged = false;
     const inputLine = document.getElementById("passLine");
     inputLine.addEventListener("blur", () => {
         const value = inputLine.value.trim();
         if (value === "") {
-            fieldChanged = false;
+            passChanged = false;
             inputLine.type = "text";
             inputLine.value = "Password";
         }
     });
     inputLine.addEventListener("focus", () => {
-        if (!fieldChanged) {
+        if (!passChanged) {
             inputLine.type = "text";
             inputLine.value = "";
         }
     });
     inputLine.addEventListener("input", () => {
         inputLine.type = "password";
-        fieldChanged = true;
+        passChanged = true;
     });
+}
+
+export function changedUser() {
+    return userChanged;
+}
+
+export function changedEmail() {
+    return emailChanged;
+}
+
+export function changedPass() {
+    return passChanged;
 }

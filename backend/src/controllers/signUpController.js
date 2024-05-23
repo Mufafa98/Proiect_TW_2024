@@ -3,9 +3,14 @@ const validate = require("../utils/validators");
 const httpStatus = require("http-status-codes").StatusCodes;
 const sendResponse = require("../utils/sendResponse");
 const userServices = require("../services/userServices")
-
 const passwordServices = require("../services/passwordServices")
-
+const statusCodes = require("../utils/statusCodes");
+/**
+ * Handles user sign-up.
+ * 
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ */
 async function signUpUser(req, res) {
     const response = await getBody(req);
     if (response.type === "json") {
@@ -15,14 +20,15 @@ async function signUpUser(req, res) {
             password === undefined) {
             const message = "Invalid JSON format. Expected: {email, username, "
                 + "password}"
-            sendResponse.JSON(res, message, httpStatus.BAD_REQUEST);
+            sendResponse.JSON(res, message, statusCodes.INVALID_JSON_FORMAT);
         }
         else {
             if (await validate.email(email)) {
-                const user = userServices.getUserByEmail(email);
-                if ((await user).found) {
+                const user = await userServices.getUserByEmail(email);
+                const userByU = await userServices.getUserByUsername(username);
+                if (user.found || userByU.found) {
                     const message = "User already Exists"
-                    sendResponse.JSON(res, message, httpStatus.NOT_ACCEPTABLE);
+                    sendResponse.JSON(res, message, statusCodes.USER_EXISTS);
                 }
                 else {
                     userServices.insertUser(
@@ -38,7 +44,7 @@ async function signUpUser(req, res) {
             else {
                 const message = "Invalid email format. Expected " +
                     "<uname>@<domain>.<identifier>"
-                sendResponse.JSON(res, message, httpStatus.NOT_ACCEPTABLE);
+                sendResponse.JSON(res, message, statusCodes.INVALID_EMAIL);
             }
         }
     }

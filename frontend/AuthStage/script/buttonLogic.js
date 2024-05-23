@@ -1,3 +1,6 @@
+import { showPopup } from "./popup.js";
+import { changedUser, changedEmail, changedPass } from "./animations.js";
+
 const Pages = { Login: "Login", Signup: "Signup" };
 let pageState = Pages.Signup;
 
@@ -27,11 +30,11 @@ export function initSignUp() {
 export function buttonLogic() {
     const button = document.getElementById("Button");
     button.addEventListener("click", () => {
-        switch (button.value) {
-            case "Login":
+        switch (pageState) {
+            case Pages.Login:
                 login();
                 break;
-            case "SignUp":
+            case Pages.Signup:
                 signUp();
                 break;
             default:
@@ -42,40 +45,69 @@ export function buttonLogic() {
     });
 }
 
-function login() {
-    console.log("not implemented");
+async function login() {
+    const url = 'http://127.0.0.1:3000/login/';
+
+    const formElements = document.querySelectorAll(".inputLine");
+    let username = formElements.item(0).value;
+    let password = formElements.item(2).value;
+
+    if (!changedPass()) password = undefined;
+    if (!changedUser()) username = undefined;
+
+    const data = {
+        username: username,
+        password: password
+    };
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        handleStatusCodes(response.status)
+        console.log('Success:', response.status);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-function signUp() {
+async function signUp() {
     const url = 'http://127.0.0.1:3000/signUp/';
 
     const formElements = document.querySelectorAll(".inputLine");
-    const username = formElements.item(0).value;
-    const email = formElements.item(1).value;
-    const password = formElements.item(2).value;
+    let username = formElements.item(0).value;
+    let email = formElements.item(1).value;
+    let password = formElements.item(2).value;
 
-    // TO MANAGE ERROR CODES ACORDINGLY IN APP
-
+    if (!changedEmail()) email = undefined;
+    if (!changedPass()) password = undefined;
+    if (!changedUser()) username = undefined;
 
     const data = {
         email: email,
         username: username,
         password: password
     };
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
         });
+
+        const result = await response.json();
+        handleStatusCodes(response.status)
+        console.log('Success:', response.status);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
 // fetch(url, {
@@ -94,5 +126,31 @@ export function switchPages() {
         initSignUp();
     } else if (pageState === Pages.Signup) {
         initLogin();
+    }
+}
+
+function handleStatusCodes(code) {
+    switch (code) {
+        case 452:
+            showPopup("Fields may not be completed.");
+            break;
+        case 453:
+            showPopup("User already exists.");
+            break;
+        case 454:
+            showPopup("Invalid email format.");
+            break;
+        case 455://user
+            showPopup("Wrong user or password.");
+            break;
+        case 456://pass
+            showPopup("Wrong user or password.");
+            break;
+        case 200:
+            showPopup("Signed up succesfully.");
+            window.location.href = "../../DashboardStage/Dashboard.html";
+            break;
+        default:
+            break;
     }
 }
