@@ -7,7 +7,7 @@
  * A promise that resolves with an object containing the body and type of the 
  * request.
  * 
- * Current implemented types are: "json", "params"
+ * Current implemented types are: "json", "params", "query"
  */
 async function getBody(req) {
     return new Promise((resolve, reject) => {
@@ -15,6 +15,14 @@ async function getBody(req) {
             body: "",
             type: ""
         };
+
+        const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+        if (parsedUrl.search) {
+            result.body = Object.fromEntries(parsedUrl.searchParams);
+            result.type = "query";
+            resolve(result);
+            return;
+        }
 
         req.on("data", chunk => {
             result.body += chunk.toString();
