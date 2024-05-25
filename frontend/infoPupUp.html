@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        #popupContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup {
+            position: relative;
+            right: -500px;
+
+            margin-top: 10px;
+            min-height: 50px;
+            max-height: 1000px;
+            min-width: 250px;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            transition: right 0.5s ease;
+            overflow-wrap: break-word;
+        }
+
+
+
+        .popup.slow-hide {
+            transition: right 0.7s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="showPopupButton">Show Popup</button>
+    <div id="popupContainer"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const showPopupButton = document.getElementById('showPopupButton');
+            const popupContainer = document.getElementById('popupContainer');
+
+            async function showPopup() {
+                const popup = document.createElement('div');
+                popup.classList.add('popup');
+                const text = document.createElement('p');
+                text.classList.add('popupText');
+                text.textContent = 'asgfgkkgdfgdgergxcdfbtrnkuasgfgkkgdfgdgergxcdfbtrnkuasgfgkkgdfgdgergxcdfbtrnkuasgfgkkgdfgdgergxcdfbtrnkuasgfgkkgdfgdgergxcdfbtrnkuasgfgkkgdfgdgergxcdfbtrnku,i9,oguifjydtjghnmyu';
+                popup.appendChild(text);
+                popupContainer.appendChild(popup);
+                setTimeout(() => {
+                    popup.style.right = '0px';
+                }, 0);
+                setTimeout(() => {
+                    hidePopup(popup);
+                }, 4000);
+            }
+
+            async function hidePopup(popup) {
+                popup.classList.add('slow-hide');
+                popup.style.right = '-500px';
+                setTimeout(() => {
+                    popup.remove();
+                }, 1500);
+            }
+
+            showPopupButton.addEventListener('click', showPopup);
+        });
+    </script>
+</body>
+
+</html>

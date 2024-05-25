@@ -1,8 +1,13 @@
 
 
-//  This function get an url like /asd/123/sdf/234 (etc)
-//  and returns another url with one apth deeper ex:
-//  /asd/123/sdf/234   ->   /123/sdf/234
+/**
+ * Dives into an url
+ * Example:
+ * IN url: "asd/123"
+ * OUT url: "/123"
+ * @param {string} url Url to dive into 
+ * @returns {string} Result url
+ */
 async function diveIntoUrl(url) {
 
 
