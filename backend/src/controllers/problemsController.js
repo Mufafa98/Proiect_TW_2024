@@ -10,7 +10,11 @@ async function get(req, res) {
         if (reqBody.body.id === undefined)
             sendResponse.JSON(res, "Invalid params", httpStatus.BAD_REQUEST)
         else {
-            const problems = await getById(reqBody.body.id);
+            let problems = await getById(reqBody.body.id);
+            if (reqBody.body.data === "true")
+                problems = await getProblemDataById(reqBody.body.id);
+            else
+                problems = await getById(reqBody.body.id);
             if (problems.found)
                 sendResponse.customJSON(res, problems.data, 200);
             else
@@ -29,6 +33,10 @@ async function getAll() {
 }
 async function getById(id) {
     const problems = await problemsServices.getById(id);
+    return problems
+}
+async function getProblemDataById(id) {
+    const problems = await problemsServices.getProblemDataById(id);
     return problems
 }
 

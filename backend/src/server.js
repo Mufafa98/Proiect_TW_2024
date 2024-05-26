@@ -23,7 +23,13 @@ const server = http.createServer((req, res) => {
     app(req, res);
 });
 
+// async function test() {
+//     const database = require("./services/databaseServices");
+//     const response = await database.query("SELECT * from UserDatabase.studenti")
+//     console.log(response)
+// }
 
+// test();
 
 // Start the server and listen on the specified port
 server.listen(port, ip, () => {

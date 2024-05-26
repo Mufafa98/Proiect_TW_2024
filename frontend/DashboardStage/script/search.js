@@ -17,3 +17,4 @@ export function searchField() {
         fieldChanged = true;
     });
 }
+

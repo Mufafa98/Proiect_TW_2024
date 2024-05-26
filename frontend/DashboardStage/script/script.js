@@ -1,4 +1,4 @@
-import { initializeDashboard, tempPageSwap, resizeElements } from "./init.js";
+import { initializeDashboard, swapPage } from "./init.js";
 import { searchField } from "./search.js";
 import { sortByChapter, sortByDifficulty, sortByID, sortByTitle } from "./sort.js"
 import { loadProblems, loadProblemsById } from "./problems.js";
@@ -20,8 +20,15 @@ searchBar.addEventListener("keydown", (event) => {
 	}
 });
 
-document.getElementById("problems").addEventListener("click", tempPageSwap);
-
+document.getElementById('problems').addEventListener('click', (event) => {
+	let element = event.target;
+	while (!element.id.startsWith('problem')) {
+		element = element.parentElement;
+	}
+	const elementId = element.querySelector("#Id").innerHTML
+	localStorage.setItem("selectedProblem", elementId)
+	window.location.href = "../ProblemStage/Problem.html";
+});
 const filters = document.querySelector("#filters");
 const idFilter = filters.querySelector("#Id");
 const titleFilter = filters.querySelector("#Title");
