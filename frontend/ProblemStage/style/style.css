@@ -148,7 +148,9 @@ select {
 option {
     border-style: none;
 }
-
+#solutionOutput {
+    white-space: pre;
+}
 
 @media only screen and (max-width : 48em) {
     .solutionContainer {

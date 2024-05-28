@@ -25,6 +25,78 @@ class Problems {
             data: problems
         }
     }
+    async getProblemQuery(id) {
+        const problems = await
+            database.query(`select solution from ProblemData where id = ${id}`);
+        return {
+            found: problems.length !== 0,
+            data: problems[0].solution
+        }
+    }
+    async runQueryToString(query) {
+        try {
+            database.query("USE UserDatabase")
+            const queryResult = await database.queryToString(query);
+            database.query("USE Dev")
+            return {
+                error: false,
+                result: queryResult
+            };
+        } catch (error) {
+            database.query("USE Dev")
+            return {
+                error: true,
+                result: error.sqlMessage
+            };
+        }
+    }
+    async compareSolution(query, id) {
+        try {
+            const problemQuerry = (await this.getProblemQuery(id)).data;
+            database.query("USE UserDatabase")
+            const queryResult = await database.query(query);
+            const solution = await database.query(problemQuerry);
+            database.query("USE Dev")
+            const sameResults = JSON.stringify(queryResult) === JSON.stringify(solution)
+            return {
+                error: false,
+                result: sameResults
+            };
+        } catch (error) {
+            database.query("USE Dev")
+            return {
+                error: true,
+                result: error.sqlMessage
+            };
+        }
+    }
+    async logProblem(problemId, userId, query, passed) {
+        try {
+            database.query("USE Dev")
+            let insertQuery = "insert into ProblemsSolved (userId, problemId, ";
+            insertQuery += "passed, query, solvedAt) values (";
+            insertQuery += `${userId},${problemId},${passed},'${query}',NOW())`
+            database.insert(insertQuery);
+            return {
+                error: false,
+                result: "Success"
+            };
+        } catch (error) {
+            database.query("USE Dev")
+            return {
+                error: true,
+                result: "Internal server error"
+            };
+        }
+    }
+    async canBeRatedBy(uid) {
+        const response = await
+            database.query(`select COUNT(*) from Raitings where uid = ${uid}`);
+        return {
+            found: problems.length !== 0,
+            data: response
+        }
+    }
 }
 
 module.exports = new Problems();

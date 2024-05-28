@@ -1,4 +1,5 @@
 const mysql = require("mysql2");
+const moment = require("moment")
 /**
  * Database class for managing MySQL connections and queries.
  */
@@ -21,10 +22,53 @@ class Database {
             this.connection.query(querry, (error, results) => {
                 if (error) {
                     reject(error);
-                    console.error(error.message);
                     return
                 }
                 resolve(results);
+            });
+        })
+    }
+
+    async queryToString(query) {
+        return new Promise((resolve, reject) => {
+            this.connection.query(query, (error, results, fields) => {
+                if (error) { reject(error); return; }
+                let output = "";
+                const columnNames = fields.map(field => field.name);
+                const maxChars = [];
+                for (let i = 0; i < columnNames.length; i++) {
+                    const element = columnNames[i];
+                    maxChars[i] = element.length;
+                }
+                for (let i = 0; i < results.length; i++) {
+                    const line = results[i];
+                    const cols = columnNames.map(column => line[column]);
+                    for (let j = 0; j < cols.length; j++) {
+                        let element = String(cols[j]);
+                        if (typeof (cols[j]) === "object")
+                            element = element.substring(0, 15)
+                        if (element.length > maxChars[j])
+                            maxChars[j] = element.length;
+                    }
+                }
+
+                for (let i = 0; i < columnNames.length; i++) {
+                    const name = columnNames[i].padEnd(maxChars[i] + 5, " ");
+                    output += name;
+                }
+                output += "\n"
+                for (let i = 0; i < results.length; i++) {
+                    const line = results[i];
+                    const cols = columnNames.map(column => line[column]);
+                    for (let j = 0; j < cols.length; j++) {
+                        let element = String(cols[j]).padEnd(maxChars[j] + 5, " ");
+                        if (typeof (cols[j]) === "object")
+                            element = element.substring(0, 15).padEnd(maxChars[j] + 5, " ")
+                        output += element;
+                    }
+                    output += "\n"
+                }
+                resolve(output)
             });
         })
     }

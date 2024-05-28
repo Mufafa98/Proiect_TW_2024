@@ -36,8 +36,12 @@ async function signUpUser(req, res) {
                         email,
                         await passwordServices.hash(password)
                     )
+                    const userId = (await userServices.getUserByUsername(username))
                     const message = "User SignedUp succesfully"
-                    sendResponse.JSON(res, message, httpStatus.OK);
+                    sendResponse.customJSON(res, {
+                        message: message,
+                        uid: userId.data.ID,
+                    }, httpStatus.OK);
                 }
 
             }

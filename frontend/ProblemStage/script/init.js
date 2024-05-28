@@ -1,6 +1,7 @@
 import { getProblemData } from "./problem.js";
 
 
+
 export async function init() {
     const problemId = localStorage.getItem("selectedProblem")
     const problemData = (await getProblemData(problemId)).at(0);

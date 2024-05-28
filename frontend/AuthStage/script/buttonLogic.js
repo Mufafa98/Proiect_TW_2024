@@ -40,8 +40,6 @@ export function buttonLogic() {
             default:
                 break;
         }
-        // window.location.href = "IntermediaryPage.html";
-        // window.location.href = "../../DashboardStage/Dashboard.html";
     });
 }
 
@@ -68,9 +66,7 @@ async function login() {
             body: JSON.stringify(data),
         });
 
-        const result = await response.json();
-        handleStatusCodes(response.status)
-        console.log('Success:', response.status);
+        handleStatusCodes(response)
     } catch (error) {
         console.error('Error:', error);
     }
@@ -102,24 +98,12 @@ async function signUp() {
             body: JSON.stringify(data),
         });
 
-        const result = await response.json();
-        handleStatusCodes(response.status)
-        console.log('Success:', response.status);
+
+        handleStatusCodes(response)
     } catch (error) {
         console.error('Error:', error);
     }
 }
-
-// fetch(url, {
-//     method: 'GET'
-// })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log('Success:', data);
-//     })
-//     .catch(error => {
-//         console.error('Error:', error);
-//     });
 
 export function switchPages() {
     if (pageState === Pages.Login) {
@@ -129,7 +113,9 @@ export function switchPages() {
     }
 }
 
-function handleStatusCodes(code) {
+async function handleStatusCodes(response) {
+    const result = await response.json();
+    const code = response.status
     switch (code) {
         case 452:
             showPopup("Fields may not be completed.");
@@ -147,6 +133,7 @@ function handleStatusCodes(code) {
             showPopup("Wrong user or password.");
             break;
         case 200:
+            localStorage.setItem("uid", result.uid);
             showPopup("Signed up succesfully.");
             window.location.href = "../../DashboardStage/Dashboard.html";
             break;
