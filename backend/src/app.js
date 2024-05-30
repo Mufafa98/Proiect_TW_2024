@@ -1,13 +1,15 @@
 const singUpRoute = require("./routes/signUpRoute")
 const loginRoute = require("./routes/loginRoute")
+const problemsRoute = require("./routes/problemsRoute")
 const urlRoot = require("./utils/urlRoot")
 const resourceNotFound = require("./utils/resourceNotFound")
 
 
 const routes = {
-    '/': testRoot,      // testeaza /
+    '/': testRoot,
     '/signUp': singUpRoute,
-    '/login': loginRoute
+    '/login': loginRoute,
+    '/problems': problemsRoute
 };
 
 async function app(req, res) {

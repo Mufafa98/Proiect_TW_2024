@@ -1,13 +1,14 @@
 const mysql = require("mysql2");
+const moment = require("moment")
 /**
- * Database class for managing MySQL connections and queries.
+ * Database class for managing MySQL connections and queries for logged users.
  */
 class Database {
     constructor() {
         if (!Database.instance) {
             Database.instance = this;
             this.connection = null;
-            this.connection = mysql.createConnection(process.env.DATABASE_URL);
+            this.connection = mysql.createConnection(process.env.DATABASE_URL_USERS);
         }
     }
     /**

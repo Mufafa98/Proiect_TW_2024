@@ -118,3 +118,29 @@ footer {
         display: block
     }
 }
+
+#popupContainer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup {
+    position: relative;
+    right: -500px;
+
+    margin-top: 10px;
+    min-height: 50px;
+    max-height: 1000px;
+    min-width: 250px;
+    max-width: 400px;
+    padding: 10px;
+    background-color: var(--input_border);
+    color: var(--input_text);
+    text-align: center;
+    border-radius: 10px;
+    transition: right 0.5s ease;
+    overflow-wrap: break-word;
+}

@@ -30,7 +30,10 @@ async function signUpUser(req, res) {
                 }
                 else {
                     const message = "User logged in succesfully"
-                    sendResponse.JSON(res, message, httpStatus.OK);
+                    sendResponse.customJSON(res, {
+                        message: message,
+                        uid: user.data.ID,
+                    }, httpStatus.OK);
                 }
             }
             else {

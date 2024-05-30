@@ -7,5 +7,8 @@ const StatusCodes = {
     INVALID_EMAIL: 454,
     INEXISTENT_USER: 455,
     WRONG_PASSWORD: 456,
+    INEXISTENT_PROBLEM: 457,
+    INVALID_SQL_STATEMENT: 458,
+    UNABLE_TO_RATE: 459,
 }
 module.exports = StatusCodes;

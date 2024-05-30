@@ -1,5 +1,9 @@
 const dotenv = require("dotenv").config({
+<<<<<<< HEAD
+    path: "./src/config/.env.local"
+=======
     path: "./src/config/.env"
+>>>>>>> main
 });
 const http = require("node:http");
 const app = require("./app");
@@ -23,7 +27,10 @@ const server = http.createServer((req, res) => {
     app(req, res);
 });
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 
 // Start the server and listen on the specified port
 server.listen(port, ip, () => {
