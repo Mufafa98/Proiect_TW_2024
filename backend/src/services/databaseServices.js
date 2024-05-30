@@ -1,5 +1,4 @@
 const mysql = require("mysql2");
-const moment = require("moment")
 /**
  * Database class for managing MySQL connections and queries.
  */
