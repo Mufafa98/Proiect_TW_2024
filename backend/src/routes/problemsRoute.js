@@ -5,7 +5,8 @@ const problems = require("../controllers/problemsController")
 
 const routes = {
     'GET /': problems.get,
-    'GET /rate': problems.canRate
+    'GET /rate': problems.canRate,
+    'POST /rate': problems.rate,
 };
 
 async function handleProblems(req, res) {

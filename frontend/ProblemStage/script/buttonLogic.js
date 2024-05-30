@@ -1,4 +1,5 @@
-import { canRate, runQuery, submitQuery } from "./problem.js";
+import { canRate, runQuery, submitQuery, rate } from "./problem.js";
+import { initPopUp, unInitPopUp } from "./init.js";
 
 
 export function backButton() {
@@ -45,6 +46,36 @@ export async function subminButton() {
         localStorage.getItem("selectedProblem"),
         localStorage.getItem("uid")
     )
+    if (canUserRate) {
+        initPopUp();
 
-    console.log(canUserRate)
+        document
+            .getElementById("difficultySelectorButton")
+            .addEventListener("click", () => {
+                const difficulty = getDifficulty(document.getElementById("difficultySelector").value)
+                rate(
+                    localStorage.getItem("selectedProblem"),
+                    localStorage.getItem("uid"),
+                    difficulty
+                )
+                unInitPopUp();
+            });
+    }
+}
+
+function getDifficulty(value) {
+    let result = "NA";
+    switch (value) {
+        case "0":
+            result = "Easy"; break
+        case "1":
+            result = "Medium"; break
+        case "2":
+            result = "Hard"; break
+        case "3":
+            result = "Wrong"; break
+        default:
+            break;
+    }
+    return result
 }

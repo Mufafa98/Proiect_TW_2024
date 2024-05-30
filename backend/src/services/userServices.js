@@ -32,6 +32,21 @@ class UserServices {
         }
     }
     /**
+     * Retrives an user by id
+     * @param {string} id
+     * @returns {Promise<{found: bolean, data: *}>} A promise that contains a field 
+     * to test wether the user was found and a data field that will be populated with
+     * the user's data
+     */
+    async getUserById(id) {
+        const user = await
+            database.query(`select * from Users where id = '${id}'`);
+        return {
+            found: user.length !== 0,
+            data: user[0]
+        }
+    }
+    /**
      * Inserts an user in the database
      * @param {string} username 
      * @param {string} email 

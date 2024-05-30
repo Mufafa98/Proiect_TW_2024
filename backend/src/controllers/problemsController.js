@@ -2,8 +2,15 @@ const problemsServices = require("../services/problemsServices")
 const sendResponse = require("../utils/sendResponse")
 const getReqBody = require("../utils/getReqBody")
 const httpStatus = require("http-status-codes").StatusCodes;
-const statusCodes = require("../utils/statusCodes")
+const statusCodes = require("../utils/statusCodes");
+const userServices = require("../services/userServices");
 
+/**
+ * Handles problem retrieval
+ * 
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ */
 async function get(req, res) {
     const decodedReq = await getReqBody(req);
     const reqBody = decodedReq.body;
@@ -54,31 +61,46 @@ async function get(req, res) {
     }
 }
 
+/**
+ * Returns all the problems in the database
+ * @returns {found: Boolean, data: any}
+ */
 async function getAll() {
     const problems = await problemsServices.getAll();
     return problems
 }
+/**
+ * Returns problems by id
+ * @returns {found: Boolean, data: any}
+ */
 async function getById(id) {
     const problems = await problemsServices.getById(id);
     return problems
 }
+/**
+ * Returns problem data by id
+ * @returns {found: Boolean, data: any}
+ */
 async function getProblemDataById(id) {
     const problems = await problemsServices.getProblemDataById(id);
     return problems
 }
-
-// NOT Working
-
+/**
+ * Handles user rating system
+ * If an user already voted a problem, a second vote should not be possible
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ */
 async function canRate(req, res) {
     const decodedReq = await getReqBody(req);
     const reqBody = decodedReq.body;
-    console.log(reqBody.uid, reqBody.pid)
-    if (decodedReq.type === "json") {
+    if (decodedReq.type === "query") {
         if (reqBody.uid === undefined || reqBody.pid === undefined) {
             sendResponse.JSON(res, "Invalid fields", statusCodes.INVALID_JSON_FORMAT)
         }
         else {
-            if (await problemsServices.canBeRatedBy(reqBody.uid)) {
+            const canRate = await problemsServices.canBeRatedBy(reqBody.uid, reqBody.pid);
+            if (canRate.found) {
                 sendResponse.JSON(res, "Can rate", 200);
             }
             else {
@@ -86,9 +108,41 @@ async function canRate(req, res) {
             }
         }
     }
+    else
+        sendResponse.JSON(res, "Invalid query format", statusCodes.INVALID_JSON_FORMAT);
+}
+
+/**
+ * Handles user rating system
+ * Adds in the database the rate of the user regarding the problem
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ */
+async function rate(req, res) {
+    const decodedReq = await getReqBody(req);
+    const reqBody = decodedReq.body;
+    if (decodedReq.type === "json") {
+        if (reqBody.uid === undefined || reqBody.pid === undefined || reqBody.raiting === undefined) {
+            sendResponse.JSON(res, "Invalid fields", statusCodes.INVALID_JSON_FORMAT)
+        }
+        else {
+            const userExists = await userServices.getUserById(reqBody.uid);
+            const problemExists = await problemsServices.getById(reqBody.pid);
+            if (userExists.found && problemExists.found) {
+                await problemsServices.rate(reqBody.uid, reqBody.pid, reqBody.raiting)
+                sendResponse.JSON(res, "Can rate", 200);
+            }
+            else {
+                sendResponse.JSON(res, "Can't rate", statusCodes.UNABLE_TO_RATE);
+            }
+        }
+    }
+    else
+        sendResponse.JSON(res, "Invalid JSON format", statusCodes.INVALID_JSON_FORMAT);
 }
 
 module.exports = {
     get: get,
-    canRate: canRate
+    canRate: canRate,
+    rate: rate
 }

@@ -54,10 +54,28 @@ export async function canRate(pid, uid) {
         const response = await fetch(url, {
             method: 'GET'
         });
-        console.log(response)
         if (response.status === 200)
             return true;
         return false;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+export async function rate(pid, uid, raiting) {
+    const url = "http://127.0.0.1:3000/problems/rate";
+    const data = {
+        pid: pid,
+        uid: uid,
+        raiting: raiting
+    }
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
     } catch (error) {
         console.error('Error:', error);
     }
