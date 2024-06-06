@@ -4,6 +4,7 @@ const getReqBody = require("../utils/getReqBody")
 const httpStatus = require("http-status-codes").StatusCodes;
 const statusCodes = require("../utils/statusCodes");
 const userServices = require("../services/userServices");
+const cookiesServices = require("../services/cookiesServices");
 
 /**
  * Handles problem retrieval

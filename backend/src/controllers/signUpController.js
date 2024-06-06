@@ -5,6 +5,8 @@ const sendResponse = require("../utils/sendResponse");
 const userServices = require("../services/userServices")
 const passwordServices = require("../services/passwordServices")
 const statusCodes = require("../utils/statusCodes");
+const generateAccessToken = require("../utils/JWT/JWTGeneration").generateAccessToken
+
 /**
  * Handles user sign-up.
  * 
@@ -38,9 +40,11 @@ async function signUpUser(req, res) {
                     )
                     const userId = (await userServices.getUserByUsername(username))
                     const message = "User SignedUp succesfully"
+                    const userData = { uid: user.data.ID };
+                    const token = generateAccessToken(userData)
                     sendResponse.customJSON(res, {
                         message: message,
-                        uid: userId.data.ID,
+                        token: token,
                     }, httpStatus.OK);
                 }
 

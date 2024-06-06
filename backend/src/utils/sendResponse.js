@@ -32,6 +32,12 @@ class sendResponse {
         res.writeHead(resCode, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(responseObject));
     }
+
+    async cookie(res, cookies, resCode) {
+        res.setHeader('Set-Cookie', cookies);
+        res.writeHead(resCode);
+        res.end();
+    }
 }
 
 module.exports = new sendResponse();
