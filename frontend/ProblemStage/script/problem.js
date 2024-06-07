@@ -4,7 +4,6 @@ export async function getProblemData(id) {
         const response = await fetch(url, {
             method: 'GET',
             credentials: 'include'
-
         });
 
         const result = await response.json();
