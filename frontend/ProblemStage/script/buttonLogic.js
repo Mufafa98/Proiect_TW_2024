@@ -34,9 +34,9 @@ export async function subminButton() {
         localStorage.getItem("selectedProblem"),
         "submit",
         solutionInput.value,
-        localStorage.getItem("uid")
     ));
     const output = queryResult.result.message.result
+
     if (output) {
         solutionOutput.value = "[PASSED]"
     }
@@ -44,18 +44,15 @@ export async function subminButton() {
         solutionOutput.value = "[FAILED]"
     const canUserRate = await canRate(
         localStorage.getItem("selectedProblem"),
-        localStorage.getItem("uid")
     )
     if (canUserRate) {
         initPopUp();
-
         document
             .getElementById("difficultySelectorButton")
             .addEventListener("click", () => {
                 const difficulty = getDifficulty(document.getElementById("difficultySelector").value)
                 rate(
                     localStorage.getItem("selectedProblem"),
-                    localStorage.getItem("uid"),
                     difficulty
                 )
                 unInitPopUp();

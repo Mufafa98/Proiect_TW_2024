@@ -2,7 +2,9 @@ export async function getProblemData(id) {
     const url = `http://127.0.0.1:3000/problems?id=${id}&data=true`;
     try {
         const response = await fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            credentials: 'include'
+
         });
 
         const result = await response.json();
@@ -20,7 +22,27 @@ export async function runQuery(id, type, query) {
     const url = `http://127.0.0.1:3000/problems?id=${id}&type=${type}&query=${query}`;
     try {
         const response = await fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        const result = await response.json();
+        console.log(response.status);
+        console.log(result)
+        return {
+            result: result,
+            status: response.status,
+        };
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+export async function submitQuery(id, type, query) {
+    const url = `http://127.0.0.1:3000/problems?id=${id}&type=${type}&query=${query}`;
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'include'
         });
 
         const result = await response.json();
@@ -32,27 +54,12 @@ export async function runQuery(id, type, query) {
         console.error('Error:', error);
     }
 }
-export async function submitQuery(id, type, query, uid) {
-    const url = `http://127.0.0.1:3000/problems?id=${id}&type=${type}&query=${query}&uid=${uid}`;
+export async function canRate(pid) {
+    const url = `http://127.0.0.1:3000/problems/rate?pid=${pid}`;
     try {
         const response = await fetch(url, {
-            method: 'GET'
-        });
-
-        const result = await response.json();
-        return {
-            result: result,
-            status: response.status,
-        };
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-export async function canRate(pid, uid) {
-    const url = `http://127.0.0.1:3000/problems/rate?pid=${pid}&uid=${uid}`;
-    try {
-        const response = await fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            credentials: 'include'
         });
         if (response.status === 200)
             return true;
@@ -61,11 +68,10 @@ export async function canRate(pid, uid) {
         console.error('Error:', error);
     }
 }
-export async function rate(pid, uid, raiting) {
+export async function rate(pid, raiting) {
     const url = "http://127.0.0.1:3000/problems/rate";
     const data = {
         pid: pid,
-        uid: uid,
         raiting: raiting
     }
     try {
@@ -75,6 +81,7 @@ export async function rate(pid, uid, raiting) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
+            credentials: 'include'
         });
     } catch (error) {
         console.error('Error:', error);

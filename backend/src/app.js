@@ -3,13 +3,14 @@ const loginRoute = require("./routes/loginRoute")
 const problemsRoute = require("./routes/problemsRoute")
 const urlRoot = require("./utils/urlRoot")
 const resourceNotFound = require("./utils/resourceNotFound")
-
+const protectedController = require("./controllers/protectedController");
 
 const routes = {
     '/': testRoot,
     '/signUp': singUpRoute,
     '/login': loginRoute,
-    '/problems': problemsRoute
+    '/problems': problemsRoute,
+    '/protected': protectedController,
 };
 
 async function app(req, res) {

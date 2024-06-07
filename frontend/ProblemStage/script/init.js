@@ -3,6 +3,19 @@ import { getProblemData } from "./problem.js";
 
 
 export async function init() {
+    try {
+        const response = await fetch("http://127.0.0.1:3000/protected", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        if (response.status !== 200) {
+            window.location.href = "../HomeScreen/homescreen.html";
+            return;
+        }
+        console.log(response.status)
+    } catch (error) {
+        console.error('Error:', error);
+    }
     const problemId = localStorage.getItem("selectedProblem")
     const problemData = (await getProblemData(problemId)).at(0);
     const problemText = document.getElementById("problemStatement");

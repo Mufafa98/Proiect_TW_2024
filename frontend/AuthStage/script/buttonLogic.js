@@ -59,7 +59,7 @@ async function login() {
     };
     try {
 
-        let response = await fetch(url, {
+        const response = await fetch(url, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -67,12 +67,6 @@ async function login() {
             },
             body: JSON.stringify(data),
         });
-        // response = await fetch("https://81.196.149.146:25565", {
-        //     method: 'GET'
-        // }).catch((e) => console.log(e));
-        // console.log(123123123);
-        // console.log(response);
-        // console.log(document.cookie);
         handleStatusCodes(response);
     } catch (error) {
         console.error('Error:', error);

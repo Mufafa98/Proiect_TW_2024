@@ -5,7 +5,8 @@ export async function loadProblems() {
     const url = 'http://127.0.0.1:3000/problems/';
     try {
         const response = await fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            credentials: 'include'
         });
 
         const result = await response.json();
@@ -21,7 +22,8 @@ export async function loadProblemsById(id) {
     const url = `http://127.0.0.1:3000/problems?id=${id}`;
     try {
         const response = await fetch(url, {
-            method: 'GET'
+            method: 'GET',
+            credentials: 'include'
         });
 
         const result = await response.json();
