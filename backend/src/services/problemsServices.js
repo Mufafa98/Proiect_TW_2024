@@ -25,6 +25,16 @@ class Problems {
             data: problems
         }
     }
+
+    async getProblemByTitle(title){
+        const problems = await
+            database.query(`select * from Problems where title like '${title}'`)
+        return {
+            found: problems.length !== 0,
+            data: problems
+        }
+    }
+
     async getProblemQuery(id) {
         const problems = await
             database.query(`select solution from ProblemData where id = ${id}`);
@@ -96,6 +106,20 @@ class Problems {
             found: problems.length !== 0,
             data: response
         }
+    }
+
+    async insertProblem(title, chapter, difficulty) {
+        let querry = "insert into Problems (TITLE, CHAPTER, DIFFICULTY)";
+        querry += ` values('${title}', '${chapter}', '${difficulty}')`;
+        database.insert(querry);
+    }
+
+    async insertSolution(title, solution) {
+        const result = await database.query(`SELECT * FROM Problems WHERE Title='${title}'`);
+        const idValue = result[0].id;
+        let querry = "insert into ProblemData (ID, CONTENT, SOLUTION)";
+        querry += ` values('${idValue}', '${title}', '${solution}')`;
+        database.insert(querry);
     }
 }
 

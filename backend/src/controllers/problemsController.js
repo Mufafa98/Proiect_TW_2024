@@ -1,6 +1,7 @@
 const problemsServices = require("../services/problemsServices")
 const sendResponse = require("../utils/sendResponse")
 const getReqBody = require("../utils/getReqBody")
+const getBody = require("../utils/getReqBody");
 const httpStatus = require("http-status-codes").StatusCodes;
 const statusCodes = require("../utils/statusCodes")
 
@@ -88,7 +89,43 @@ async function canRate(req, res) {
     }
 }
 
+async function post(req,res){
+    const response = await getBody(req);
+
+    if(response.type === "json") {
+        const { title, chapter, difficulty, solution } = response.body;
+        if (title === undefined ||
+            chapter === undefined ||
+            difficulty === undefined ||
+            solution === undefined) {
+            const message = "Invalid JSON format. Expected: {title, chapter, difficulty, description}" 
+            sendResponse.JSON(res, message, statusCodes.INVALID_JSON_FORMAT)
+        }
+        else {
+            const problem = await problemsServices.getProblemByTitle(title);
+            if (problem.found) {
+                const message = "Problem with this title already exists. Change the title"
+                sendResponse.JSON(res, message, statusCodes.PROBLEM_TITLE_EXISTS);
+            }
+            else {
+                problemsServices.insertProblem(
+                    title,
+                    chapter,
+                    difficulty
+                )
+                problemsServices.insertSolution(
+                    title,
+                    solution
+                )
+                const message = "Problem uploaded succesfully"
+                sendResponse.customJSON(res, {message: message}, 200)
+            }
+        }
+    }
+}
+
 module.exports = {
     get: get,
-    canRate: canRate
+    canRate: canRate,
+    post: post
 }

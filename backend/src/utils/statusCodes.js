@@ -10,5 +10,6 @@ const StatusCodes = {
     INEXISTENT_PROBLEM: 457,
     INVALID_SQL_STATEMENT: 458,
     UNABLE_TO_RATE: 459,
+    PROBLEM_TITLE_EXISTS: 460
 }
 module.exports = StatusCodes;
