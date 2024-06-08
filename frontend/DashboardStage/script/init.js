@@ -1,4 +1,18 @@
-export function initializeDashboard() {
+
+export async function initializeDashboard() {
+    try {
+        const response = await fetch("http://127.0.0.1:3000/protected", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        if (response.status !== 200) {
+            window.location.href = "../HomeScreen/homescreen.html";
+            return;
+        }
+        console.log(response.status)
+    } catch (error) {
+        console.error('Error:', error);
+    }
     const menuButton = document.getElementById("menuButton").style;
     const searchBar = document.getElementById("searchBar").style;
 

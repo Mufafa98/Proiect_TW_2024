@@ -4,6 +4,8 @@ const sendResponse = require("../utils/sendResponse");
 const userServices = require("../services/userServices")
 const passwordServices = require("../services/passwordServices")
 const statusCodes = require("../utils/statusCodes")
+const generateAccessToken = require("../utils/JWT/JWTGeneration").generateAccessToken
+const cookiesServices = require("../services/cookiesServices");
 
 /**
  * Handles user sign-up.
@@ -11,7 +13,7 @@ const statusCodes = require("../utils/statusCodes")
  * @param {Object} req - The HTTP request object.
  * @param {Object} res - The HTTP response object.
  */
-async function signUpUser(req, res) {
+async function loginUser(req, res) {
     const response = await getBody(req);
     if (response.type === "json") {
         const { username, password } = response.body;
@@ -29,11 +31,14 @@ async function signUpUser(req, res) {
                     sendResponse.JSON(res, message, statusCodes.WRONG_PASSWORD);
                 }
                 else {
-                    const message = "User logged in succesfully"
-                    sendResponse.customJSON(res, {
-                        message: message,
-                        uid: user.data.ID,
-                    }, httpStatus.OK);
+                    const userData = { uid: user.data.ID };
+                    const token = generateAccessToken(userData)
+                    const options = cookiesServices.createOptions();
+                    options.Path = "/";
+                    options.HttpOnly = false;
+                    options.SameSite = "Strict";
+                    const cookie = cookiesServices.setCookie(res, "token", token, options);
+                    sendResponse.cookie(res, cookie, 200);
                 }
             }
             else {
@@ -50,4 +55,4 @@ async function signUpUser(req, res) {
     }
 }
 
-module.exports = signUpUser;
+module.exports = loginUser;

@@ -58,15 +58,16 @@ async function login() {
         password: password
     };
     try {
+
         const response = await fetch(url, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data),
         });
-
-        handleStatusCodes(response)
+        handleStatusCodes(response);
     } catch (error) {
         console.error('Error:', error);
     }
@@ -98,7 +99,6 @@ async function signUp() {
             body: JSON.stringify(data),
         });
 
-
         handleStatusCodes(response)
     } catch (error) {
         console.error('Error:', error);
@@ -114,7 +114,6 @@ export function switchPages() {
 }
 
 async function handleStatusCodes(response) {
-    const result = await response.json();
     const code = response.status
     switch (code) {
         case 452:
@@ -133,7 +132,6 @@ async function handleStatusCodes(response) {
             showPopup("Wrong user or password.");
             break;
         case 200:
-            localStorage.setItem("uid", result.uid);
             showPopup("Signed up succesfully.");
             window.location.href = "../../DashboardStage/Dashboard.html";
             break;
