@@ -93,12 +93,13 @@ async function post(req,res){
     const response = await getBody(req);
 
     if(response.type === "json") {
-        const { title, chapter, difficulty, solution } = response.body;
+        const { title, chapter, difficulty, content, solution } = response.body;
         if (title === undefined ||
             chapter === undefined ||
             difficulty === undefined ||
+            content === undefined ||
             solution === undefined) {
-            const message = "Invalid JSON format. Expected: {title, chapter, difficulty, description}" 
+            const message = "Invalid JSON format. Expected: {title, chapter, difficulty, content, description}" 
             sendResponse.JSON(res, message, statusCodes.INVALID_JSON_FORMAT)
         }
         else {
@@ -115,6 +116,7 @@ async function post(req,res){
                 )
                 problemsServices.insertSolution(
                     title,
+                    content,
                     solution
                 )
                 const message = "Problem uploaded succesfully"

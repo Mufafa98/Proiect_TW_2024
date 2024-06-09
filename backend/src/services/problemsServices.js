@@ -109,17 +109,35 @@ class Problems {
     }
 
     async insertProblem(title, chapter, difficulty) {
-        let querry = "insert into Problems (TITLE, CHAPTER, DIFFICULTY)";
-        querry += ` values('${title}', '${chapter}', '${difficulty}')`;
-        database.insert(querry);
+        try{
+            let querry = "insert into Problems (TITLE, CHAPTER, DIFFICULTY)";
+            querry += ` values('${title}', '${chapter}', '${difficulty}')`;
+            database.insert(querry);
+        } catch (error) {
+            database.query("USE Dev")
+            return {
+                error: true,
+                result: error.sqlMessage
+            };
+        }
+        
     }
 
-    async insertSolution(title, solution) {
-        const result = await database.query(`SELECT * FROM Problems WHERE Title='${title}'`);
-        const idValue = result[0].id;
-        let querry = "insert into ProblemData (ID, CONTENT, SOLUTION)";
-        querry += ` values('${idValue}', '${title}', '${solution}')`;
-        database.insert(querry);
+    async insertSolution(title, content, solution) {
+        try{
+            const result = await database.query(`SELECT * FROM Problems WHERE Title='${title}'`);
+            const idValue = result[0].id;
+            let querry = "insert into ProblemData (ID, CONTENT, SOLUTION)";
+            querry += ` values('${idValue}', '${content}', '${solution}')`;
+            database.insert(querry);
+        } catch (error) {
+            database.query("USE Dev")
+            return {
+                error: true,
+                result: error.sqlMessage
+            };
+        }
+        
     }
 }
 
