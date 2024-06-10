@@ -99,8 +99,6 @@ async function signUp() {
             body: JSON.stringify(data),
         });
 
-
-
         handleStatusCodes(response)
     } catch (error) {
         console.error('Error:', error);
