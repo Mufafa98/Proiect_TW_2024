@@ -182,9 +182,6 @@ class Problems {
 	}
 
 	async insertProblem(title, chapter, difficulty) {
-        let querry = "insert into Problems (TITLE, CHAPTER, DIFFICULTY)";
-        querry += ` values('${title}', '${chapter}', '${difficulty}')`;
-        database.insert(querry);
         try{
             let querry = "insert into Problems (TITLE, CHAPTER, DIFFICULTY)";
             querry += ` values('${title}', '${chapter}', '${difficulty}')`;
