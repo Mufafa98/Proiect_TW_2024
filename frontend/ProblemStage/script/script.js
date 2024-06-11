@@ -8,5 +8,4 @@ document.getElementById("backButton").addEventListener("click", backButton);
 document.getElementById("runButton").addEventListener("click", runButton);
 document.getElementById("submitButton").addEventListener("click", subminButton);
 
-
 init();
