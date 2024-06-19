@@ -20,11 +20,80 @@ class Problems {
      * @returns {found: Boolean, data: *} Where data is an array of problems
      */
     async getById(id) {
-        const problems = await
-            database.query(`select * from Problems where id like ${id}`);
-        return {
-            found: problems.length !== 0,
-            data: problems
+        try {
+            const problems = await
+                database.query(`select * from Problems where id like ${id}`);
+            return {
+                found: problems.length !== 0,
+                data: problems
+            }
+        } catch (error) {
+            return {
+                found: false,
+                data: null
+            }
+        }
+
+    }
+    /**
+ * Returns the problems with a specific title
+ * @param {String} title The title to retrieve by
+ * @returns {found: Boolean, data: *} Where data is an array of problems
+ */
+    async getByTitle(title) {
+        try {
+            const problems = await
+                database.query(`select * from Problems where title like '%${title}%'`);
+            return {
+                found: problems.length !== 0,
+                data: problems
+            }
+        } catch (error) {
+            return {
+                found: false,
+                data: null
+            }
+        }
+
+    }
+    /**
+* Returns the problems with a specific chapter
+* @param {String} chapter The chapter to retrieve by
+* @returns {found: Boolean, data: *} Where data is an array of problems
+*/
+    async getByChapter(chapter) {
+        try {
+            const problems = await
+                database.query(`select * from Problems where chapter like '%${chapter}%'`);
+            return {
+                found: problems.length !== 0,
+                data: problems
+            }
+        } catch (error) {
+            return {
+                found: false,
+                data: null
+            }
+        }
+    }
+    /**
+* Returns the problems with a specific difficulty
+* @param {String} difficulty The chapter to retrieve by
+* @returns {found: Boolean, data: *} Where data is an array of problems
+*/
+    async getByDifficulty(difficulty) {
+        try {
+            const problems = await
+                database.query(`select * from Problems where difficulty like '%${difficulty}%'`);
+            return {
+                found: problems.length !== 0,
+                data: problems
+            }
+        } catch (error) {
+            return {
+                found: false,
+                data: null
+            }
         }
     }
     /**

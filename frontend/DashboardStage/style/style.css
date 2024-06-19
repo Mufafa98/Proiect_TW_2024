@@ -29,6 +29,12 @@ header {
     justify-content: space-between;
     background-color: var(--second_background);
 }
+#searchTools {
+    height: 7vh;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--second_background);
+}
 
 footer {
     height: 5vh;
@@ -113,6 +119,43 @@ footer {
     display: none;
 }
 
+#exportButton {
+    background-color: var(--button_background);
+    border-color: var(--button_background);
+    border-bottom-width: 0.23em;
+    border-left-width: 0em;
+    border-top-width: 0em;
+    border-right-width: 0.15em;
+    color: var(--button_text);
+    font-size: medium;
+    font-weight: bold;
+    border-radius: 0.7em;
+    min-height: 2em;
+
+    margin: 1em 0em 1em 1em;
+}
+
+#exportButton:hover {
+    filter: brightness(0.92);
+}
+
+#exportButton:active {
+    filter: brightness(0.88);
+
+}
+
+select {
+    margin: 1em 0em 1em 1em;
+    height: 2.8em;
+    background-color: var(--button_background);
+    border-style: none;
+    border-radius: 0.7em;
+}
+
+option {
+    border-style: none;
+}
+
 @media only screen and (min-width : 48em) {
     #Title {
         display: block
@@ -143,4 +186,10 @@ footer {
     border-radius: 10px;
     transition: right 0.5s ease;
     overflow-wrap: break-word;
+}
+
+#problems #errorMessage {
+    font-size: medium;
+    color: var(--input_text);
+    text-align: center;
 }

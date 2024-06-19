@@ -8,7 +8,6 @@ export async function initializeDashboard() {
             window.location.href = "../HomeScreen/homescreen.html";
             return;
         }
-        console.log(response.status)
     } catch (error) {
         console.error('Error:', error);
     }
@@ -23,6 +22,9 @@ export async function initializeDashboard() {
         getComputedStyle(document.getElementById("mainHeader")).height,
     ) * 0.7
         }px`;
+
+    const searchFilter = document.getElementById("searchFilter");
+    searchFilter.style.paddingLeft = "5px";
 
     menuButton.marginRight = getComputedStyle(
         document.getElementById("rightPadding"),

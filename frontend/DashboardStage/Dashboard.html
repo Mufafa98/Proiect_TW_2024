@@ -12,9 +12,20 @@
 </head>
 
 <body>
-    <h1 style="color: white;">To improve search by category etc?</h1>
     <header class="col-sm-12 col-md-12 col-lg-12 col-xl-12" id="mainHeader">
-        <input type="search" name="SearchProblem" id="searchBar" value="Search Problem by ID">
+        <div id="searchTools">
+            <input type="search" name="SearchProblem" id="searchBar" value="Search Problem by ID">
+            <div id="selector">
+                <select name="searchFilter" id="searchFilter">
+                    <option value="0">Id</option>
+                    <option value="1">Title</option>
+                    <option value="2">Chapter</option>
+                    <option value="3">Difficulty</option>
+                </select>
+            </div>
+            <button id="exportButton">Export as JSON</button>
+        </div>
+
         <div id="menuButton">
             <div class="menuLine"></div>
             <div class="menuLine"></div>

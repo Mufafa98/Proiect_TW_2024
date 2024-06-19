@@ -68,6 +68,7 @@ async function login() {
             body: JSON.stringify(data),
         });
         handleStatusCodes(response);
+        console.log(document.cookie);
     } catch (error) {
         console.error('Error:', error);
     }

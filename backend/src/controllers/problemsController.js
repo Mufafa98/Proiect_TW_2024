@@ -55,8 +55,18 @@ async function get(req, res) {
                 else {
                     if (reqBody.data === "true")
                         problems = await getProblemDataById(id);
-                    else
-                        problems = await getById(id);
+                    else {
+                        problems = {
+                            found: true,
+                            data: {
+                                byId: await getById(id),
+                                byTitle: await getByTitle(id),
+                                byChapter: await getByChapter(id),
+                                byDifficulty: await getByDifficulty(id),
+                            }
+                        }
+                    }
+
 
                     if (problems.found)
                         sendResponse.customJSON(res, problems.data, 200);
@@ -90,6 +100,30 @@ async function getAll() {
  */
 async function getById(id) {
     const problems = await problemsServices.getById(id);
+    return problems
+}
+/**
+ * Returns problems by title
+ * @returns {found: Boolean, data: any}
+ */
+async function getByTitle(title) {
+    const problems = await problemsServices.getByTitle(title);
+    return problems
+}
+/**
+ * Returns problems by chapter
+ * @returns {found: Boolean, data: any}
+ */
+async function getByChapter(chapter) {
+    const problems = await problemsServices.getByChapter(chapter);
+    return problems
+}
+/**
+ * Returns problems by difficulty
+ * @returns {found: Boolean, data: any}
+ */
+async function getByDifficulty(difficulty) {
+    const problems = await problemsServices.getByDifficulty(difficulty);
     return problems
 }
 /**
@@ -177,8 +211,62 @@ async function rate(req, res) {
     }
 }
 
+async function download(req, res) {
+    const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+    const cookies = await cookiesServices.parseCookies(cookieHeader);
+    const jwtToken = cookies.token;
+    if (jwtAuthentication(jwtToken) === 200) {
+        const decodedReq = await getReqBody(req);
+        const reqBody = decodedReq.body;
+        const id = reqBody.id;
+        const filter = reqBody.filter;
+        if (id !== undefined && filter !== undefined) {
+            let problems;
+            switch (filter) {
+                case "0":
+                    problems = await getById(id);
+                    break;
+                case "1":
+                    problems = await getByTitle(id);
+                    break;
+                case "2":
+                    problems = await getByChapter(id);
+                    break;
+                case "3":
+                    problems = await getByDifficulty(id);
+                    break;
+                case "4":
+                    problems = await getAll();
+                    break;
+                default:
+                    break;
+            }
+
+            // BUG LA DOWNLOAD ALL
+
+            if (problems.found) {
+                for (const problem of problems.data) {
+                    problem.Description = (await
+                        problemsServices
+                            .getProblemDataById(problem.id)).data.at(0).content;
+                }
+                sendResponse.customJSON(res, problems.data, 200);
+            }
+            else
+                sendResponse.JSON(res, "Problem not found", statusCodes.INEXISTENT_PROBLEM)
+
+        }
+        else
+            sendResponse.JSON(res, "Invalid params", httpStatus.BAD_REQUEST)
+    }
+    else {
+        sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+    }
+}
+
 module.exports = {
     get: get,
     canRate: canRate,
-    rate: rate
+    rate: rate,
+    download: download,
 }

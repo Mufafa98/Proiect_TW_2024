@@ -10,7 +10,10 @@ export async function loadProblems() {
         });
 
         const result = await response.json();
-        loadProblemsInPage(result);
+        loadProblemsInPage({
+            data: result,
+            found: true
+        });
         loadElementMaxSize()
         initializeDashboard()
     } catch (error) {
@@ -27,19 +30,50 @@ export async function loadProblemsById(id) {
         });
 
         const result = await response.json();
-        if (response.status === 457)
-            showPopup("Problem not found");
-        else {
-            deleteProblemsFromPage()
-            loadProblemsInPage(result);
-            initializeDashboard()
-        }
+        const selector = document.getElementById("searchFilter");
+        selector.value = "0";
+        loadByFilter(result, "0")
+        selector.addEventListener("change", () => {
+            loadByFilter(result, selector.value);
+        })
+
     } catch (error) {
         console.error('Error:', error);
     }
 }
 
-function loadProblemsInPage(problems) {
+
+export async function loadByFilter(data, filter) {
+    deleteProblemsFromPage()
+    switch (filter) {
+        case "0":
+            loadProblemsInPage(data.byId)
+            break;
+        case "1":
+            loadProblemsInPage(data.byTitle)
+            break;
+        case "2":
+            loadProblemsInPage(data.byChapter)
+            break;
+        case "3":
+            loadProblemsInPage(data.byDifficulty)
+            break;
+        default:
+            break;
+    }
+    initializeDashboard()
+}
+
+function loadProblemsInPage(dataByFilter) {
+    if (dataByFilter.found === false) {
+        const problemContainer = document.querySelector("#problems")
+        const errorMessage = document.createElement("div");
+        errorMessage.id = "errorMessage";
+        errorMessage.innerHTML = "No problems found";
+        problemContainer.appendChild(errorMessage);
+        return;
+    }
+    const problems = dataByFilter.data;
     const problemContainer = document.querySelector("#problems")
 
     for (let index = 0; index < problems.length; index++) {
@@ -84,4 +118,20 @@ function deleteProblemsFromPage() {
     for (let index = 0; index < problems.length; index++) {
         problems[index].remove();
     }
+    const errorMessages = document.querySelectorAll("#errorMessage");
+    for (let index = 0; index < errorMessages.length; index++) {
+        errorMessages[index].remove();
+    }
+}
+
+export function downloadProblems(problemsData) {
+    const jsonString = JSON.stringify(problemsData)
+    const dataToDownload = new Blob([jsonString], { type: "application/json" });
+    const anchor = document.createElement('a');
+    anchor.href = URL.createObjectURL(dataToDownload);
+    anchor.download = "problems";
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    URL.revokeObjectURL(anchor.href);
 }
