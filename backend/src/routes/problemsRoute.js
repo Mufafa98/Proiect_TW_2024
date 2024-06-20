@@ -4,10 +4,10 @@ const resourceNotFound = require("../utils/resourceNotFound");
 const problems = require("../controllers/problemsController");
 
 const routes = {
-	"GET /": problems.get,
-	"GET /rate": problems.canRate,
-	"POST /": problems.post,
-	"POST /rate": problems.rate,
+	'GET /': problems.get,
+	'GET /rate': problems.canRate,
+	'POST /rate': problems.rate,
+	'GET /download': problems.download,
 };
 
 async function handleProblems(req, res) {

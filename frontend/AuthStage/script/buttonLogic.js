@@ -113,7 +113,7 @@ export function switchPages() {
 }
 
 async function handleStatusCodes(response) {
-	const code = response.status;
+	const code = response.status
 	switch (code) {
 		case 452:
 			showPopup("Fields may not be completed.");
@@ -124,13 +124,14 @@ async function handleStatusCodes(response) {
 		case 454:
 			showPopup("Invalid email format.");
 			break;
-		case 455: //user
+		case 455://user
 			showPopup("Wrong user or password.");
 			break;
-		case 456: //pass
+		case 456://pass
 			showPopup("Wrong user or password.");
 			break;
 		case 200:
+			//localStorage.setItem("uid", result.uid);
 			showPopup("Signed up succesfully.");
 			window.location.href = "../../DashboardStage/Dashboard.html";
 			break;

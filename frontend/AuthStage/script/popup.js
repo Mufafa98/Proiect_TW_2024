@@ -1,8 +1,6 @@
 
 export function showPopup(textContent) {
     const popupContainer = document.getElementById('popupContainer');
-
-    console.log(popupContainer);
     const popup = document.createElement('div');
     popup.classList.add('popup');
     const text = document.createElement('p');
