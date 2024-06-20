@@ -93,7 +93,6 @@ function resizeWidthToFitIn(id, maxWidth) {
 
 export function tempPageSwap() {
     localStorage.setItem("test1", "valoare mesaj doi");
-    console.log(localStorage.getItem("test1"));
     //window.location.href = "../ProblemStage/Problem.html";
 }
 

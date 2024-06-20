@@ -14,19 +14,26 @@ searchField();
 menuButton.addEventListener("click", () => {
 	window.location.href = "../AuthStage/Auth.html";
 });
+const selector = document.getElementById("searchFilter");
+selector.value = "0";
 searchBar.addEventListener("keydown", (event) => {
 	if (event.key === "Enter") {
 		loadProblemsById(searchBar.value)
+		selector.style.display = "block"
+		if (searchBar.value === "") {
+			loadProblems();
+			initializeDashboard();
+			selector.style.display = "none";
+		}
 	}
 });
 
-const selector = document.getElementById("searchFilter");
-selector.value = "0";
+
 const exportButton = document.getElementById("exportButton");
 exportButton.addEventListener("click", async () => {
 	let url = `http://127.0.0.1:3000/problems/download?id=${searchBar.value}&filter=${selector.value}`;
 	if (searchBar.value === "Search Problem by ID" || searchBar.value === "")
-		url = `http://127.0.0.1:3000/problems/download?id="neimportant"&filter=4`;
+		url = "http://127.0.0.1:3000/problems/download?id=neimportant&filter=4";
 	try {
 		const response = await fetch(url, {
 			method: 'GET',

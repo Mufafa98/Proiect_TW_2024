@@ -220,6 +220,7 @@ async function download(req, res) {
         const reqBody = decodedReq.body;
         const id = reqBody.id;
         const filter = reqBody.filter;
+        console.log(req.url);
         if (id !== undefined && filter !== undefined) {
             let problems;
             switch (filter) {
@@ -236,19 +237,20 @@ async function download(req, res) {
                     problems = await getByDifficulty(id);
                     break;
                 case "4":
+                    console.log("all");
                     problems = await getAll();
                     break;
                 default:
                     break;
             }
-
-            // BUG LA DOWNLOAD ALL
-
             if (problems.found) {
                 for (const problem of problems.data) {
                     problem.Description = (await
                         problemsServices
                             .getProblemDataById(problem.id)).data.at(0).content;
+
+
+
                 }
                 sendResponse.customJSON(res, problems.data, 200);
             }

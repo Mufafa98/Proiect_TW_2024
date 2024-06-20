@@ -68,7 +68,6 @@ async function login() {
             body: JSON.stringify(data),
         });
         handleStatusCodes(response);
-        console.log(document.cookie);
     } catch (error) {
         console.error('Error:', error);
     }
@@ -133,7 +132,6 @@ async function handleStatusCodes(response) {
             showPopup("Wrong user or password.");
             break;
         case 200:
-            console.log("ok")
             //localStorage.setItem("uid", result.uid);
             showPopup("Signed up succesfully.");
             window.location.href = "../../DashboardStage/Dashboard.html";

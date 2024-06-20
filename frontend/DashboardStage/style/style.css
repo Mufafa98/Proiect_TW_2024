@@ -145,6 +145,7 @@ footer {
 }
 
 select {
+    display: none;
     margin: 1em 0em 1em 1em;
     height: 2.8em;
     background-color: var(--button_background);
