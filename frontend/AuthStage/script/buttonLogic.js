@@ -5,138 +5,137 @@ const Pages = { Login: "Login", Signup: "Signup" };
 let pageState = Pages.Signup;
 
 export function initSwaping() {
-    initLogin();
+	initLogin();
 }
 
 export function initLogin() {
-    pageState = Pages.Login;
-    document.title = "Login";
-    document.getElementById("title").innerHTML = "Login";
-    document.getElementById("emailLine").style.display = "none";
-    document.getElementById("Button").value = "Login";
-    document.getElementById("QswapPage").innerHTML =
-        'You don\'t have an account?<br><a id="swapPage">SignUp</a>';
+	pageState = Pages.Login;
+	document.title = "Login";
+	document.getElementById("title").innerHTML = "Login";
+	document.getElementById("emailLine").style.display = "none";
+	document.getElementById("Button").value = "Login";
+	document.getElementById("QswapPage").innerHTML =
+		'You don\'t have an account?<br><a id="swapPage">SignUp</a>';
 }
 export function initSignUp() {
-    pageState = Pages.Signup;
-    document.title = "SignUp";
-    document.getElementById("title").innerHTML = "SignUp";
-    document.getElementById("emailLine").style.display = "block";
-    document.getElementById("Button").value = "SignUp";
-    document.getElementById("QswapPage").innerHTML =
-        'Do you have an account?<br><a id="swapPage">Login</a>';
+	pageState = Pages.Signup;
+	document.title = "SignUp";
+	document.getElementById("title").innerHTML = "SignUp";
+	document.getElementById("emailLine").style.display = "block";
+	document.getElementById("Button").value = "SignUp";
+	document.getElementById("QswapPage").innerHTML =
+		'Do you have an account?<br><a id="swapPage">Login</a>';
 }
 
 export function buttonLogic() {
-    const button = document.getElementById("Button");
-    button.addEventListener("click", () => {
-        switch (pageState) {
-            case Pages.Login:
-                login();
-                break;
-            case Pages.Signup:
-                signUp();
-                break;
-            default:
-                break;
-        }
-    });
+	const button = document.getElementById("Button");
+	button.addEventListener("click", () => {
+		switch (pageState) {
+			case Pages.Login:
+				login();
+				break;
+			case Pages.Signup:
+				signUp();
+				break;
+			default:
+				break;
+		}
+	});
 }
 
 async function login() {
-    const url = 'http://127.0.0.1:3000/login/';
+	const url = "http://127.0.0.1:3000/login/";
 
-    const formElements = document.querySelectorAll(".inputLine");
-    let username = formElements.item(0).value;
-    let password = formElements.item(2).value;
+	const formElements = document.querySelectorAll(".inputLine");
+	let username = formElements.item(0).value;
+	let password = formElements.item(2).value;
 
-    if (!changedPass()) password = undefined;
-    if (!changedUser()) username = undefined;
+	if (!changedPass()) password = undefined;
+	if (!changedUser()) username = undefined;
 
-    const data = {
-        username: username,
-        password: password
-    };
-    try {
-
-        const response = await fetch(url, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-        handleStatusCodes(response);
-    } catch (error) {
-        console.error('Error:', error);
-    }
+	const data = {
+		username: username,
+		password: password,
+	};
+	try {
+		const response = await fetch(url, {
+			method: "POST",
+			credentials: "include",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
+		handleStatusCodes(response);
+	} catch (error) {
+		console.error("Error:", error);
+	}
 }
 
 async function signUp() {
-    const url = 'http://127.0.0.1:3000/signUp/';
+	const url = "http://127.0.0.1:3000/signUp/";
 
-    const formElements = document.querySelectorAll(".inputLine");
-    let username = formElements.item(0).value;
-    let email = formElements.item(1).value;
-    let password = formElements.item(2).value;
+	const formElements = document.querySelectorAll(".inputLine");
+	let username = formElements.item(0).value;
+	let email = formElements.item(1).value;
+	let password = formElements.item(2).value;
 
-    if (!changedEmail()) email = undefined;
-    if (!changedPass()) password = undefined;
-    if (!changedUser()) username = undefined;
+	if (!changedEmail()) email = undefined;
+	if (!changedPass()) password = undefined;
+	if (!changedUser()) username = undefined;
 
-    const data = {
-        email: email,
-        username: username,
-        password: password
-    };
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
+	const data = {
+		email: email,
+		username: username,
+		password: password,
+	};
+	try {
+		const response = await fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		});
 
-        handleStatusCodes(response)
-    } catch (error) {
-        console.error('Error:', error);
-    }
+		handleStatusCodes(response);
+	} catch (error) {
+		console.error("Error:", error);
+	}
 }
 
 export function switchPages() {
-    if (pageState === Pages.Login) {
-        initSignUp();
-    } else if (pageState === Pages.Signup) {
-        initLogin();
-    }
+	if (pageState === Pages.Login) {
+		initSignUp();
+	} else if (pageState === Pages.Signup) {
+		initLogin();
+	}
 }
 
 async function handleStatusCodes(response) {
-    const code = response.status
-    switch (code) {
-        case 452:
-            showPopup("Fields may not be completed.");
-            break;
-        case 453:
-            showPopup("User already exists.");
-            break;
-        case 454:
-            showPopup("Invalid email format.");
-            break;
-        case 455://user
-            showPopup("Wrong user or password.");
-            break;
-        case 456://pass
-            showPopup("Wrong user or password.");
-            break;
-        case 200:
-            //localStorage.setItem("uid", result.uid);
-            showPopup("Signed up succesfully.");
-            window.location.href = "../../DashboardStage/Dashboard.html";
-            break;
-        default:
-            break;
-    }
+	const code = response.status
+	switch (code) {
+		case 452:
+			showPopup("Fields may not be completed.");
+			break;
+		case 453:
+			showPopup("User already exists.");
+			break;
+		case 454:
+			showPopup("Invalid email format.");
+			break;
+		case 455://user
+			showPopup("Wrong user or password.");
+			break;
+		case 456://pass
+			showPopup("Wrong user or password.");
+			break;
+		case 200:
+			//localStorage.setItem("uid", result.uid);
+			showPopup("Signed up succesfully.");
+			window.location.href = "../../DashboardStage/Dashboard.html";
+			break;
+		default:
+			break;
+	}
 }
