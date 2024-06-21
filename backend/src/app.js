@@ -4,6 +4,7 @@ const problemsRoute = require("./routes/problemsRoute");
 const urlRoot = require("./utils/urlRoot");
 const resourceNotFound = require("./utils/resourceNotFound");
 const protectedController = require("./controllers/protectedController");
+const metadataRoutes = require("./routes/metadataRoute");
 
 const routes = {
 	"/": testRoot,
@@ -11,6 +12,7 @@ const routes = {
 	"/login": loginRoute,
 	"/problems": problemsRoute,
 	"/protected": protectedController,
+	"/metadata": metadataRoutes,
 };
 
 async function app(req, res) {

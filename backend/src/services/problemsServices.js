@@ -15,6 +15,46 @@ class Problems {
 		}
 	}
 	/**
+	 * Returns a candidate for a tournament problem
+	 * @returns {found: Boolean, data: *} Where data is an id of a candidate
+	 */
+	async getTournamentProblem(chapter, difficulty) {
+		const problems = await
+			database.query(`select Problems.id, COUNT(userId) as 'solves'
+		from Problems left join ProblemsSolved 
+		on Problems.id = ProblemsSolved.problemId
+		where Problems.Chapter like '${chapter}'
+		and Problems.Difficulty like '${difficulty}'
+		group by Problems.id
+		order by solves
+		LIMIT 1`);
+		console.log(problems);
+		return {
+			found: problems.length !== 0,
+			data: problems
+		}
+	}
+	/**
+ * Returns the available chapters
+ * @returns {found: Boolean, data: *} Where data is an array of chapters
+ */
+	async getChapters() {
+		try {
+			const problems = await
+				database.query("select distinct Chapter from Problems");
+			return {
+				found: problems.length !== 0,
+				data: problems
+			}
+		} catch (error) {
+			return {
+				found: false,
+				data: null
+			}
+		}
+
+	}
+	/**
 	 * Returns the problems with a specific id
 	 * @param {Number} id The id to retrieve by
 	 * @returns {found: Boolean, data: *} Where data is an array of problems
@@ -169,7 +209,34 @@ class Problems {
 			};
 		}
 	}
+	/**
+		 * Method to log all submited queryes
+		 * @param {Number} problemId 
+		 * @param {Number} userId 
+		 * @param {String} query 
+		 * @param {Boolean} passed 
+		 * @returns {error: Boolean, result: String}
+		 */
+	async logProblem(problemId, userId, query, passed) {
+		try {
 
+			database.query("USE Dev")
+			let insertQuery = "insert into ProblemsSolved (userId, problemId, ";
+			insertQuery += "passed, query, solvedAt) values (";
+			insertQuery += `${userId},${problemId},${passed},'${query}',NOW())`
+			database.insert(insertQuery);
+			return {
+				error: false,
+				result: "Success"
+			};
+		} catch (error) {
+			database.query("USE Dev")
+			return {
+				error: true,
+				result: "Internal server error"
+			};
+		}
+	}
 	async insertSolution(title, content, solution) {
 		try {
 			const result = await database.query(`SELECT * FROM Problems WHERE Title='${title}'`);
@@ -184,7 +251,44 @@ class Problems {
 				result: error.sqlMessage
 			};
 		}
+	}
+	/**
+	 * Method to check wether an user can rate a problem
+	 * @param {Number} uid user id
+	 * @param {Number} pid problem id
+	 * @returns {found: Boolean, data: *} Where found represents wether a user can
+	 * rate a problem or not
+	 */
+	async canBeRatedBy(uid, pid) {
+		const response = await
+			database.query(`select * from Raitings where uid = ${uid} and problemid = ${pid}`);
+		return {
+			found: response.length === 0,
+			data: response
+		}
+	}
 
+	/**
+	 * Method to insert a raiting to a problem
+	 * @param {Number} uid user id
+	 * @param {Number} pid problem id
+	 * @param {String} raiting the raiting of the problem
+	 * @returns {success: Boolean, message :?String} the rating was succesfully
+	 * inserted or there appeared an error message
+	 */
+	async rate(uid, pid, raiting) {
+		try {
+			database.insert(`insert into Raitings (uid, problemid, raiting) values (${uid}, ${pid}, '${raiting}')`)
+			return {
+				success: true,
+			}
+		}
+		catch (error) {
+			return {
+				success: false,
+				message: error.message
+			}
+		}
 	}
 }
 

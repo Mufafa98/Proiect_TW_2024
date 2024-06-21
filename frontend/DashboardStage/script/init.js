@@ -30,6 +30,16 @@ export async function initializeDashboard() {
 		document.getElementById("rightPadding"),
 	).width;
 
+	const menuDropDown = document.getElementById("menu");
+	if (menu.classList.contains('hidden')) menu.classList.remove('hidden');
+	const dropDownWidth = menuDropDown.getBoundingClientRect().width;
+	if (!menu.classList.contains('hidden')) menu.classList.add('hidden');
+
+	menuDropDown.style.marginLeft = `${document.getElementById("menuButton")
+		.getBoundingClientRect().left - dropDownWidth + document.getElementById("menuButton").getBoundingClientRect().width}px`;
+
+	menuDropDown.style.marginTop = `${document.getElementById("menuButton")
+		.getBoundingClientRect().bottom}px`
 	resizeElements();
 }
 
