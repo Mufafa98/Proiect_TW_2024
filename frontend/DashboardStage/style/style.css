@@ -194,3 +194,33 @@ option {
     color: var(--input_text);
     text-align: center;
 }
+
+#menu.hidden {
+    display: none;
+}
+
+#menu {
+    position: absolute;
+    background-color: var(--second_background);
+    border: 1px solid;
+    border-color: var(--input_border);
+    border-radius: 0.7em;
+}
+.menuButton {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: var(--second_background);
+    color: var(--input_text);
+    border: 0px;
+    cursor: pointer;
+    border-radius: 0.7em;
+}
+
+.menuButton:hover {
+    filter: brightness(0.92);
+}
+.menuButton:active {
+    filter: brightness(0.88);
+}

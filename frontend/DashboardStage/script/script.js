@@ -10,10 +10,29 @@ const menuButton = document.getElementById("menuButton");
 const searchBar = document.getElementById("searchBar");
 
 searchField();
-
+const menu = document.getElementById('menu');
 menuButton.addEventListener("click", () => {
-	window.location.href = "../AuthStage/Auth.html";
+
+	if (menu.classList.contains('hidden')) {
+		menu.classList.remove('hidden');
+	} else {
+		menu.classList.add('hidden');
+	}
 });
+menu.addEventListener("mouseleave", () => {
+	if (!menu.classList.contains('hidden')) {
+		menu.classList.add('hidden');
+	}
+})
+const logoutButton = document.getElementById("logOutButton");
+logoutButton.addEventListener("click", () => {
+	document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+	window.location.href = "../AuthStage/Auth.html";
+})
+const startSolvingButton = document.getElementById("startSolvingButton");
+startSolvingButton.addEventListener("click", () => {
+	window.location.href = "../SolveSelectorStage/SolveSelector.html";
+})
 const selector = document.getElementById("searchFilter");
 selector.value = "0";
 searchBar.addEventListener("keydown", (event) => {

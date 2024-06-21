@@ -51,7 +51,8 @@ async function get(req, res) {
 				}
 				else if (type === "submit" && query !== "" && uid !== "") {
 					const solutionResult = await problemsServices.compareSolution(query, id);
-					problemsServices.logProblem(id, uid, query, solutionResult.result)
+					if (!solutionResult.error)
+						problemsServices.logProblem(id, uid, query, solutionResult.result)
 					sendResponse.JSON(res, solutionResult, 200);
 				}
 				else {
@@ -79,9 +80,42 @@ async function get(req, res) {
 						);
 				}
 			}
-		} else {
+		}
+
+		else {
 			const problems = await getAll();
 			sendResponse.customJSON(res, problems.data, 200);
+		}
+	} else {
+		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+	}
+}
+
+/**
+ * Handles problem retrieval for tournaments
+ *
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ */
+async function getTournamentProblem(req, res) {
+	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+	const cookies = await cookiesServices.parseCookies(cookieHeader);
+	const jwtToken = cookies.token;
+	if (jwtAuthentication(jwtToken) === 200) {
+		const decodedReq = await getReqBody(req);
+		const reqBody = decodedReq.body;
+		if (reqBody.chapter === undefined || reqBody.difficulty === undefined) {
+			sendResponse.JSON(res, "Bad Request", httpStatus.BAD_REQUEST);
+			return;
+		}
+		const chapter = reqBody.chapter === "All" ? "%" : reqBody.chapter;
+		const difficulty = reqBody.difficulty === "All" ? "%" : reqBody.difficulty;
+		const id = await problemsServices.getTournamentProblem(chapter, difficulty);
+		if (id.found) {
+			sendResponse.customJSON(res, id.data.at(0).id, 200);
+		}
+		else {
+			sendResponse.JSON(res, "Inexistent problem", statusCodes.INEXISTENT_PROBLEM);
 		}
 	} else {
 		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
@@ -262,7 +296,6 @@ async function download(req, res) {
 		const reqBody = decodedReq.body;
 		const id = reqBody.id;
 		const filter = reqBody.filter;
-		console.log(req.url);
 		if (id !== undefined && filter !== undefined) {
 			let problems;
 			switch (filter) {
@@ -279,7 +312,6 @@ async function download(req, res) {
 					problems = await getByDifficulty(id);
 					break;
 				case "4":
-					console.log("all");
 					problems = await getAll();
 					break;
 				default:
@@ -313,4 +345,5 @@ module.exports = {
 	canRate: canRate,
 	rate: rate,
 	download: download,
+	tournament: getTournamentProblem,
 }
