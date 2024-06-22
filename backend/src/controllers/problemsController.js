@@ -111,8 +111,11 @@ async function getProblemDataById(id) {
 async function post(req, res) {
 	const response = await getBody(req);
 
+	
+
 	if (response.type === "json") {
 		const { title, chapter, difficulty, content, solution } = response.body;
+		console.log(response);
 		if (
 			title === undefined ||
 			chapter === undefined ||

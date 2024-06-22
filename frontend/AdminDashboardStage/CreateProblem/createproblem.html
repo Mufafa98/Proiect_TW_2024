@@ -5,20 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <script src="./script.js"></script>
 </head>
 <body>
     <input type="text" name="problems" id="searchBar" value="Search problems by ID">
     <div class="problemSpecifications">
-        <div class="probleminput"><p>Id:</p><textarea rows="1" wrap="off" maxlength="10" id="inputtext">Write the id</textarea></div>
-        <div class="probleminput"><p>Title:</p><textarea cols="1" rows="1" id="inputtext">Write the title</textarea></div>
-        <div class="probleminput"><p>Chapter:</p><textarea cols="1" rows="1" id="inputtext">Write the chapter</textarea></div>
-        <div class="probleminput"><p>Difficulty:</p><textarea cols="1" rows="1" id="inputtext">Write the difficulty</textarea></div>
+        <div><p>Title:</p><textarea class="probleminput" cols="1" rows="1" id="inputtext">Write the title</textarea></div>
+        <div><p>Chapter:</p><textarea class="probleminput" cols="1" rows="1" id="inputtext">Write the chapter</textarea></div>
+        <div><p>Difficulty:</p><textarea class="probleminput" cols="1" rows="1" id="inputtext">Write the difficulty</textarea></div>
         <p>Description:</p>
-        <textarea cols="10" id="feedbacktext">Write the description of the problem</textarea>
+        <textarea cols="10" id="feedbacktext" class="probleminput">Write the description of the problem</textarea>
+        <p>Solution:</p>
+        <textarea cols="10" id="feedbacktext" class="probleminput">Write the solution of the problem</textarea>
 
         <div class="buttoncontainer">
-            <button type="button">Submit problem</button>
-            <button type="button">Delete problem</button>
+            <button type="button" onclick="uploadProblem()">
+                Upload problem
+            </button>
         </div>
     </div>
 
