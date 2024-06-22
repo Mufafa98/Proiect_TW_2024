@@ -36,7 +36,7 @@ export async function runQuery(id, type, query) {
 	}
 }
 export async function submitQuery(id, type, query) {
-	const url = `http://127.0.0.1:3000/problems?id=${id}&type=${type}&query=${query}`;
+	const url = `http://127.0.0.1:3000/problems?id=${id}&type=${type}&query=${query}&tournament=1`;
 	try {
 		const response = await fetch(url, {
 			method: "GET",

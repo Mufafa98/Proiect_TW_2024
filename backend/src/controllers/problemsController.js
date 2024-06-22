@@ -51,8 +51,14 @@ async function get(req, res) {
 				}
 				else if (type === "submit" && query !== "" && uid !== "") {
 					const solutionResult = await problemsServices.compareSolution(query, id);
-					if (!solutionResult.error)
-						problemsServices.logProblem(id, uid, query, solutionResult.result)
+					if (!solutionResult.error) {
+						let notTournament;
+						if (reqBody.tournament !== undefined)
+							notTournament = 0;
+						else
+							notTournament = 1;
+						problemsServices.logProblem(id, uid, query, solutionResult.result, notTournament)
+					}
 					sendResponse.JSON(res, solutionResult, 200);
 				}
 				else {

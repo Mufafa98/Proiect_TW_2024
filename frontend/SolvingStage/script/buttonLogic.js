@@ -32,7 +32,6 @@ export async function subminButton() {
 		"submit",
 		solutionInput.value,
 	);
-	console.log(queryResult);
 	const output = queryResult.result.message.result;
 
 	if (output) {

@@ -30,7 +30,6 @@ export async function init() {
 	} catch (error) {
 		console.error("Error:", error);
 	}
-
 	const problemId = localStorage.getItem("selectedProblem");
 	const problemData = (await getProblemData(problemId)).at(0);
 	const problemText = document.getElementById("problemStatement");

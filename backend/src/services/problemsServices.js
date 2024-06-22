@@ -28,7 +28,6 @@ class Problems {
 		group by Problems.id
 		order by solves
 		LIMIT 1`);
-		console.log(problems);
 		return {
 			found: problems.length !== 0,
 			data: problems
@@ -217,13 +216,13 @@ class Problems {
 		 * @param {Boolean} passed 
 		 * @returns {error: Boolean, result: String}
 		 */
-	async logProblem(problemId, userId, query, passed) {
+	async logProblem(problemId, userId, query, passed, notTournament = 1) {
 		try {
 
 			database.query("USE Dev")
 			let insertQuery = "insert into ProblemsSolved (userId, problemId, ";
-			insertQuery += "passed, query, solvedAt) values (";
-			insertQuery += `${userId},${problemId},${passed},'${query}',NOW())`
+			insertQuery += "passed, query, solvedAt, training) values (";
+			insertQuery += `${userId},${problemId},${passed},'${query}',NOW(),${notTournament})`
 			database.insert(insertQuery);
 			return {
 				error: false,
