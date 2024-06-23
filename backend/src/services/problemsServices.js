@@ -209,8 +209,23 @@ class Problems {
                 result: error.sqlMessage
             };
         }
-        
     }
+
+	async getReportedProblems() {
+		try{
+			const problems = await database.query(`SELECT P.Title FROM Problems P JOIN Raitings R WHERE R.raiting = 'wrong'`);
+			 return {
+				found: problems.length !== 0,
+				data: problems,
+			 }
+		} catch (error) {
+			database.query("USE Dev")
+			return {
+				error: true,
+				result: error.sqlMessage
+			}
+		}
+	}
 }
 
 module.exports = new Problems();

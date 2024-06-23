@@ -108,10 +108,14 @@ async function getProblemDataById(id) {
 	return problems;
 }
 
+//returns the titles of problems that are rated as wrong
+async function getReportedProblems(req, res) {
+	const problems = await problemsServices.getReportedProblems();
+	return problems;
+}
+
 async function post(req, res) {
 	const response = await getBody(req);
-
-	
 
 	if (response.type === "json") {
 		const { title, chapter, difficulty, content, solution } = response.body;
@@ -232,4 +236,4 @@ async function rate(req, res) {
 	}
 }
 
-module.exports = { get: get, canRate: canRate, post: post, rate: rate };
+module.exports = { get: get, getReportedProblems: getReportedProblems, canRate: canRate, post: post, rate: rate };
