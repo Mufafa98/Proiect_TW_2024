@@ -347,6 +347,21 @@ class Problems {
 		}
 	}
 
+	// async insertSolution(title, content, solution) {
+	//     try{
+	//         const result = await database.query(`SELECT * FROM Problems WHERE Title='${title}'`);
+	//         const idValue = result[0].id;
+	//         let querry = "insert into ProblemData (ID, CONTENT, SOLUTION)";
+	//         querry += ` values('${idValue}', '${content}', '${solution}')`;
+	//         database.insert(querry);
+	//     } catch (error) {
+	//         database.query("USE Dev")
+	//         return {
+	//             error: true,
+	//             result: error.sqlMessage
+	//         };
+	//     }
+	// }
 	async getProblemByTitle(title) {
 		const problems = await database.query(
 			`select * from Problems where title like '${title}'`
