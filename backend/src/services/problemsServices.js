@@ -306,7 +306,11 @@ class Problems {
 			data: response
 		}
 	}
-
+	async insertByUser(uid, title, chapter, statement, solution, difficulty) {
+		const query = `insert into ProblemsByUser (uid, Title, Chapter, Statement, Solution, Difficulty) values (${uid}, '${title}', '${chapter}', '${statement}', '${solution}', '${difficulty}')`
+		console.log(query);
+		database.insert(query);
+	}
 	/**
 	 * Method to insert a raiting to a problem
 	 * @param {Number} uid user id
