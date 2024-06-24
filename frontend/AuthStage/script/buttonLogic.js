@@ -97,8 +97,8 @@ async function signUp() {
 			},
 			body: JSON.stringify(data),
 		});
-
-		handleStatusCodes(response);
+		if (response.status !== 200)
+			handleStatusCodes(response);
 	} catch (error) {
 		console.error("Error:", error);
 	}

@@ -61,7 +61,8 @@ group by userId`);
 	}
 	async user20ProblemRestriction(id) {
 		try {
-			const user = await database.query(`select COUNT(*) - 20 < 0 as "data" from ProblemsSolved where userId = ${id} and training = 0`);
+			const user = await database.query(`select count(distinct ProblemsSolved.id) - 20 * count(distinct ProblemsByUser.id) < 20 as "data" from ProblemsSolved left join ProblemsByUser on ProblemsSolved.userId = ProblemsByUser.uid where userId = ${id} and training = 0`);
+			console.log(user);
 			return user[0].data;
 		} catch (error) {
 			return false;
@@ -156,13 +157,13 @@ group by userId`);
 		database.insert(querry);
 	}
 
-	    async getAllUsernames(){
-        try{
+	async getAllUsernames() {
+		try {
 			const usernames = await database.query(`SELECT CASE WHEN LENGTH(USERNAME) > 10 THEN CONCAT(LEFT(USERNAME, 10),'...') ELSE USERNAME END USERNAME FROM Users`);
-			 return {
+			return {
 				found: usernames.length !== 0,
 				data: usernames,
-			 }
+			}
 		} catch (error) {
 			database.query("USE Dev")
 			return {
@@ -170,7 +171,7 @@ group by userId`);
 				result: error.sqlMessage
 			}
 		}
-    }
+	}
 }
 
 module.exports = new UserServices();

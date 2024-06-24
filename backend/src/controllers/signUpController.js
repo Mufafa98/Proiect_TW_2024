@@ -7,6 +7,9 @@ const passwordServices = require("../services/passwordServices");
 const statusCodes = require("../utils/statusCodes");
 const generateAccessToken =
 	require("../utils/JWT/JWTGeneration").generateAccessToken;
+const cookiesServices = require("../services/cookiesServices");
+const jwtAuthentication = require("../utils/JWT/JWTAuthentication")
+const jwtDecoder = require("../utils/JWT/JWTDecoder");
 
 /**
  * Handles user sign-up.
@@ -43,14 +46,35 @@ async function signUpUser(req, res) {
 					const message = "User SignedUp succesfully";
 					const userData = { uid: userId };
 					const token = generateAccessToken(userData);
-					sendResponse.customJSON(
-						res,
-						{
-							message: message,
-							token: token,
-						},
-						httpStatus.OK,
-					);
+					// sendResponse.customJSON(
+					// 	res,
+					// 	{
+					// 		message: message,
+					// 		token: token,
+					// 	},
+					// 	httpStatus.OK,
+					// );
+
+					const options = cookiesServices.createOptions();
+					options.Path = "/";
+					options.HttpOnly = false;
+					options.SameSite = "Strict";
+					const adminProp = await userServices.isUserAdmin(userData.uid);
+					const cookie = [
+						cookiesServices.setCookie(
+							res,
+							"token",
+							token,
+							options,
+						),
+						cookiesServices.setCookie(
+							res,
+							"admin",
+							await userServices.isUserAdmin(userData.uid),
+							options,
+						)
+					];
+					sendResponse.cookie(res, cookie, 200);
 				}
 			} else {
 				const message =

@@ -21,13 +21,6 @@ document.getElementById("Add").addEventListener("click", async () => {
     const description = document.getElementById("statementInput").value
     const solution = document.getElementById("solutionInput").value
 
-    // console.log(formElements);
-    // console.log(`title: ${title}`);
-    // console.log(`chapter: ${chapter}`);
-    // console.log(`difficulty: ${difficulty}`);
-    // console.log(`decription: ${description}`);
-    // console.log(`solution: ${solution}`);
-
     const data = {
         title: title,
         chapter: chapter,
@@ -38,6 +31,18 @@ document.getElementById("Add").addEventListener("click", async () => {
 
     try {
         const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+            credentials: 'include'
+        });
+    } catch (error) {
+        console.error("Error:", error);
+    }
+    try {
+        const response = await fetch(`${url}log`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

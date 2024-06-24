@@ -306,7 +306,11 @@ class Problems {
 			data: response
 		}
 	}
-
+	async insertByUser(uid, title, chapter, statement, solution, difficulty) {
+		const query = `insert into ProblemsByUser (uid, Title, Chapter, Statement, Solution, Difficulty) values (${uid}, '${title}', '${chapter}', '${statement}', '${solution}', '${difficulty}')`
+		console.log(query);
+		database.insert(query);
+	}
 	/**
 	 * Method to insert a raiting to a problem
 	 * @param {Number} uid user id
@@ -343,21 +347,6 @@ class Problems {
 		}
 	}
 
-	// async insertSolution(title, content, solution) {
-	//     try{
-	//         const result = await database.query(`SELECT * FROM Problems WHERE Title='${title}'`);
-	//         const idValue = result[0].id;
-	//         let querry = "insert into ProblemData (ID, CONTENT, SOLUTION)";
-	//         querry += ` values('${idValue}', '${content}', '${solution}')`;
-	//         database.insert(querry);
-	//     } catch (error) {
-	//         database.query("USE Dev")
-	//         return {
-	//             error: true,
-	//             result: error.sqlMessage
-	//         };
-	//     }
-	// }
 	async getProblemByTitle(title) {
 		const problems = await database.query(
 			`select * from Problems where title like '${title}'`

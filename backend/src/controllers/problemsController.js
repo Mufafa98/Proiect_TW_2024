@@ -210,7 +210,6 @@ async function post(req, res) {
 		const response = await getBody(req);
 		if (response.type === "json") {
 			const { title, chapter, difficulty, content, solution } = response.body;
-			console.log(response);
 			if (
 				title === undefined ||
 				chapter === undefined ||
@@ -238,6 +237,39 @@ async function post(req, res) {
 						sendResponse.customJSON(res, { message: message }, 200);
 					}
 				}
+			}
+		}
+	} else {
+		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+	}
+
+}
+async function logPost(req, res) {
+	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+	const cookies = await cookiesServices.parseCookies(cookieHeader);
+	const jwtToken = cookies.token;
+	if (jwtAuthentication(jwtToken) === 200) {
+		const response = await getBody(req);
+		const uid = (await jwtDecoder(jwtToken)).userData.uid
+		if (response.type === "json") {
+			const { title, chapter, difficulty, content, solution } = response.body;
+			if (
+				title === undefined ||
+				chapter === undefined ||
+				difficulty === undefined ||
+				content === undefined ||
+				solution === undefined
+			) {
+				const message =
+					"Invalid JSON format. Expected: {title, chapter, difficulty, content, description}";
+				sendResponse.JSON(res, message, statusCodes.INVALID_JSON_FORMAT);
+			} else {
+
+				problemsServices.insertByUser(uid, title, chapter, content, solution, difficulty);
+				const message = "Problem uploaded succesfully";
+				sendResponse.customJSON(res, { message: message }, 200);
+
+
 			}
 		}
 	} else {
@@ -392,4 +424,5 @@ module.exports = {
 	tournament: getTournamentProblem,
 	getReportedProblems: getReportedProblems,
 	post: post,
+	log: logPost,
 }

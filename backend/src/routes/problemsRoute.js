@@ -8,9 +8,10 @@ const routes = {
 	"GET /rate": problems.canRate,
 	"GET /reported": problems.getReportedProblems,
 	"POST /": problems.post,
+	"POST /log": problems.log,
 	"POST /rate": problems.rate,
-  'GET /download': problems.download,
-  'GET /tournament': problems.tournament,
+	'GET /download': problems.download,
+	'GET /tournament': problems.tournament,
 };
 
 async function handleProblems(req, res) {
