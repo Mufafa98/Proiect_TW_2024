@@ -1,7 +1,7 @@
 const diveIntoUrl = require("../utils/urlDiver")
 const urlRoot = require("../utils/urlRoot")
 const resourceNotFound = require("../utils/resourceNotFound")
-const loginUser = require("../controllers/loginController")
+const user = require("../controllers/loginController")
 
 const routes = {
     'GET /': (req, res) => {
@@ -10,7 +10,8 @@ const routes = {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(responseObject));
     },
-    'POST /': loginUser,
+    'POST /': user.loginUser,
+    'GET /users': user.getAllUsers,
 };
 
 async function handleLogin(req, res) {
