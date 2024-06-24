@@ -34,6 +34,103 @@ class UserServices {
 		};
 	}
 	/**
+	 * Method to get the top tournament users
+	 * @param {String} category 
+	 * @param {String} difficulty 
+	 * @returns {error: Boolean, result: String} Where error is the state of the
+	 * sql statement and the result is a formated string with the result of the query
+	 */
+	async getTopUsers(category, difficulty) {
+		try {
+			const user = await database.query(`select userId, Username, count(passed) as "totalProblemsSolved", sum(passed) / count(passed) as "SuccessRate"
+from ProblemsSolved join Users on ProblemsSolved.userId = Users.ID
+where training = 0
+  and solvingDifficulty like '${difficulty}'
+  and solvingCategory like '${category}'
+group by userId`);
+			return {
+				found: user.length !== 0,
+				data: user,
+			};
+		} catch (error) {
+			return {
+				found: false,
+				data: 0,
+			};
+		}
+	}
+	async user20ProblemRestriction(id) {
+		try {
+			const user = await database.query(`select COUNT(*) - 20 < 0 as "data" from ProblemsSolved where userId = ${id} and training = 0`);
+			return user[0].data;
+		} catch (error) {
+			return false;
+		}
+	}
+	async isUserAdmin(id) {
+		try {
+			const user = await database.query(`select admin from Users where ID = ${id}`);
+			return user[0].admin;
+		} catch (error) {
+			return false;
+		}
+	}
+	/**
+	 * Method to get the top tournament users by id
+	 * @param {String} category 
+	 * @param {String} difficulty 
+	 * @returns {error: Boolean, result: String} Where error is the state of the
+	 * sql statement and the result is a formated string with the result of the query
+	 */
+	async getTopUsersById(category, difficulty, id) {
+		try {
+			const user = await database.query(`select userId, Username, count(passed) as "totalProblemsSolved", sum(passed) / count(passed) as "SuccessRate"
+from ProblemsSolved join Users on ProblemsSolved.userId = Users.ID
+where training = 0
+  and solvingDifficulty like '${difficulty}'
+  and solvingCategory like '${category}'
+  and userId = ${id}
+group by userId`);
+			return {
+				found: user.length !== 0,
+				data: user,
+			};
+		} catch (error) {
+			return {
+				found: false,
+				data: 0,
+			};
+		}
+	}
+	/**
+	 * Method to get the top tournament users by username
+	 * @param {String} category 
+	 * @param {String} difficulty 
+	 * @returns {error: Boolean, result: String} Where error is the state of the
+	 * sql statement and the result is a formated string with the result of the query
+	 */
+	async getTopUsersByUsername(category, difficulty, username) {
+		try {
+			const user = await database.query(`select userId, Username, count(passed) as "totalProblemsSolved", sum(passed) / count(passed) as "SuccessRate"
+from ProblemsSolved join Users on ProblemsSolved.userId = Users.ID
+where training = 0
+  and solvingDifficulty like '${difficulty}'
+  and solvingCategory like '${category}'
+  and Username like '%${username}%'
+group by userId`);
+			return {
+				found: user.length !== 0,
+				data: user,
+			};
+		} catch (error) {
+			return {
+				found: false,
+				data: 0,
+			};
+		}
+
+	}
+	/**
 	 * Retrives an user by id
 	 * @param {string} id
 	 * @returns {Promise<{found: bolean, data: *}>} A promise that contains a field

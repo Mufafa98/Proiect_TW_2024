@@ -25,8 +25,6 @@ export async function runQuery(id, type, query) {
 		});
 
 		const result = await response.json();
-		console.log(response.status);
-		console.log(result);
 		return {
 			result: result,
 			status: response.status,
@@ -35,8 +33,8 @@ export async function runQuery(id, type, query) {
 		console.error("Error:", error);
 	}
 }
-export async function submitQuery(id, type, query) {
-	const url = `http://127.0.0.1:3000/problems?id=${id}&type=${type}&query=${query}`;
+export async function submitQuery(id, type, query, chapter, difficulty) {
+	const url = `http://127.0.0.1:3000/problems?id=${id}&type=${type}&query=${query}&tournament=1&chapter=${chapter}&difficulty=${difficulty}`;
 	try {
 		const response = await fetch(url, {
 			method: "GET",

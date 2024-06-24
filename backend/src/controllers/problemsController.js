@@ -51,8 +51,16 @@ async function get(req, res) {
 				}
 				else if (type === "submit" && query !== "" && uid !== "") {
 					const solutionResult = await problemsServices.compareSolution(query, id);
-					if (!solutionResult.error)
-						problemsServices.logProblem(id, uid, query, solutionResult.result)
+					if (!solutionResult.error) {
+						let notTournament;
+						if (reqBody.tournament !== undefined)
+							notTournament = 0;
+						else
+							notTournament = 1;
+						const chapter = reqBody.chapter;
+						const difficulty = reqBody.difficulty;
+						problemsServices.logProblem(id, uid, query, solutionResult.result, notTournament, chapter, difficulty)
+					}
 					sendResponse.JSON(res, solutionResult, 200);
 				}
 				else {
@@ -104,18 +112,24 @@ async function getTournamentProblem(req, res) {
 	if (jwtAuthentication(jwtToken) === 200) {
 		const decodedReq = await getReqBody(req);
 		const reqBody = decodedReq.body;
-		if (reqBody.chapter === undefined || reqBody.difficulty === undefined) {
-			sendResponse.JSON(res, "Bad Request", httpStatus.BAD_REQUEST);
-			return;
-		}
-		const chapter = reqBody.chapter === "All" ? "%" : reqBody.chapter;
-		const difficulty = reqBody.difficulty === "All" ? "%" : reqBody.difficulty;
-		const id = await problemsServices.getTournamentProblem(chapter, difficulty);
-		if (id.found) {
-			sendResponse.customJSON(res, id.data.at(0).id, 200);
+		if (reqBody.uid === undefined) {
+			if (reqBody.chapter === undefined || reqBody.difficulty === undefined) {
+				sendResponse.JSON(res, "Bad Request", httpStatus.BAD_REQUEST);
+				return;
+			}
+			const chapter = reqBody.chapter === "All" ? "%" : reqBody.chapter;
+			const difficulty = reqBody.difficulty === "All" ? "%" : reqBody.difficulty;
+			const id = await problemsServices.getTournamentProblem(chapter, difficulty);
+			if (id.found) {
+				sendResponse.customJSON(res, id.data.at(0).id, 200);
+			}
+			else {
+				sendResponse.JSON(res, "Inexistent problem", statusCodes.INEXISTENT_PROBLEM);
+			}
 		}
 		else {
-			sendResponse.JSON(res, "Inexistent problem", statusCodes.INEXISTENT_PROBLEM);
+			const uid = (await jwtDecoder(jwtToken)).userData.uid;
+			sendResponse.customJSON(res, { problemsNeeded: await userServices.user20ProblemRestriction(uid) }, 200)
 		}
 	} else {
 		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
@@ -173,47 +187,63 @@ async function getProblemDataById(id) {
 
 //returns the titles of problems that are rated as wrong
 async function getReportedProblems(req, res) {
-	const problems = await problemsServices.getReportedProblems();
-	//console.log(problems);
-	sendResponse.customJSON(res, problems, 200);
-	return problems;
+	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+	const cookies = await cookiesServices.parseCookies(cookieHeader);
+	const jwtToken = cookies.token;
+	if (jwtAuthentication(jwtToken) === 200) {
+		if ((await userServices.isUserAdmin((await jwtDecoder(jwtToken)).userData.uid)) === 0)
+			return;
+		const problems = await problemsServices.getReportedProblems();
+		//console.log(problems);
+		sendResponse.customJSON(res, problems, 200);
+		// return problems;
+	} else {
+		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+	}
 }
 
 async function post(req, res) {
-	const response = await getBody(req);
-
-	if (response.type === "json") {
-		const { title, chapter, difficulty, content, solution } = response.body;
-		console.log(response);
-		if (
-			title === undefined ||
-			chapter === undefined ||
-			difficulty === undefined ||
-			content === undefined ||
-			solution === undefined
-		) {
-			const message =
-				"Invalid JSON format. Expected: {title, chapter, difficulty, content, description}";
-			sendResponse.JSON(res, message, statusCodes.INVALID_JSON_FORMAT);
-		} else {
-			if(difficulty != "Easy" && difficulty != "Medium" && difficulty != "Hard") {
-				const message = "Invalid difficulty. Must be Easy, Medium or Hard";
-				sendResponse.JSON(res, message, statusCodes.INVALID_DIFFICULTY);
+	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+	const cookies = await cookiesServices.parseCookies(cookieHeader);
+	const jwtToken = cookies.token;
+	if (jwtAuthentication(jwtToken) === 200) {
+		const response = await getBody(req);
+		if (response.type === "json") {
+			const { title, chapter, difficulty, content, solution } = response.body;
+			console.log(response);
+			if (
+				title === undefined ||
+				chapter === undefined ||
+				difficulty === undefined ||
+				content === undefined ||
+				solution === undefined
+			) {
+				const message =
+					"Invalid JSON format. Expected: {title, chapter, difficulty, content, description}";
+				sendResponse.JSON(res, message, statusCodes.INVALID_JSON_FORMAT);
 			} else {
-				const problem = await problemsServices.getProblemByTitle(title);
-				if (problem.found) {
-					const message =
-						"Problem with this title already exists. Change the title";
-					sendResponse.JSON(res, message, statusCodes.PROBLEM_TITLE_EXISTS);
+				if (difficulty !== "Easy" && difficulty !== "Medium" && difficulty !== "Hard") {
+					const message = "Invalid difficulty. Must be Easy, Medium or Hard";
+					sendResponse.JSON(res, message, statusCodes.INVALID_DIFFICULTY);
 				} else {
-					problemsServices.insertProblem(title, chapter, difficulty);
-					problemsServices.insertSolution(title, content, solution);
-					const message = "Problem uploaded succesfully";
-					sendResponse.customJSON(res, { message: message }, 200);
+					const problem = await problemsServices.getProblemByTitle(title);
+					if (problem.found) {
+						const message =
+							"Problem with this title already exists. Change the title";
+						sendResponse.JSON(res, message, statusCodes.PROBLEM_TITLE_EXISTS);
+					} else {
+						problemsServices.insertProblem(title, chapter, difficulty);
+						problemsServices.insertSolution(title, content, solution);
+						const message = "Problem uploaded succesfully";
+						sendResponse.customJSON(res, { message: message }, 200);
+					}
 				}
 			}
 		}
+	} else {
+		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
 	}
+
 }
 /**
  * Handles user rating system
@@ -360,6 +390,6 @@ module.exports = {
 	rate: rate,
 	download: download,
 	tournament: getTournamentProblem,
-  getReportedProblems: getReportedProblems, 
-  post: post,
+	getReportedProblems: getReportedProblems,
+	post: post,
 }

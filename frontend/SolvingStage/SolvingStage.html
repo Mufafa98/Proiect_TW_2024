@@ -14,6 +14,16 @@
     <div class="container col-sm-6 col-md-6 col-lg-6 col-xl-6" id="statement">
         <p id="problemTitle"></p>
         <p id="problemStatement"></p>
+        <div id="commentContainer">
+            <!-- vezi sa faci html injection -->
+            <div id="commentInputDiv">
+                <button class="Button" id="commentButton">Send comment</button>
+                <textarea name="commentInput" id="commentInput"></textarea>
+            </div>
+            <p>Comments</p>
+            <div id="commentData">
+            </div>
+        </div>
     </div>
     <div class="container solutionContainer col-sm-6 col-md-6 col-lg-6 col-xl-6" id="solution">
         <div id="actionDiv">

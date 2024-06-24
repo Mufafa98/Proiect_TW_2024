@@ -28,7 +28,6 @@ class Problems {
 		group by Problems.id
 		order by solves
 		LIMIT 1`);
-		console.log(problems);
 		return {
 			found: problems.length !== 0,
 			data: problems
@@ -42,6 +41,46 @@ class Problems {
 		try {
 			const problems = await
 				database.query("select distinct Chapter from Problems");
+			return {
+				found: problems.length !== 0,
+				data: problems
+			}
+		} catch (error) {
+			return {
+				found: false,
+				data: null
+			}
+		}
+
+	}
+	/**
+ * Returns the available chapters in tournaments
+ * @returns {found: Boolean, data: *} Where data is an array of chapters
+ */
+	async getTournamentChapters() {
+		try {
+			const problems = await
+				database.query("select distinct solvingCategory from ProblemsSolved where training = 0");
+			return {
+				found: problems.length !== 0,
+				data: problems
+			}
+		} catch (error) {
+			return {
+				found: false,
+				data: null
+			}
+		}
+
+	}
+	/**
+ * Returns the available difficulties in tournaments
+ * @returns {found: Boolean, data: *} Where data is an array of chapters
+ */
+	async getTournamentDifficulty() {
+		try {
+			const problems = await
+				database.query("select distinct solvingDifficulty from ProblemsSolved where training = 0");
 			return {
 				found: problems.length !== 0,
 				data: problems
@@ -217,13 +256,13 @@ class Problems {
 		 * @param {Boolean} passed 
 		 * @returns {error: Boolean, result: String}
 		 */
-	async logProblem(problemId, userId, query, passed) {
+	async logProblem(problemId, userId, query, passed, notTournament = 1, chapter = "", difficulty = "") {
 		try {
 
 			database.query("USE Dev")
 			let insertQuery = "insert into ProblemsSolved (userId, problemId, ";
-			insertQuery += "passed, query, solvedAt) values (";
-			insertQuery += `${userId},${problemId},${passed},'${query}',NOW())`
+			insertQuery += "passed, query, solvedAt, training, solvingCategory, solvingDifficulty) values (";
+			insertQuery += `${userId},${problemId},${passed},'${query}',NOW(),${notTournament}, '${difficulty}', '${chapter}')`
 			database.insert(insertQuery);
 			return {
 				error: false,
@@ -291,42 +330,51 @@ class Problems {
 		}
 	}
 	async insertProblem(title, chapter, difficulty) {
-        try{
-            let querry = "insert into Problems (TITLE, CHAPTER, DIFFICULTY)";
-            querry += ` values('${title}', '${chapter}', '${difficulty}')`;
-            database.insert(querry);
-        } catch (error) {
-            database.query("USE Dev")
-            return {
-                error: true,
-                result: error.sqlMessage
-            };
-        }
-    }
+		try {
+			let querry = "insert into Problems (TITLE, CHAPTER, DIFFICULTY)";
+			querry += ` values('${title}', '${chapter}', '${difficulty}')`;
+			database.insert(querry);
+		} catch (error) {
+			database.query("USE Dev")
+			return {
+				error: true,
+				result: error.sqlMessage
+			};
+		}
+	}
 
-	async insertSolution(title, content, solution) {
-        try{
-            const result = await database.query(`SELECT * FROM Problems WHERE Title='${title}'`);
-            const idValue = result[0].id;
-            let querry = "insert into ProblemData (ID, CONTENT, SOLUTION)";
-            querry += ` values('${idValue}', '${content}', '${solution}')`;
-            database.insert(querry);
-        } catch (error) {
-            database.query("USE Dev")
-            return {
-                error: true,
-                result: error.sqlMessage
-            };
-        }
-    }
+	// async insertSolution(title, content, solution) {
+	//     try{
+	//         const result = await database.query(`SELECT * FROM Problems WHERE Title='${title}'`);
+	//         const idValue = result[0].id;
+	//         let querry = "insert into ProblemData (ID, CONTENT, SOLUTION)";
+	//         querry += ` values('${idValue}', '${content}', '${solution}')`;
+	//         database.insert(querry);
+	//     } catch (error) {
+	//         database.query("USE Dev")
+	//         return {
+	//             error: true,
+	//             result: error.sqlMessage
+	//         };
+	//     }
+	// }
+	async getProblemByTitle(title) {
+		const problems = await database.query(
+			`select * from Problems where title like '${title}'`
+		);
+		return {
+			found: problems.length !== 0,
+			data: problems,
+		};
+	}
 
 	async getReportedProblems() {
-		try{
+		try {
 			const problems = await database.query(`SELECT P.Title FROM Problems P JOIN Raitings R WHERE R.raiting = 'Wrong' AND P.id = R.problemid`);
-			 return {
+			return {
 				found: problems.length !== 0,
 				data: problems,
-			 }
+			}
 		} catch (error) {
 			database.query("USE Dev")
 			return {

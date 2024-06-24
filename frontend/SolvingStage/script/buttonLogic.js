@@ -21,6 +21,29 @@ export async function runButton() {
 	} else solutionOutput.value = `[ERROR]:${output}`;
 }
 
+export async function commentButton() {
+	const url = "http://127.0.0.1:3000/comments";
+	const commentText = document.getElementById("commentInput").value
+	const data = {
+		pid: localStorage.getItem("selectedProblem"),
+		message: commentText,
+	};
+	try {
+		const response = await fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+			credentials: "include",
+		});
+		if (response.status === 200)
+			document.getElementById("commentInput").value = "";
+	} catch (error) {
+		console.error("Error:", error);
+	}
+}
+
 export async function subminButton() {
 	const solutionInput = document.getElementById("problemSolution");
 	const solutionOutput = document.getElementById("solutionOutput");
@@ -31,8 +54,9 @@ export async function subminButton() {
 		localStorage.getItem("selectedProblem"),
 		"submit",
 		solutionInput.value,
+		localStorage.getItem("chapterSelector"),
+		localStorage.getItem("difficultySelector")
 	);
-	console.log(queryResult);
 	const output = queryResult.result.message.result;
 
 	if (output) {

@@ -25,8 +25,6 @@ export async function runQuery(id, type, query) {
 		});
 
 		const result = await response.json();
-		console.log(response.status);
-		console.log(result);
 		return {
 			result: result,
 			status: response.status,

@@ -12,6 +12,7 @@
 
 
 body {
+    overflow-wrap: break-word;
     margin: 0em;
     padding: 0em;
     background-image: var(--background);
@@ -36,6 +37,28 @@ header {
     background-color: var(--second_background);
 }
 
+#BackButton {
+    padding: 0em 1em 0em 1em;
+    background-color: var(--button_background);
+    border-color: var(--button_background);
+    border-bottom-width: 0.23em;
+    border-left-width: 0em;
+    border-top-width: 0em;
+    border-right-width: 0.15em;
+    color: var(--button_text);
+    font-size: larger;
+    font-weight: bold;
+    border-radius: 0.7em;
+}
+
+#BackButton:hover {
+    filter: brightness(0.92);
+}
+
+#BackButton:active {
+    filter: brightness(0.88);
+}
+
 footer {
     height: 5vh;
 }
@@ -51,22 +74,6 @@ footer {
     font-size: medium;
     padding-left: 1em;
     outline: none;
-}
-
-.menuLine {
-    margin: 0.3vh;
-    border-radius: 0.2em;
-    background-color: var(--input_border);
-    height: 0.7vh;
-    width: 2em;
-}
-
-#menuButton {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    float: right;
-    align-self: center;
 }
 
 #secondHeader {
@@ -100,14 +107,13 @@ footer {
     cursor: pointer;
 }
 
-#problem {
+#user {
     margin: 1em;
     display: flex;
     border: 0em;
     border-bottom: 0.1em;
     border-color: var(--input_border);
     border-style: solid;
-    cursor: pointer;
 }
 
 .property {
@@ -199,4 +205,8 @@ option {
 }
 .menuButton:active {
     filter: brightness(0.88);
+}
+
+.notHidden {
+    display: block;
 }

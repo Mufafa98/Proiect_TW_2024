@@ -11,6 +11,7 @@ export async function initializeDashboard() {
 	} catch (error) {
 		console.error('Error:', error);
 	}
+
 	const menuButton = document.getElementById("menuButton").style;
 	const searchBar = document.getElementById("searchBar").style;
 
@@ -31,9 +32,10 @@ export async function initializeDashboard() {
 	).width;
 
 	const menuDropDown = document.getElementById("menu");
-	if (menu.classList.contains('hidden')) menu.classList.remove('hidden');
+	if (menuDropDown.classList.contains('hidden')) menu.classList.remove('hidden');
+	menuDropDown.style.width = "200px"
 	const dropDownWidth = menuDropDown.getBoundingClientRect().width;
-	if (!menu.classList.contains('hidden')) menu.classList.add('hidden');
+	if (!menuDropDown.classList.contains('hidden')) menu.classList.add('hidden');
 
 	menuDropDown.style.marginLeft = `${document.getElementById("menuButton")
 		.getBoundingClientRect().left - dropDownWidth + document.getElementById("menuButton").getBoundingClientRect().width}px`;

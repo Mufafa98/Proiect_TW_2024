@@ -7,6 +7,8 @@ const statusCodes = require("../utils/statusCodes");
 const generateAccessToken =
 	require("../utils/JWT/JWTGeneration").generateAccessToken;
 const cookiesServices = require("../services/cookiesServices");
+const jwtAuthentication = require("../utils/JWT/JWTAuthentication")
+const jwtDecoder = require("../utils/JWT/JWTDecoder");
 
 /**
  * Handles user sign-up.
@@ -38,12 +40,21 @@ async function loginUser(req, res) {
 					options.Path = "/";
 					options.HttpOnly = false;
 					options.SameSite = "Strict";
-					const cookie = cookiesServices.setCookie(
-						res,
-						"token",
-						token,
-						options,
-					);
+					const adminProp = await userServices.isUserAdmin(userData.uid);
+					const cookie = [
+						cookiesServices.setCookie(
+							res,
+							"token",
+							token,
+							options,
+						),
+						cookiesServices.setCookie(
+							res,
+							"admin",
+							await userServices.isUserAdmin(userData.uid),
+							options,
+						)
+					];
 					sendResponse.cookie(res, cookie, 200);
 				}
 			} else {
@@ -57,11 +68,20 @@ async function loginUser(req, res) {
 	}
 }
 
-async function getAllUsers(req, res){
-	const usernames = await userServices.getAllUsernames();
-	console.log(usernames);
-	sendResponse.customJSON(res, usernames, 200);
-	return usernames;
+async function getAllUsers(req, res) {
+	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+	const cookies = await cookiesServices.parseCookies(cookieHeader);
+	const jwtToken = cookies.token;
+	if (jwtAuthentication(jwtToken) === 200) {
+		if ((await userServices.isUserAdmin((await jwtDecoder(jwtToken)).userData.uid)) === 0)
+			return;
+		const usernames = await userServices.getAllUsernames();
+		console.log(usernames);
+		sendResponse.customJSON(res, usernames, 200);
+		// return usernames;
+	} else {
+		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+	}
 }
 
-module.exports = {loginUser : loginUser, getAllUsers : getAllUsers};
+module.exports = { loginUser: loginUser, getAllUsers: getAllUsers };

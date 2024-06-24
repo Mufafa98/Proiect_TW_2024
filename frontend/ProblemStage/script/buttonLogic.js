@@ -20,7 +20,6 @@ export async function runButton() {
 		solutionOutput.value = `[OUTPUT EXPECTED]:\n${output.expected.result}\n[OUTPUT GOT]:\n${output.got}`;
 	} else solutionOutput.value = `[ERROR]:${output}`;
 }
-
 export async function subminButton() {
 	const solutionInput = document.getElementById("problemSolution");
 	const solutionOutput = document.getElementById("solutionOutput");
@@ -49,6 +48,28 @@ export async function subminButton() {
 				rate(localStorage.getItem("selectedProblem"), difficulty);
 				unInitPopUp();
 			});
+	}
+}
+export async function commentButton() {
+	const url = "http://127.0.0.1:3000/comments";
+	const commentText = document.getElementById("commentInput").value
+	const data = {
+		pid: localStorage.getItem("selectedProblem"),
+		message: commentText,
+	};
+	try {
+		const response = await fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+			credentials: "include",
+		});
+		if (response.status === 200)
+			document.getElementById("commentInput").value = "";
+	} catch (error) {
+		console.error("Error:", error);
 	}
 }
 

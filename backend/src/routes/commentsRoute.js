@@ -1,13 +1,11 @@
 const diveIntoUrl = require("../utils/urlDiver");
 const urlRoot = require("../utils/urlRoot");
 const resourceNotFound = require("../utils/resourceNotFound");
-const problems = require("../controllers/problemsController");
-const metadataController = require("../controllers/metadataController");
+const commentsController = require("../controllers/commentsController");
 
 const routes = {
-    'GET /chapters': metadataController.getChapters,
-    'GET /tournamentChapters': metadataController.getTournamentChapters,
-    'GET /tournamentDifficulty': metadataController.getTournamentDifficulty,
+    'POST /': commentsController.comment,
+    'GET /': commentsController.getAll,
 };
 
 async function handleProblems(req, res) {

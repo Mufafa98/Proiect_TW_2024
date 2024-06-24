@@ -1,13 +1,11 @@
 const diveIntoUrl = require("../utils/urlDiver");
 const urlRoot = require("../utils/urlRoot");
 const resourceNotFound = require("../utils/resourceNotFound");
-const problems = require("../controllers/problemsController");
-const metadataController = require("../controllers/metadataController");
+const protectedController = require("../controllers/protectedController");
 
 const routes = {
-    'GET /chapters': metadataController.getChapters,
-    'GET /tournamentChapters': metadataController.getTournamentChapters,
-    'GET /tournamentDifficulty': metadataController.getTournamentDifficulty,
+    'GET /': protectedController.protectedController,
+    'GET /admin': protectedController.protectedControllerAdmin,
 };
 
 async function handleProblems(req, res) {

@@ -161,3 +161,68 @@ option {
 #nextButton {
     display: none;
 }
+
+#commentInputDiv{
+    display: flex;
+    flex-direction: column;
+}
+#commentButton{
+    margin-left: 1em;
+}
+
+#commentInput {
+    width: 100%;
+    background-color: var(--input_background);
+    color: var(--input_text);
+    border-radius: 1em;
+    border-color: var(--input_border);
+    border-width: 0.2em;
+    border-style: solid;
+    padding: 1em;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 1em;
+    text-align: left;
+    resize: none;
+    box-sizing: border-box;
+    outline: none;
+}
+
+#commentData{
+    display: flex;
+    flex-direction: column;
+}
+
+.commentorName{
+    width: 100%;
+    background-color: var(--input_background);
+    color: var(--input_text);
+    border-style: none;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    resize: none;
+    box-sizing: border-box;
+    outline: none;
+
+    margin-left: 2em;
+
+}
+.commentorMessage{
+    width: 100%;
+    background-color: var(--input_background);
+    color: var(--input_text);
+    border-style: solid;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: left;
+    resize: none;
+    box-sizing: border-box;
+    outline: none;
+
+    border-radius: 0px;
+    border-width: 0 0 0 1px;
+    padding-left: 1em;
+
+    margin-left: 3em;
+}

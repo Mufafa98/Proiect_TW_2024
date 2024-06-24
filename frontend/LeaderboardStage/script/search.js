@@ -5,7 +5,7 @@ export function searchField() {
         const value = inputLine.value.trim();
         if (value === "") {
             fieldChanged = false;
-            inputLine.value = "Search Problem";
+            inputLine.value = "Search User";
         }
     });
     inputLine.addEventListener("focus", () => {

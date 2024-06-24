@@ -24,6 +24,10 @@ menu.addEventListener("mouseleave", () => {
 		menu.classList.add('hidden');
 	}
 })
+const leaderboardButton = document.getElementById("LeaderboardButton")
+leaderboardButton.addEventListener("click", () => {
+	window.location.href = "../LeaderboardStage/Leaderboard.html"
+})
 const logoutButton = document.getElementById("logOutButton");
 logoutButton.addEventListener("click", () => {
 	document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
@@ -51,7 +55,7 @@ searchBar.addEventListener("keydown", (event) => {
 const exportButton = document.getElementById("exportButton");
 exportButton.addEventListener("click", async () => {
 	let url = `http://127.0.0.1:3000/problems/download?id=${searchBar.value}&filter=${selector.value}`;
-	if (searchBar.value === "Search Problem by ID" || searchBar.value === "")
+	if (searchBar.value === "Search Problem" || searchBar.value === "")
 		url = "http://127.0.0.1:3000/problems/download?id=neimportant&filter=4";
 	try {
 		const response = await fetch(url, {
