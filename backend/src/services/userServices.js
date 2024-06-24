@@ -59,9 +59,9 @@ class UserServices {
 		database.insert(querry);
 	}
 
-	async getAllUsernames(){
+	    async getAllUsernames(){
         try{
-			const usernames = await database.query(`SELECT USERNAME FROM Users`);
+			const usernames = await database.query(`SELECT CASE WHEN LENGTH(USERNAME) > 10 THEN CONCAT(LEFT(USERNAME, 10),'...') ELSE USERNAME END USERNAME FROM Users`);
 			 return {
 				found: usernames.length !== 0,
 				data: usernames,
