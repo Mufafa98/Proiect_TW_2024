@@ -207,8 +207,6 @@ async function post(req, res) {
 	const cookies = await cookiesServices.parseCookies(cookieHeader);
 	const jwtToken = cookies.token;
 	if (jwtAuthentication(jwtToken) === 200) {
-		if ((await userServices.isUserAdmin((await jwtDecoder(jwtToken)).userData.uid)) === 0)
-			return;
 		const response = await getBody(req);
 		if (response.type === "json") {
 			const { title, chapter, difficulty, content, solution } = response.body;

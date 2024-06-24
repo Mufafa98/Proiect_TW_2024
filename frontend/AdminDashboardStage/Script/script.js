@@ -1,25 +1,29 @@
-try {
-    const response = await fetch("http://127.0.0.1:3000/protected", {
-        method: 'GET',
-        credentials: 'include'
-    });
-    if (response.status !== 200) {
-        window.location.href = "../HomeScreen/homescreen.html";
+async function validate() {
+    try {
+        const response = await fetch("http://127.0.0.1:3000/protected", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        if (response.status !== 200) {
+            window.location.href = "../HomeScreen/homescreen.html";
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
-} catch (error) {
-    console.error('Error:', error);
-}
-try {
-    const response = await fetch("http://127.0.0.1:3000/protected/admin", {
-        method: 'GET',
-        credentials: 'include'
-    });
-    if (response.status !== 200) {
-        window.location.href = "../HomeScreen/homescreen.html";
+    try {
+        const response = await fetch("http://127.0.0.1:3000/protected/admin", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        if (response.status !== 200) {
+            window.location.href = "../HomeScreen/homescreen.html";
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
-} catch (error) {
-    console.error('Error:', error);
 }
+
+validate()
 
 function users() {
     document.getElementsByClassName("problems")[0].style.display = "none";
