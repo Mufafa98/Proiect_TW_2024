@@ -187,47 +187,65 @@ async function getProblemDataById(id) {
 
 //returns the titles of problems that are rated as wrong
 async function getReportedProblems(req, res) {
-	const problems = await problemsServices.getReportedProblems();
-	//console.log(problems);
-	sendResponse.customJSON(res, problems, 200);
-	return problems;
+	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+	const cookies = await cookiesServices.parseCookies(cookieHeader);
+	const jwtToken = cookies.token;
+	if (jwtAuthentication(jwtToken) === 200) {
+		if ((await userServices.isUserAdmin((await jwtDecoder(jwtToken)).userData.uid)) === 0)
+			return;
+		const problems = await problemsServices.getReportedProblems();
+		//console.log(problems);
+		sendResponse.customJSON(res, problems, 200);
+		// return problems;
+	} else {
+		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+	}
 }
 
 async function post(req, res) {
-	const response = await getBody(req);
-
-	if (response.type === "json") {
-		const { title, chapter, difficulty, content, solution } = response.body;
-		console.log(response);
-		if (
-			title === undefined ||
-			chapter === undefined ||
-			difficulty === undefined ||
-			content === undefined ||
-			solution === undefined
-		) {
-			const message =
-				"Invalid JSON format. Expected: {title, chapter, difficulty, content, description}";
-			sendResponse.JSON(res, message, statusCodes.INVALID_JSON_FORMAT);
-		} else {
-			if(difficulty != "Easy" && difficulty != "Medium" && difficulty != "Hard") {
-				const message = "Invalid difficulty. Must be Easy, Medium or Hard";
-				sendResponse.JSON(res, message, statusCodes.INVALID_DIFFICULTY);
+	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+	const cookies = await cookiesServices.parseCookies(cookieHeader);
+	const jwtToken = cookies.token;
+	if (jwtAuthentication(jwtToken) === 200) {
+		if ((await userServices.isUserAdmin((await jwtDecoder(jwtToken)).userData.uid)) === 0)
+			return;
+		const response = await getBody(req);
+		if (response.type === "json") {
+			const { title, chapter, difficulty, content, solution } = response.body;
+			console.log(response);
+			if (
+				title === undefined ||
+				chapter === undefined ||
+				difficulty === undefined ||
+				content === undefined ||
+				solution === undefined
+			) {
+				const message =
+					"Invalid JSON format. Expected: {title, chapter, difficulty, content, description}";
+				sendResponse.JSON(res, message, statusCodes.INVALID_JSON_FORMAT);
 			} else {
-				const problem = await problemsServices.getProblemByTitle(title);
-				if (problem.found) {
-					const message =
-						"Problem with this title already exists. Change the title";
-					sendResponse.JSON(res, message, statusCodes.PROBLEM_TITLE_EXISTS);
+				if (difficulty !== "Easy" && difficulty !== "Medium" && difficulty !== "Hard") {
+					const message = "Invalid difficulty. Must be Easy, Medium or Hard";
+					sendResponse.JSON(res, message, statusCodes.INVALID_DIFFICULTY);
 				} else {
-					problemsServices.insertProblem(title, chapter, difficulty);
-					problemsServices.insertSolution(title, content, solution);
-					const message = "Problem uploaded succesfully";
-					sendResponse.customJSON(res, { message: message }, 200);
+					const problem = await problemsServices.getProblemByTitle(title);
+					if (problem.found) {
+						const message =
+							"Problem with this title already exists. Change the title";
+						sendResponse.JSON(res, message, statusCodes.PROBLEM_TITLE_EXISTS);
+					} else {
+						problemsServices.insertProblem(title, chapter, difficulty);
+						problemsServices.insertSolution(title, content, solution);
+						const message = "Problem uploaded succesfully";
+						sendResponse.customJSON(res, { message: message }, 200);
+					}
 				}
 			}
 		}
+	} else {
+		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
 	}
+
 }
 /**
  * Handles user rating system
@@ -374,6 +392,6 @@ module.exports = {
 	rate: rate,
 	download: download,
 	tournament: getTournamentProblem,
-  getReportedProblems: getReportedProblems, 
-  post: post,
+	getReportedProblems: getReportedProblems,
+	post: post,
 }

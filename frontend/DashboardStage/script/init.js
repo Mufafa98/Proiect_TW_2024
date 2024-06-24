@@ -11,6 +11,7 @@ export async function initializeDashboard() {
 	} catch (error) {
 		console.error('Error:', error);
 	}
+
 	const menuButton = document.getElementById("menuButton").style;
 	const searchBar = document.getElementById("searchBar").style;
 

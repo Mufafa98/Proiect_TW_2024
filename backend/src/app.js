@@ -3,7 +3,7 @@ const loginRoute = require("./routes/loginRoute");
 const problemsRoute = require("./routes/problemsRoute");
 const urlRoot = require("./utils/urlRoot");
 const resourceNotFound = require("./utils/resourceNotFound");
-const protectedController = require("./controllers/protectedController");
+const protectedRoute = require("./routes/protectedRoute");
 const metadataRoutes = require("./routes/metadataRoute");
 const commentsRoute = require("./routes/commentsRoute");
 const leaderboardRoute = require("./routes/leaderboardRoute");
@@ -13,7 +13,7 @@ const routes = {
 	"/signUp": singUpRoute,
 	"/login": loginRoute,
 	"/problems": problemsRoute,
-	"/protected": protectedController,
+	"/protected": protectedRoute,
 	"/metadata": metadataRoutes,
 	"/comments": commentsRoute,
 	"/leaderboard": leaderboardRoute,
