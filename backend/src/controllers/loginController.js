@@ -57,4 +57,11 @@ async function loginUser(req, res) {
 	}
 }
 
-module.exports = loginUser;
+async function getAllUsers(req, res){
+	const usernames = await userServices.getAllUsernames();
+	console.log(usernames);
+	sendResponse.customJSON(res, usernames, 200);
+	return usernames;
+}
+
+module.exports = {loginUser : loginUser, getAllUsers : getAllUsers};

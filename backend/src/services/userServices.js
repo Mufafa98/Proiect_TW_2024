@@ -58,6 +58,22 @@ class UserServices {
 		querry += ` values('${username}', '${email}', '${password}')`;
 		database.insert(querry);
 	}
+
+	async getAllUsernames(){
+        try{
+			const usernames = await database.query(`SELECT USERNAME FROM Users`);
+			 return {
+				found: usernames.length !== 0,
+				data: usernames,
+			 }
+		} catch (error) {
+			database.query("USE Dev")
+			return {
+				error: true,
+				result: error.sqlMessage
+			}
+		}
+    }
 }
 
 module.exports = new UserServices();
