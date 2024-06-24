@@ -8,7 +8,7 @@ export async function loadReportedProblems() {
 		});
 
         const result = await response.json();
-        console.log(result.data);
+        //console.log(result.data);
         loadReportedProblemsInPage(result.data);
     } catch (error) {
         console.error("Error", error);

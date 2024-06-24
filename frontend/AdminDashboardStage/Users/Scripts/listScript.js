@@ -8,7 +8,7 @@ export async function loadUsers() {
 		});
 
         const result = await response.json();
-        console.log(result.data);
+        //console.log(result.data);
         loadUsersInPage(result.data);
     } catch (error) {
         console.error("Error", error);
