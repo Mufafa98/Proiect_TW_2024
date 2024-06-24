@@ -54,6 +54,46 @@ class Problems {
 
 	}
 	/**
+ * Returns the available chapters in tournaments
+ * @returns {found: Boolean, data: *} Where data is an array of chapters
+ */
+	async getTournamentChapters() {
+		try {
+			const problems = await
+				database.query("select distinct solvingCategory from ProblemsSolved where training = 0");
+			return {
+				found: problems.length !== 0,
+				data: problems
+			}
+		} catch (error) {
+			return {
+				found: false,
+				data: null
+			}
+		}
+
+	}
+	/**
+ * Returns the available difficulties in tournaments
+ * @returns {found: Boolean, data: *} Where data is an array of chapters
+ */
+	async getTournamentDifficulty() {
+		try {
+			const problems = await
+				database.query("select distinct solvingDifficulty from ProblemsSolved where training = 0");
+			return {
+				found: problems.length !== 0,
+				data: problems
+			}
+		} catch (error) {
+			return {
+				found: false,
+				data: null
+			}
+		}
+
+	}
+	/**
 	 * Returns the problems with a specific id
 	 * @param {Number} id The id to retrieve by
 	 * @returns {found: Boolean, data: *} Where data is an array of problems
@@ -216,13 +256,13 @@ class Problems {
 		 * @param {Boolean} passed 
 		 * @returns {error: Boolean, result: String}
 		 */
-	async logProblem(problemId, userId, query, passed, notTournament = 1) {
+	async logProblem(problemId, userId, query, passed, notTournament = 1, chapter = "", difficulty = "") {
 		try {
 
 			database.query("USE Dev")
 			let insertQuery = "insert into ProblemsSolved (userId, problemId, ";
-			insertQuery += "passed, query, solvedAt, training) values (";
-			insertQuery += `${userId},${problemId},${passed},'${query}',NOW(),${notTournament})`
+			insertQuery += "passed, query, solvedAt, training, solvingCategory, solvingDifficulty) values (";
+			insertQuery += `${userId},${problemId},${passed},'${query}',NOW(),${notTournament}, '${difficulty}', '${chapter}')`
 			database.insert(insertQuery);
 			return {
 				error: false,

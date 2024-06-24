@@ -12,6 +12,18 @@ export async function initSelectorScreen() {
     } catch (error) {
         console.error('Error:', error);
     }
+    try {
+        const response = await fetch("http://127.0.0.1:3000/problems/tournament?uid=expected", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        const result = await response.json();
+        if (result.problemsNeeded === 0)
+            window.location.href = "../ProblemAddingStage/ProblemAdding.html";
+        console.log(result);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 
     const authBackgroundHeight = Number.parseFloat(
         getComputedStyle(document.getElementById("AuthBackground")).height,

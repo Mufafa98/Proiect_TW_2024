@@ -22,6 +22,28 @@ class MetadataController {
             sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
         }
     }
+    async getTournamentChapters(req, res) {
+        const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+        const cookies = await cookiesServices.parseCookies(cookieHeader);
+        const jwtToken = cookies.token;
+        if (jwtAuthentication(jwtToken) === 200) {
+            const chapters = await problemsServices.getTournamentChapters();
+            sendResponse.customJSON(res, chapters, 200)
+        } else {
+            sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+        }
+    }
+    async getTournamentDifficulty(req, res) {
+        const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+        const cookies = await cookiesServices.parseCookies(cookieHeader);
+        const jwtToken = cookies.token;
+        if (jwtAuthentication(jwtToken) === 200) {
+            const chapters = await problemsServices.getTournamentDifficulty();
+            sendResponse.customJSON(res, chapters, 200)
+        } else {
+            sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+        }
+    }
 }
 
 module.exports = new MetadataController();

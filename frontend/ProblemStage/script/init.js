@@ -10,7 +10,6 @@ export async function init() {
 			window.location.href = "../HomeScreen/homescreen.html";
 			return;
 		}
-		console.log(response.status);
 	} catch (error) {
 		console.error("Error:", error);
 	}

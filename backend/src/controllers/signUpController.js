@@ -41,7 +41,7 @@ async function signUpUser(req, res) {
 					);
 					const userId = await userServices.getUserByUsername(username);
 					const message = "User SignedUp succesfully";
-					const userData = { uid: user.data.ID };
+					const userData = { uid: userId };
 					const token = generateAccessToken(userData);
 					sendResponse.customJSON(
 						res,

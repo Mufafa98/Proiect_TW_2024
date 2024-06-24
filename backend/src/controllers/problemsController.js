@@ -57,7 +57,9 @@ async function get(req, res) {
 							notTournament = 0;
 						else
 							notTournament = 1;
-						problemsServices.logProblem(id, uid, query, solutionResult.result, notTournament)
+						const chapter = reqBody.chapter;
+						const difficulty = reqBody.difficulty;
+						problemsServices.logProblem(id, uid, query, solutionResult.result, notTournament, chapter, difficulty)
 					}
 					sendResponse.JSON(res, solutionResult, 200);
 				}
@@ -110,18 +112,24 @@ async function getTournamentProblem(req, res) {
 	if (jwtAuthentication(jwtToken) === 200) {
 		const decodedReq = await getReqBody(req);
 		const reqBody = decodedReq.body;
-		if (reqBody.chapter === undefined || reqBody.difficulty === undefined) {
-			sendResponse.JSON(res, "Bad Request", httpStatus.BAD_REQUEST);
-			return;
-		}
-		const chapter = reqBody.chapter === "All" ? "%" : reqBody.chapter;
-		const difficulty = reqBody.difficulty === "All" ? "%" : reqBody.difficulty;
-		const id = await problemsServices.getTournamentProblem(chapter, difficulty);
-		if (id.found) {
-			sendResponse.customJSON(res, id.data.at(0).id, 200);
+		if (reqBody.uid === undefined) {
+			if (reqBody.chapter === undefined || reqBody.difficulty === undefined) {
+				sendResponse.JSON(res, "Bad Request", httpStatus.BAD_REQUEST);
+				return;
+			}
+			const chapter = reqBody.chapter === "All" ? "%" : reqBody.chapter;
+			const difficulty = reqBody.difficulty === "All" ? "%" : reqBody.difficulty;
+			const id = await problemsServices.getTournamentProblem(chapter, difficulty);
+			if (id.found) {
+				sendResponse.customJSON(res, id.data.at(0).id, 200);
+			}
+			else {
+				sendResponse.JSON(res, "Inexistent problem", statusCodes.INEXISTENT_PROBLEM);
+			}
 		}
 		else {
-			sendResponse.JSON(res, "Inexistent problem", statusCodes.INEXISTENT_PROBLEM);
+			const uid = (await jwtDecoder(jwtToken)).userData.uid;
+			sendResponse.customJSON(res, { problemsNeeded: await userServices.user20ProblemRestriction(uid) }, 200)
 		}
 	} else {
 		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);

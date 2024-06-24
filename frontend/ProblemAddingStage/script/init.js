@@ -1,4 +1,19 @@
-export function initLoginScreen() {
+export async function initSelectorScreen() {
+    //logged in user
+    try {
+        const response = await fetch("http://127.0.0.1:3000/protected", {
+            method: 'GET',
+            credentials: 'include'
+        });
+        if (response.status !== 200) {
+            window.location.href = "../HomeScreen/homescreen.html";
+            return;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+
     const authBackgroundHeight = Number.parseFloat(
         getComputedStyle(document.getElementById("AuthBackground")).height,
     );
@@ -20,11 +35,4 @@ export function initLoginScreen() {
                 }px`;
         }
     }
-    const cookies = document.cookie.split(";");
-    for (const cookie of cookies) {
-        const eqPos = cookie.indexOf("=");
-        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/`;
-    }
-    console.log(document.cookie)
 }

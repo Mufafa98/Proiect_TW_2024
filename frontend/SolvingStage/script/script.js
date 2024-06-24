@@ -1,5 +1,5 @@
 import { init, unInitPopUp } from "./init.js";
-import { runButton, backButton, subminButton } from "./buttonLogic.js";
+import { runButton, backButton, subminButton, commentButton } from "./buttonLogic.js";
 
 window.addEventListener("DOMContentLoaded", init);
 window.addEventListener("resize", init);
@@ -10,5 +10,4 @@ document.getElementById("submitButton").addEventListener("click", subminButton);
 document.getElementById("nextButton").addEventListener("click", () => {
     window.location.href = "./SolvingStage.html"
 });
-
-init();
+document.getElementById("commentButton").addEventListener("click", commentButton);

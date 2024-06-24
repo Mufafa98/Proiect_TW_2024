@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Leaderboard</title>
 
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./style/Responsivenes.css">
@@ -14,29 +14,24 @@
 <body>
     <header class="col-sm-12 col-md-12 col-lg-12 col-xl-12" id="mainHeader">
         <div id="searchTools">
-            <input type="search" name="SearchProblem" id="searchBar" value="Search Problem">
+            <input type="search" name="SearchProblem" id="searchBar" value="Search User">
             <div id="selector">
                 <select name="searchFilter" id="searchFilter">
                     <option value="0">Id</option>
-                    <option value="1">Title</option>
-                    <option value="2">Chapter</option>
-                    <option value="3">Difficulty</option>
+                    <option value="1">Name</option>
+                </select>
+            </div>
+            <div id="selector">
+                <select name="chapterFilter" id="chapterFilter" class="notHidden">
+                </select>
+            </div>
+            <div id="selector">
+                <select name="difficultyFilter" id="difficultyFilter" class="notHidden">
                 </select>
             </div>
 
         </div>
-
-        <div id="menuButton">
-            <div class="menuLine"></div>
-            <div class="menuLine"></div>
-            <div class="menuLine"></div>
-        </div>
-        <div id="menu" class="hidden">
-            <button class="menuButton" id="exportButton">Export as JSON</button>
-            <button class="menuButton" id="startSolvingButton">StartSolving</button>
-            <button class="menuButton" id="LeaderboardButton">Leaderboard</button>
-            <button class="menuButton" id="logOutButton">LogOut</button>
-        </div>
+        <button id="BackButton">Back</button>
     </header>
     <div id="secondHeader"></div>
 
@@ -44,12 +39,12 @@
         <div class="col-sm-1 col-md-1 col-lg-1 col-xl-2" id="leftPadding"></div>
         <div class="col-sm-10 col-md-10 col-lg-10 col-xl-8" id="content">
             <div id="filters">
-                <p class="filter" id="Id">Id</p>
-                <p class="filter" id="Title">Title</p>
-                <p class="filter" id="Chapter">Chapter</p>
-                <p class="filter" id="Difficulty">Difficulty</p>
+                <p class="filter" id="Uid">UserId</p>
+                <p class="filter" id="Username">Username</p>
+                <p class="filter" id="TotalProblems">Total problems solved</p>
+                <p class="filter" id="SuccessRate">Success rate</p>
             </div>
-            <div id="problems">
+            <div id="users">
             </div>
 
         </div>

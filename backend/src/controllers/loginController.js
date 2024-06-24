@@ -38,12 +38,21 @@ async function loginUser(req, res) {
 					options.Path = "/";
 					options.HttpOnly = false;
 					options.SameSite = "Strict";
-					const cookie = cookiesServices.setCookie(
-						res,
-						"token",
-						token,
-						options,
-					);
+					const adminProp = await userServices.isUserAdmin(userData.uid);
+					const cookie = [
+						cookiesServices.setCookie(
+							res,
+							"token",
+							token,
+							options,
+						),
+						cookiesServices.setCookie(
+							res,
+							"admin",
+							await userServices.isUserAdmin(userData.uid),
+							options,
+						)
+					];
 					sendResponse.cookie(res, cookie, 200);
 				}
 			} else {

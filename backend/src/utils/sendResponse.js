@@ -38,6 +38,7 @@ class sendResponse {
 		res.writeHead(resCode);
 		res.end();
 	}
+
 }
 
 module.exports = new sendResponse();

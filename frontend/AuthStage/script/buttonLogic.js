@@ -130,11 +130,29 @@ async function handleStatusCodes(response) {
 		case 456://pass
 			showPopup("Wrong user or password.");
 			break;
-		case 200:
-			//localStorage.setItem("uid", result.uid);
+		case 200: {
 			showPopup("Signed up succesfully.");
-			window.location.href = "../../DashboardStage/Dashboard.html";
+			const cookies = document.cookie.split(";");
+			for (const cookie of cookies) {
+				let [cookieName, cookieValue] = cookie.trim().split("=");
+
+				cookieName = decodeURIComponent(cookieName);
+				cookieValue = decodeURIComponent(cookieValue);
+				if (cookieName === "admin") {
+					if (cookieValue === "1") {
+						window.location.href = "../../AdminDashboardStage/AdminDashBoard.html";
+					}
+					else {
+						window.location.href = "../../DashboardStage/Dashboard.html";
+					}
+				}
+				else {
+					window.location.href = "../../DashboardStage/Dashboard.html";
+				}
+			}
+
 			break;
+		}
 		default:
 			break;
 	}
