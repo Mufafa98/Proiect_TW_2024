@@ -329,6 +329,51 @@ class Problems {
 			}
 		}
 	}
+	async insertProblem(title, chapter, difficulty) {
+        try{
+            let querry = "insert into Problems (TITLE, CHAPTER, DIFFICULTY)";
+            querry += ` values('${title}', '${chapter}', '${difficulty}')`;
+            database.insert(querry);
+        } catch (error) {
+            database.query("USE Dev")
+            return {
+                error: true,
+                result: error.sqlMessage
+            };
+        }
+    }
+
+	async insertSolution(title, content, solution) {
+        try{
+            const result = await database.query(`SELECT * FROM Problems WHERE Title='${title}'`);
+            const idValue = result[0].id;
+            let querry = "insert into ProblemData (ID, CONTENT, SOLUTION)";
+            querry += ` values('${idValue}', '${content}', '${solution}')`;
+            database.insert(querry);
+        } catch (error) {
+            database.query("USE Dev")
+            return {
+                error: true,
+                result: error.sqlMessage
+            };
+        }
+    }
+
+	async getReportedProblems() {
+		try{
+			const problems = await database.query(`SELECT P.Title FROM Problems P JOIN Raitings R WHERE R.raiting = 'Wrong' AND P.id = R.problemid`);
+			 return {
+				found: problems.length !== 0,
+				data: problems,
+			 }
+		} catch (error) {
+			database.query("USE Dev")
+			return {
+				error: true,
+				result: error.sqlMessage
+			}
+		}
+	}
 }
 
 module.exports = new Problems();

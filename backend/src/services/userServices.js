@@ -155,6 +155,22 @@ group by userId`);
 		querry += ` values('${username}', '${email}', '${password}')`;
 		database.insert(querry);
 	}
+
+	    async getAllUsernames(){
+        try{
+			const usernames = await database.query(`SELECT CASE WHEN LENGTH(USERNAME) > 10 THEN CONCAT(LEFT(USERNAME, 10),'...') ELSE USERNAME END USERNAME FROM Users`);
+			 return {
+				found: usernames.length !== 0,
+				data: usernames,
+			 }
+		} catch (error) {
+			database.query("USE Dev")
+			return {
+				error: true,
+				result: error.sqlMessage
+			}
+		}
+    }
 }
 
 module.exports = new UserServices();

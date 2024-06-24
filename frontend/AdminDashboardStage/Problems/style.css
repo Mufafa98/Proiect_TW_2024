@@ -16,6 +16,12 @@ body{
     outline: none;
 }
 
+#title:hover{
+    color: #8b0c2c;
+    text-decoration: double;
+    font-weight: bold;
+}
+
 .problemSpecifications{
     margin-left: 20px;
 }
@@ -53,4 +59,11 @@ button{
     display: flex;
     margin-right: 20px;
     margin-top: 20px;
+}
+
+#listtitle{
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+    text-decoration: underline;
 }

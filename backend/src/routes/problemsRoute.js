@@ -4,11 +4,13 @@ const resourceNotFound = require("../utils/resourceNotFound");
 const problems = require("../controllers/problemsController");
 
 const routes = {
-	'GET /': problems.get,
-	'GET /rate': problems.canRate,
-	'POST /rate': problems.rate,
-	'GET /download': problems.download,
-	'GET /tournament': problems.tournament,
+	"GET /": problems.get,
+	"GET /rate": problems.canRate,
+	"GET /reported": problems.getReportedProblems,
+	"POST /": problems.post,
+	"POST /rate": problems.rate,
+  'GET /download': problems.download,
+  'GET /tournament': problems.tournament,
 };
 
 async function handleProblems(req, res) {

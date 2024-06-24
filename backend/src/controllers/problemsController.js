@@ -185,11 +185,20 @@ async function getProblemDataById(id) {
 	return problems;
 }
 
+//returns the titles of problems that are rated as wrong
+async function getReportedProblems(req, res) {
+	const problems = await problemsServices.getReportedProblems();
+	//console.log(problems);
+	sendResponse.customJSON(res, problems, 200);
+	return problems;
+}
+
 async function post(req, res) {
 	const response = await getBody(req);
 
 	if (response.type === "json") {
 		const { title, chapter, difficulty, content, solution } = response.body;
+		console.log(response);
 		if (
 			title === undefined ||
 			chapter === undefined ||
@@ -201,16 +210,21 @@ async function post(req, res) {
 				"Invalid JSON format. Expected: {title, chapter, difficulty, content, description}";
 			sendResponse.JSON(res, message, statusCodes.INVALID_JSON_FORMAT);
 		} else {
-			const problem = await problemsServices.getProblemByTitle(title);
-			if (problem.found) {
-				const message =
-					"Problem with this title already exists. Change the title";
-				sendResponse.JSON(res, message, statusCodes.PROBLEM_TITLE_EXISTS);
+			if(difficulty != "Easy" && difficulty != "Medium" && difficulty != "Hard") {
+				const message = "Invalid difficulty. Must be Easy, Medium or Hard";
+				sendResponse.JSON(res, message, statusCodes.INVALID_DIFFICULTY);
 			} else {
-				problemsServices.insertProblem(title, chapter, difficulty);
-				problemsServices.insertSolution(title, content, solution);
-				const message = "Problem uploaded succesfully";
-				sendResponse.customJSON(res, { message: message }, 200);
+				const problem = await problemsServices.getProblemByTitle(title);
+				if (problem.found) {
+					const message =
+						"Problem with this title already exists. Change the title";
+					sendResponse.JSON(res, message, statusCodes.PROBLEM_TITLE_EXISTS);
+				} else {
+					problemsServices.insertProblem(title, chapter, difficulty);
+					problemsServices.insertSolution(title, content, solution);
+					const message = "Problem uploaded succesfully";
+					sendResponse.customJSON(res, { message: message }, 200);
+				}
 			}
 		}
 	}
@@ -360,4 +374,6 @@ module.exports = {
 	rate: rate,
 	download: download,
 	tournament: getTournamentProblem,
+  getReportedProblems: getReportedProblems, 
+  post: post,
 }

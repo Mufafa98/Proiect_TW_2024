@@ -54,3 +54,16 @@ button{
     margin-right: 20px;
     margin-top: 20px;
 }
+
+#listtitle{
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: larger;
+    text-decoration: underline;
+}
+
+#username:hover{
+    color: #8b0c2c;
+    text-decoration: underline;
+    font-weight: bold;
+}
