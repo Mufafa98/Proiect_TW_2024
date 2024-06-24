@@ -12,16 +12,32 @@
 </head>
 
 <body>
-    <h1 style="color: white;">To improve search by category etc?</h1>
     <header class="col-sm-12 col-md-12 col-lg-12 col-xl-12" id="mainHeader">
-        <input type="search" name="SearchProblem" id="searchBar" value="Search Problem by ID">
+        <div id="searchTools">
+            <input type="search" name="SearchProblem" id="searchBar" value="Search Problem by ID">
+            <div id="selector">
+                <select name="searchFilter" id="searchFilter">
+                    <option value="0">Id</option>
+                    <option value="1">Title</option>
+                    <option value="2">Chapter</option>
+                    <option value="3">Difficulty</option>
+                </select>
+            </div>
+            <button id="exportButton">Export as JSON</button>
+        </div>
+
         <div id="menuButton">
             <div class="menuLine"></div>
             <div class="menuLine"></div>
             <div class="menuLine"></div>
         </div>
+        <div id="menu" class="hidden">
+            <button class="menuButton" id="startSolvingButton">StartSolving</button>
+            <button class="menuButton" id="logOutButton">LogOut</button>
+        </div>
     </header>
     <div id="secondHeader"></div>
+
     <div class="container">
         <div class="col-sm-1 col-md-1 col-lg-1 col-xl-2" id="leftPadding"></div>
         <div class="col-sm-10 col-md-10 col-lg-10 col-xl-8" id="content">

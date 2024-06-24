@@ -34,11 +34,9 @@ async function get(req, res) {
 				let problems = await getById(id);
 
 				if (type === "run" && query !== "") {
-					const problemQuery = (await problemsServices.getProblemQuery(id))
-						.data;
-					const querryResponse = await problemsServices.runQueryToString(query);
-					const problemResponse =
-						await problemsServices.runQueryToString(problemQuery);
+					const problemQuery = (await problemsServices.getProblemQuery(id)).data
+					const querryResponse = await problemsServices.runQueryToString(query)
+					const problemResponse = await problemsServices.runQueryToString(problemQuery)
 					if (!querryResponse.error)
 						sendResponse.JSON(
 							res,
@@ -46,24 +44,32 @@ async function get(req, res) {
 								expected: problemResponse,
 								got: querryResponse.result,
 							},
-							200,
+							200
 						);
 					else
-						sendResponse.JSON(
-							res,
-							querryResponse.result,
-							statusCodes.INVALID_SQL_STATEMENT,
-						);
-				} else if (type === "submit" && query !== "" && uid !== "") {
-					const solutionResult = await problemsServices.compareSolution(
-						query,
-						id,
-					);
-					problemsServices.logProblem(id, uid, query, solutionResult.result);
+						sendResponse.JSON(res, querryResponse.result, statusCodes.INVALID_SQL_STATEMENT);
+				}
+				else if (type === "submit" && query !== "" && uid !== "") {
+					const solutionResult = await problemsServices.compareSolution(query, id);
+					if (!solutionResult.error)
+						problemsServices.logProblem(id, uid, query, solutionResult.result)
 					sendResponse.JSON(res, solutionResult, 200);
-				} else {
-					if (reqBody.data === "true") problems = await getProblemDataById(id);
-					else problems = await getById(id);
+				}
+				else {
+					if (reqBody.data === "true")
+						problems = await getProblemDataById(id);
+					else {
+						problems = {
+							found: true,
+							data: {
+								byId: await getById(id),
+								byTitle: await getByTitle(id),
+								byChapter: await getByChapter(id),
+								byDifficulty: await getByDifficulty(id),
+							}
+						}
+					}
+
 
 					if (problems.found) sendResponse.customJSON(res, problems.data, 200);
 					else
@@ -74,9 +80,42 @@ async function get(req, res) {
 						);
 				}
 			}
-		} else {
+		}
+
+		else {
 			const problems = await getAll();
 			sendResponse.customJSON(res, problems.data, 200);
+		}
+	} else {
+		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+	}
+}
+
+/**
+ * Handles problem retrieval for tournaments
+ *
+ * @param {Object} req - The HTTP request object.
+ * @param {Object} res - The HTTP response object.
+ */
+async function getTournamentProblem(req, res) {
+	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+	const cookies = await cookiesServices.parseCookies(cookieHeader);
+	const jwtToken = cookies.token;
+	if (jwtAuthentication(jwtToken) === 200) {
+		const decodedReq = await getReqBody(req);
+		const reqBody = decodedReq.body;
+		if (reqBody.chapter === undefined || reqBody.difficulty === undefined) {
+			sendResponse.JSON(res, "Bad Request", httpStatus.BAD_REQUEST);
+			return;
+		}
+		const chapter = reqBody.chapter === "All" ? "%" : reqBody.chapter;
+		const difficulty = reqBody.difficulty === "All" ? "%" : reqBody.difficulty;
+		const id = await problemsServices.getTournamentProblem(chapter, difficulty);
+		if (id.found) {
+			sendResponse.customJSON(res, id.data.at(0).id, 200);
+		}
+		else {
+			sendResponse.JSON(res, "Inexistent problem", statusCodes.INEXISTENT_PROBLEM);
 		}
 	} else {
 		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
@@ -98,6 +137,30 @@ async function getAll() {
 async function getById(id) {
 	const problems = await problemsServices.getById(id);
 	return problems;
+}
+/**
+ * Returns problems by title
+ * @returns {found: Boolean, data: any}
+ */
+async function getByTitle(title) {
+	const problems = await problemsServices.getByTitle(title);
+	return problems
+}
+/**
+ * Returns problems by chapter
+ * @returns {found: Boolean, data: any}
+ */
+async function getByChapter(chapter) {
+	const problems = await problemsServices.getByChapter(chapter);
+	return problems
+}
+/**
+ * Returns problems by difficulty
+ * @returns {found: Boolean, data: any}
+ */
+async function getByDifficulty(difficulty) {
+	const problems = await problemsServices.getByDifficulty(difficulty);
+	return problems
 }
 /**
  * Returns problem data by id
@@ -238,4 +301,65 @@ async function rate(req, res) {
 	}
 }
 
-module.exports = { get: get, getReportedProblems: getReportedProblems, canRate: canRate, post: post, rate: rate };
+async function download(req, res) {
+	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
+	const cookies = await cookiesServices.parseCookies(cookieHeader);
+	const jwtToken = cookies.token;
+	if (jwtAuthentication(jwtToken) === 200) {
+		const decodedReq = await getReqBody(req);
+		const reqBody = decodedReq.body;
+		const id = reqBody.id;
+		const filter = reqBody.filter;
+		if (id !== undefined && filter !== undefined) {
+			let problems;
+			switch (filter) {
+				case "0":
+					problems = await getById(id);
+					break;
+				case "1":
+					problems = await getByTitle(id);
+					break;
+				case "2":
+					problems = await getByChapter(id);
+					break;
+				case "3":
+					problems = await getByDifficulty(id);
+					break;
+				case "4":
+					problems = await getAll();
+					break;
+				default:
+					break;
+			}
+			if (problems.found) {
+				for (const problem of problems.data) {
+					problem.Description = (await
+						problemsServices
+							.getProblemDataById(problem.id)).data.at(0).content;
+
+
+
+				}
+				sendResponse.customJSON(res, problems.data, 200);
+			}
+			else
+				sendResponse.JSON(res, "Problem not found", statusCodes.INEXISTENT_PROBLEM)
+
+		}
+		else
+			sendResponse.JSON(res, "Invalid params", httpStatus.BAD_REQUEST)
+	}
+	else {
+		sendResponse.JSON(res, "Forbiden", httpStatus.FORBIDDEN);
+	}
+}
+
+module.exports = {
+	get: get,
+	canRate: canRate,
+	rate: rate,
+	download: download,
+	tournament: getTournamentProblem,
+  getReportedProblems: getReportedProblems, 
+  post: post,
+}

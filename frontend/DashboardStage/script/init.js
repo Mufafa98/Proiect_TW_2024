@@ -1,16 +1,15 @@
 export async function initializeDashboard() {
 	try {
 		const response = await fetch("http://127.0.0.1:3000/protected", {
-			method: "GET",
-			credentials: "include",
+			method: 'GET',
+			credentials: 'include'
 		});
 		if (response.status !== 200) {
 			window.location.href = "../HomeScreen/homescreen.html";
 			return;
 		}
-		console.log(response.status);
 	} catch (error) {
-		console.error("Error:", error);
+		console.error('Error:', error);
 	}
 	const menuButton = document.getElementById("menuButton").style;
 	const searchBar = document.getElementById("searchBar").style;
@@ -19,16 +18,28 @@ export async function initializeDashboard() {
 		document.getElementById("leftPadding"),
 	).width;
 
-	searchBar.height = `${
-		Number.parseInt(
-			getComputedStyle(document.getElementById("mainHeader")).height,
-		) * 0.7
-	}px`;
+	searchBar.height = `${Number.parseInt(
+		getComputedStyle(document.getElementById("mainHeader")).height,
+	) * 0.7
+		}px`;
+
+	const searchFilter = document.getElementById("searchFilter");
+	searchFilter.style.paddingLeft = "5px";
 
 	menuButton.marginRight = getComputedStyle(
 		document.getElementById("rightPadding"),
 	).width;
 
+	const menuDropDown = document.getElementById("menu");
+	if (menu.classList.contains('hidden')) menu.classList.remove('hidden');
+	const dropDownWidth = menuDropDown.getBoundingClientRect().width;
+	if (!menu.classList.contains('hidden')) menu.classList.add('hidden');
+
+	menuDropDown.style.marginLeft = `${document.getElementById("menuButton")
+		.getBoundingClientRect().left - dropDownWidth + document.getElementById("menuButton").getBoundingClientRect().width}px`;
+
+	menuDropDown.style.marginTop = `${document.getElementById("menuButton")
+		.getBoundingClientRect().bottom}px`
 	resizeElements();
 }
 
@@ -89,7 +100,6 @@ function resizeWidthToFitIn(id, maxWidth) {
 
 export function tempPageSwap() {
 	localStorage.setItem("test1", "valoare mesaj doi");
-	console.log(localStorage.getItem("test1"));
 	//window.location.href = "../ProblemStage/Problem.html";
 }
 

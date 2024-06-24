@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/Responsivenes.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <script type="module" src="./script/script.js" defer></script>
+    <title>ProblemStage</title>
+</head>
+
+<body>
+    <div class="container col-sm-6 col-md-6 col-lg-6 col-xl-6" id="statement">
+        <p id="problemTitle"></p>
+        <p id="problemStatement"></p>
+    </div>
+    <div class="container solutionContainer col-sm-6 col-md-6 col-lg-6 col-xl-6" id="solution">
+        <div id="actionDiv">
+            <button type="button" class="Button" id="backButton" href="../DashboardStage/Dashboard.html">Back</button>
+            <button type="button" class="Button" id="runButton">Run</button>
+            <button type="button" class="Button" id="submitButton">Submit</button>
+            <button type="button" class="Button" id="nextButton">Next</button>
+        </div>
+        <textarea type="text" name="problemSolution" id="problemSolution"
+            class="solutionContainer inOutContainer"></textarea>
+        <textarea type="text" name="solutionOutput" id="solutionOutput" class="solutionContainer inOutContainer"
+            disabled></textarea>
+    </div>
+    <div id="popUpContainer">
+        <div id="popUp">
+            <p id="popUpText">How difficult was the problem?</p>
+            <div id="selector">
+                <select name="difficultySelector" id="difficultySelector">
+                    <option value="0">Easy</option>
+                    <option value="1">Medium</option>
+                    <option value="2">Hard</option>
+                    <option value="3">Wrong</option>
+                </select>
+            </div>
+            <button type="button" class="Button" id="difficultySelectorButton">Submit</button>
+        </div>
+    </div>
+</body>
+
+</html>
