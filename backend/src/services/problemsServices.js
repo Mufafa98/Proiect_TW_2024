@@ -213,7 +213,7 @@ class Problems {
 
 	async getReportedProblems() {
 		try{
-			const problems = await database.query(`SELECT P.Title FROM Problems P JOIN Raitings R WHERE R.raiting = 'wrong'`);
+			const problems = await database.query(`SELECT P.Title FROM Problems P JOIN Raitings R WHERE R.raiting = 'Wrong' AND P.id = R.problemid`);
 			 return {
 				found: problems.length !== 0,
 				data: problems,

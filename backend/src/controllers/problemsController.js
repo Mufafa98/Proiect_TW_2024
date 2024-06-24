@@ -111,6 +111,8 @@ async function getProblemDataById(id) {
 //returns the titles of problems that are rated as wrong
 async function getReportedProblems(req, res) {
 	const problems = await problemsServices.getReportedProblems();
+	//console.log(problems);
+	sendResponse.customJSON(res, problems, 200);
 	return problems;
 }
 
