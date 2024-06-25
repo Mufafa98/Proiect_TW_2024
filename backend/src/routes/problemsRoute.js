@@ -5,6 +5,7 @@ const problems = require("../controllers/problemsController");
 
 const routes = {
 	"GET /": problems.get,
+	"POST /byTitle": problems.getProblemByTitle,
 	"GET /rate": problems.canRate,
 	"GET /reported": problems.getReportedProblems,
 	"POST /": problems.post,

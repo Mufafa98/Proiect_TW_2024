@@ -1,0 +1,9 @@
+import { loadSearchedProblem } from "./searchScript.js";
+
+const searchbar = document.getElementById("searchBar");
+
+searchbar.addEventListener("keydown", (event) => {
+    if(event.key === "Enter") {
+        loadSearchedProblem(searchbar.value);
+    }
+})

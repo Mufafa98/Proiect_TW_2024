@@ -172,6 +172,16 @@ group by userId`);
 			}
 		}
 	}
+
+	async getUserDataByUsername(username) {
+		const user = await database.query(
+			`SELECT ID, USERNAME, EMAIL, ADMIN FROM Users WHERE USERNAME = '${username}';`,
+		);
+		return {
+			found: user.length !== 0,
+			data: user[0],
+		};
+	}
 }
 
 module.exports = new UserServices();

@@ -5,16 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <script type="module" src="./Scripts/initSearch.js"></script>
 </head>
 <body>
-    <input type="text" name="problems" id="searchBar" value="Search problems by Title">
-    <div class="problemSpecifications">
-        <p>Id:</p>
-        <p>Title:</p>
-        <p>Chapter:</p>
-        <p>Difficulty:</p>
+    <input type="text" name="problems" id="searchBar" placeholder="Search problems by Title">
+    <div class="problemSpecifications" id="problemcontainer">
+        <p id="problemid">Id:</p>
+        <p id="problemtitle">Title:</p>
+        <p id="problemchapter">Chapter:</p>
+        <p id="problemdifficulty">Difficulty:</p>
         <p>Description:</p>
-        <div class="problemDescription"></div>
+        <div class="problemDescription" id="problemdescription"></div>
+        <p>Solution:</p>
+        <div class="problemDescription" id="problemsolution"></div>
 
         <div class="buttoncontainer">
             <button type="button">Edit problem</button>
