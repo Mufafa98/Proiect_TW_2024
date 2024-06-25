@@ -31,6 +31,7 @@ async function uploadProblem() {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(data),
+            credentials: 'include',
 		});
     } catch (error) {
         console.error("Error:", error);

@@ -372,6 +372,16 @@ class Problems {
 		};
 	}
 
+	async getAllProblemByTitle(title) {
+		const problems = await database.query(
+			`SELECT p.id, p.Title, p.Chapter, p.Difficulty, pd.content, pd.solution FROM Problems p  JOIN ProblemData pd where p.id = pd.id and p.Title = '${title}';`
+		);
+		return {
+			found: problems.length !== 0,
+			data: problems,
+		};
+	}
+
 	async getReportedProblems() {
 		try {
 			const problems = await database.query(`SELECT P.Title FROM Problems P JOIN Raitings R WHERE R.raiting = 'Wrong' AND P.id = R.problemid`);

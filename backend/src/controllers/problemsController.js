@@ -363,6 +363,17 @@ async function rate(req, res) {
 	}
 }
 
+async function getProblemByTitle(req, res) {
+		const response = await getBody(req);
+		//console.log(response.body);
+		const {title} = response.body;
+		console.log(title);
+		const problem = await problemsServices.getAllProblemByTitle(title);
+		//console.log(problems);
+		sendResponse.customJSON(res, problem, 200);
+		// return problems;
+}
+
 async function download(req, res) {
 	const cookieHeader = req.headers.cookie ? req.headers.cookie : "";
 	const cookies = await cookiesServices.parseCookies(cookieHeader);
@@ -425,4 +436,5 @@ module.exports = {
 	getReportedProblems: getReportedProblems,
 	post: post,
 	log: logPost,
+	getProblemByTitle: getProblemByTitle,
 }
