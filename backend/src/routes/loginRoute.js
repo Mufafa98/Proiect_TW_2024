@@ -12,6 +12,7 @@ const routes = {
     },
     'POST /': user.loginUser,
     'GET /users': user.getAllUsers,
+    'POST /userByUname': user.getUserDataByUsername,
 };
 
 async function handleLogin(req, res) {

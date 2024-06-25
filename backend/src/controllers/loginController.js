@@ -84,4 +84,13 @@ async function getAllUsers(req, res) {
 	}
 }
 
-module.exports = { loginUser: loginUser, getAllUsers: getAllUsers };
+async function getUserDataByUsername(req, res) {
+	const response = await getBody(req);
+	const {username} = response.body;
+	//console.log(username);
+	const user = await userServices.getUserDataByUsername(username);
+	console.log(user);
+	sendResponse.customJSON(res, user, 200);
+}
+
+module.exports = { loginUser: loginUser, getAllUsers: getAllUsers, getUserDataByUsername: getUserDataByUsername};

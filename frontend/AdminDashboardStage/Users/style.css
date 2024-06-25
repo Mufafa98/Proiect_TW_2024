@@ -1,11 +1,14 @@
 body{
+    display: flex;
     color: #dad3fe;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    height: 25em;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #searchBar {
     border-radius: 0.7em;
-    align-self: center;
     background-color: #1f1b31;
     border-color: #60597e;
     color: grey;
@@ -13,7 +16,9 @@ body{
     border-style: solid;
     font-size: medium;
     padding-left: 1em;
+    padding-top:5px;
     outline: none;
+    width: 25%;
 }
 
 .problemSpecifications{

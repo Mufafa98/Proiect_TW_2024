@@ -5,22 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <script type="module" src="./Scripts/initSearch.js"></script>
 </head>
 <body>
-    <input type="text" name="problems" id="searchBar" value="Search users by username">
-    <div class="problemSpecifications">
-        <p>Id:</p>
-        <p>Username:</p>
-        <p>Email:</p>
-        <p>Number of points:</p>
-        <p>Bio:</p>
-        <div class="problemDescription"></div>
+    <input type="text" name="problems" id="searchBar" placeholder="Search users by username">
+    <div class="problemSpecifications" id="usercontainer">
+        <p id="userid">Id:</p>
+        <p id="username">Username:</p>
+        <p id="email">Email:</p>
+        <p id="isadmin">Is admin:</p>
+    </div>
 
-        <div class="buttoncontainer">
-            <button type="button">Warn user</button>
-            <button type="button">Delete user</button>
-            <button type="button">Promote user</button>
-        </div>
+    <div class="buttoncontainer">
+        <button type="button">Warn user</button>
+        <button type="button">Delete user</button>
+        <button type="button">Promote user</button>
     </div>
 </body>
 </html>

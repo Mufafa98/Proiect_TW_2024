@@ -72,10 +72,4 @@ function clearProblem(){
 
     const problemDifficulty = document.querySelector("#problemdifficulty");
     problemDifficulty.textContent = "Difficulty: ";
-
-    const problemContent = document.querySelector("#problemdescription");
-    problemContent.textContent = "Description: ";
-
-    const problemSolution = document.querySelector("#problemsolution");
-    problemSolution.textContent = "Solution: ";
 }
