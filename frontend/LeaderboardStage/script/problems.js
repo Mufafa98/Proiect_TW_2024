@@ -57,7 +57,7 @@ export async function loadUsersBy(category, difficulty, searchBar) {
 
 export async function loadProblemsById(id) {
     const url = `http://127.0.0.1:3000/leaderboard?category=All&difficulty=All&id=${id}`;
-    console.log(url);
+    // console.log(url);
     try {
         const response = await fetch(url, {
             method: "GET",
@@ -100,7 +100,7 @@ export async function loadByFilter(data, filter) {
 }
 
 function loadUsersInPage(dataByFilter) {
-    console.log(dataByFilter);
+    // console.log(dataByFilter);
     if (dataByFilter.found === false) {
         const userContainer = document.querySelector("#users")
         const errorMessage = document.createElement("div");

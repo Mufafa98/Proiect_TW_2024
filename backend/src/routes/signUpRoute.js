@@ -5,7 +5,7 @@ const signUpUser = require("../controllers/signUpController")
 
 const routes = {
     'GET /': (req, res) => {
-        console.log("recived get on /singUp");
+        // console.log("recived get on /singUp");
         const responseObject = { data: "SignUp GET request" };
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(responseObject));

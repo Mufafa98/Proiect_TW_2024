@@ -308,7 +308,7 @@ class Problems {
 	}
 	async insertByUser(uid, title, chapter, statement, solution, difficulty) {
 		const query = `insert into ProblemsByUser (uid, Title, Chapter, Statement, Solution, Difficulty) values (${uid}, '${title}', '${chapter}', '${statement}', '${solution}', '${difficulty}')`
-		console.log(query);
+		// console.log(query);
 		database.insert(query);
 	}
 	/**

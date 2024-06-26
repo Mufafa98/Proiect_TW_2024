@@ -1,18 +1,18 @@
 export async function loadSearchedProblem(title) {
     const url = "http://127.0.0.1:3000/problems/byTitle/";
 
-    try{
+    try {
         const response = await fetch(url, {
-			method: "POST",
+            method: "POST",
             headers: {
-				"Content-Type": "application/json",
-			},
+                "Content-Type": "application/json",
+            },
             body: JSON.stringify({ title: title }),
-			credentials: "include",
-		});
+            credentials: "include",
+        });
 
         const result = await response.json();
-        console.log(result.data);
+        // console.log(result.data);
         clearProblem();
         loadSearchedProblemInPage(result.data);
     } catch (error) {
@@ -20,10 +20,10 @@ export async function loadSearchedProblem(title) {
     }
 }
 
-function loadSearchedProblemInPage(problem){
+function loadSearchedProblemInPage(problem) {
     const listContainer = document.querySelector("#problemcontainer")
     const element = problem[0];
-        
+
     //const problem = document.createElement("div");
     const problemID = document.querySelector("#problemid");
 
@@ -60,7 +60,7 @@ function loadSearchedProblemInPage(problem){
     //listContainer.appendChild(problem);
 }
 
-function clearProblem(){
+function clearProblem() {
     const problemID = document.querySelector("#problemid");
     problemID.textContent = "Id: ";
 

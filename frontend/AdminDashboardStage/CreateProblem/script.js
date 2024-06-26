@@ -9,12 +9,12 @@ async function uploadProblem() {
     let description = formElements.item(3).value;
     let solution = formElements.item(4).value;
 
-    console.log(formElements);
-    console.log("title: " + title);
-    console.log("chapter: " + chapter);
-    console.log("difficulty: " + difficulty);
-    console.log("decription: " + description);
-    console.log("solution: " + solution);
+    // console.log(formElements);
+    // console.log("title: " + title);
+    // console.log("chapter: " + chapter);
+    // console.log("difficulty: " + difficulty);
+    // console.log("decription: " + description);
+    // console.log("solution: " + solution);
 
     const data = {
         title: title,
@@ -24,15 +24,15 @@ async function uploadProblem() {
         solution: solution,
     };
 
-    try{
+    try {
         const response = await fetch(url, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
             credentials: 'include',
-		});
+        });
     } catch (error) {
         console.error("Error:", error);
     }

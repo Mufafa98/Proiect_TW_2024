@@ -9,7 +9,7 @@ function authenticateToken(token) {
 
     jwt.verify(token, jwtKey, (err) => {
         if (err) {
-            console.log("Invalid signature");
+            //console.log("Invalid signature");
             response = httpStatus.FORBIDDEN;
         }
         else

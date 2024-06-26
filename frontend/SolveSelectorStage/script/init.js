@@ -20,7 +20,7 @@ export async function initSelectorScreen() {
         const result = await response.json();
         if (result.problemsNeeded === 0)
             window.location.href = "../ProblemAddingStage/ProblemAdding.html";
-        console.log(result);
+        // console.log(result);
     } catch (error) {
         console.error('Error:', error);
     }

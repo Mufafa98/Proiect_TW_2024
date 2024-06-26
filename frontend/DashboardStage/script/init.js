@@ -106,5 +106,5 @@ export function tempPageSwap() {
 }
 
 export function swapPage(problem) {
-	console.log(problem.value);
+	// console.log(problem.value);
 }

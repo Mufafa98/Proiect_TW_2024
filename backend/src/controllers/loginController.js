@@ -76,7 +76,7 @@ async function getAllUsers(req, res) {
 		if ((await userServices.isUserAdmin((await jwtDecoder(jwtToken)).userData.uid)) === 0)
 			return;
 		const usernames = await userServices.getAllUsernames();
-		console.log(usernames);
+		// console.log(usernames);
 		sendResponse.customJSON(res, usernames, 200);
 		// return usernames;
 	} else {
@@ -86,11 +86,11 @@ async function getAllUsers(req, res) {
 
 async function getUserDataByUsername(req, res) {
 	const response = await getBody(req);
-	const {username} = response.body;
+	const { username } = response.body;
 	//console.log(username);
 	const user = await userServices.getUserDataByUsername(username);
-	console.log(user);
+	// console.log(user);
 	sendResponse.customJSON(res, user, 200);
 }
 
-module.exports = { loginUser: loginUser, getAllUsers: getAllUsers, getUserDataByUsername: getUserDataByUsername};
+module.exports = { loginUser: loginUser, getAllUsers: getAllUsers, getUserDataByUsername: getUserDataByUsername };
